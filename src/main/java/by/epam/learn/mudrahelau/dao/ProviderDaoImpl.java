@@ -24,6 +24,18 @@ public class ProviderDaoImpl {
     private static final int TARIFF_SPEED_COLUMN = 4;
     private static final int TARIFF_PRICE_COLUMN = 5;
 
+    public void createClient(String login, String password, String name, String surname, TariffPlan tariffPlan) throws SQLException {
+        PreparedStatement preparedStatement = DBUtils.getDbConnection()
+                .prepareStatement("INSERT into clients(login, password, name, surname, tariff) values (?,?,?,?,?)");
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, name);
+            preparedStatement.setString(4, surname);
+            preparedStatement.setString(5, tariffPlan.getTitle());
+            preparedStatement.execute();
+            preparedStatement.close();
+    }
+
     public List<Client> retrieveClients() throws SQLException {
         List<Client> clients = new ArrayList<>();
         Statement statement = DBUtils.getStatement();
@@ -89,7 +101,7 @@ public class ProviderDaoImpl {
                 "values (?,?,?)");
         preparedStatement.setString(1, payment.getClient().getLogin());
         preparedStatement.setDouble(2, payment.getAmount());
-        preparedStatement.setDate(3,new java.sql.Date(payment.getDate().getTimeInMillis()));
+        preparedStatement.setDate(3, new java.sql.Date(payment.getDate().getTimeInMillis()));
         preparedStatement.execute();
         preparedStatement.close();
 
