@@ -44,4 +44,20 @@ public class TariffPlan {
     public double getPrice() {
         return price;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setTariffType(TariffType tariffType) {
+        this.tariffType = tariffType;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
