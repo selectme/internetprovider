@@ -1,6 +1,7 @@
 package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.model.Client;
+import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.tarifftypes.TariffType;
 import by.epam.learn.mudrahelau.util.DBUtils;
@@ -69,6 +70,29 @@ public class ProviderDaoImpl {
         }
         resultSet.close();
         return tariffPlans;
+    }
+
+    public void editTariffPlan(TariffPlan tariffPlan) throws SQLException {
+        PreparedStatement preparedStatement = DBUtils.getDbConnection().
+                prepareStatement("UPDATE tariffs SET title = ?, type = ?, speed = ?, price = ? where title = ?");
+        preparedStatement.setString(1, tariffPlan.getTitle());
+        preparedStatement.setString(2, tariffPlan.getTariffType().label);
+        preparedStatement.setInt(3, tariffPlan.getSpeed());
+        preparedStatement.setDouble(4, tariffPlan.getPrice());
+        preparedStatement.setString(5, tariffPlan.getTitle());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
+    public void makePayment(Payment payment) throws SQLException {
+        PreparedStatement preparedStatement = DBUtils.getDbConnection().prepareStatement("INSERT into payments(client_login, amount, date) " +
+                "values (?,?,?)");
+        preparedStatement.setString(1, payment.getClient().getLogin());
+        preparedStatement.setDouble(2, payment.getAmount());
+        preparedStatement.setDate(3,new java.sql.Date(payment.getDate().getTimeInMillis()));
+        preparedStatement.execute();
+        preparedStatement.close();
+
     }
 
 }
