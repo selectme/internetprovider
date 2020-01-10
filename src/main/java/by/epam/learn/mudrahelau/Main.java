@@ -36,7 +36,7 @@ public class Main {
             logger.info(client);
         }
         Calendar calendar = new GregorianCalendar();
-        Payment payment = new Payment(clients.get(0), 24,
+        Payment payment = new Payment(clients.get(1), 24,
                 new GregorianCalendar(2020, Calendar.JANUARY, 9));
         providerDao.makePayment(payment);
     }

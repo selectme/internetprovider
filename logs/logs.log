@@ -1,0 +1,15 @@
+22:57:18.637 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+22:57:18.681 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='141414', password='f2f2', name='витя', surname='м', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+22:57:18.681 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='22252', password='5egeg4', name='dd', surname='ddd', tariffPlan=TariffPlan{title='superXL', speed=50, tariffType=UNLIM, price=22.0}}
+22:57:18.681 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='515555', password='gsgs3', name='vv', surname='vv', tariffPlan=TariffPlan{title='superXXL', speed=100, tariffType=UNLIM, price=24.0}}
+22:57:18.681 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='656563', password='22gf2fsf', name='ss', surname='ss', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+22:59:23.955 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+22:59:24.007 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='141414', password='f2f2', name='витя', surname='м', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+22:59:24.007 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='22252', password='5egeg4', name='dd', surname='ddd', tariffPlan=TariffPlan{title='superXL', speed=50, tariffType=UNLIM, price=22.0}}
+22:59:24.007 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='515555', password='gsgs3', name='vv', surname='vv', tariffPlan=TariffPlan{title='superXXL', speed=100, tariffType=UNLIM, price=24.0}}
+22:59:24.007 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='656563', password='22gf2fsf', name='ss', surname='ss', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+23:14:51.055 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+23:14:51.099 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='141414', password='f2f2', name='витя', surname='м', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+23:14:51.099 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='22252', password='5egeg4', name='dd', surname='ddd', tariffPlan=TariffPlan{title='superXL', speed=50, tariffType=UNLIM, price=22.0}}
+23:14:51.103 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='515555', password='gsgs3', name='vv', surname='vv', tariffPlan=TariffPlan{title='superXXL', speed=100, tariffType=UNLIM, price=24.0}}
+23:14:51.103 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='656563', password='22gf2fsf', name='ss', surname='ss', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
