@@ -1,21 +1,56 @@
 package by.epam.learn.mudrahelau.model;
 
-import by.epam.learn.mudrahelau.tarifftypes.TariffType;
-
 /**
  * @author Viktar on 26.12.2019
  */
 public class TariffPlan {
-
+    private int id;
     private String title;
     private int speed;
-    private TariffType tariffType;
     private double price;
 
-    public TariffPlan(String title, int speed, TariffType tariffType, double price) {
+    public TariffPlan(int id, String title, int speed, double price) {
+        this.id = id;
         this.title = title;
         this.speed = speed;
-        this.tariffType = tariffType;
+        this.price = price;
+    }
+
+    public TariffPlan(String title, int speed, double price) {
+        this.title = title;
+        this.speed = speed;
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -24,40 +59,7 @@ public class TariffPlan {
         return "TariffPlan{" +
                 "title='" + title + '\'' +
                 ", speed=" + speed +
-                ", tariffType=" + tariffType +
                 ", price=" + price +
                 '}';
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public TariffType getTariffType() {
-        return tariffType;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setTariffType(TariffType tariffType) {
-        this.tariffType = tariffType;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

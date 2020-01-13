@@ -13,3 +13,49 @@
 23:14:51.099 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='22252', password='5egeg4', name='dd', surname='ddd', tariffPlan=TariffPlan{title='superXL', speed=50, tariffType=UNLIM, price=22.0}}
 23:14:51.103 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='515555', password='gsgs3', name='vv', surname='vv', tariffPlan=TariffPlan{title='superXXL', speed=100, tariffType=UNLIM, price=24.0}}
 23:14:51.103 [main] INFO  by.epam.learn.mudrahelau.Main - Client{login='656563', password='22gf2fsf', name='ss', surname='ss', tariffPlan=TariffPlan{title='super', speed=100, tariffType=UNLIM, price=30.0}}
+20:08:21.684 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:10:00.750 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:10:00.861 [main] INFO  by.epam.learn.mudrahelau.Main - by.epam.learn.mudrahelau.model.Client@1cb346ea
+20:10:00.861 [main] INFO  by.epam.learn.mudrahelau.Main - by.epam.learn.mudrahelau.model.Client@4c012563
+20:10:27.251 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:10:27.326 [main] INFO  by.epam.learn.mudrahelau.Main - Client{tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+20:10:27.326 [main] INFO  by.epam.learn.mudrahelau.Main - Client{tariffPlan=TariffPlan{title='superXL', speed=100, price=20.0}}
+20:12:05.547 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:12:05.632 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+20:12:05.633 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXL', speed=100, price=20.0}}
+20:48:01.932 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:48:02.051 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+20:48:02.051 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXL', speed=100, price=20.0}}
+20:48:23.962 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+20:48:24.022 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+20:48:24.023 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+11:11:47.879 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+11:11:47.944 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+11:11:47.945 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:16:53.877 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:16:54.362 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:16:54.363 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:40:44.379 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:40:44.783 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:40:44.784 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:41:08.873 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:41:09.515 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:41:09.516 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:46:21.320 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:46:21.795 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:46:21.796 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:47:34.544 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:47:35.054 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:47:35.055 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:50:45.869 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:50:46.359 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:50:46.359 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:53:02.496 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:53:02.939 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:53:02.940 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:54:18.315 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:54:18.811 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:54:18.812 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}
+12:54:59.474 [main] INFO  by.epam.learn.mudrahelau.Main - list of clients: 
+12:54:59.903 [main] INFO  by.epam.learn.mudrahelau.Main - Client{2 name test tariffPlan=TariffPlan{title='super', speed=50, price=15.0}}
+12:54:59.904 [main] INFO  by.epam.learn.mudrahelau.Main - Client{3 name sggsg tariffPlan=TariffPlan{title='superXXL', speed=200, price=30.0}}

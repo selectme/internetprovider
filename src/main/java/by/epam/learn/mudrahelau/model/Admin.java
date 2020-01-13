@@ -1,40 +1,15 @@
 package by.epam.learn.mudrahelau.model;
 
-/**
- * @author Viktar on 26.12.2019
- */
-public class Admin {
+import by.epam.learn.mudrahelau.role.Role;
 
-    private String login;
-    private String password;
-
-
-    public Admin(String login, String password) {
-        this.login = login;
-        this.password = password;
+public class Admin extends User {
+    public Admin(long id, String login, String password, String name, String surname) {
+        super(id, login, password, name, surname);
+        super.setRole(Role.ADMIN);
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public Admin(String login, String password, String name, String surname) {
+        super(login, password, name, surname);
+        super.setRole(Role.ADMIN);
     }
 }
