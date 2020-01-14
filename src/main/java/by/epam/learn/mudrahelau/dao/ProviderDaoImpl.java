@@ -27,31 +27,4 @@ public class ProviderDaoImpl {
 
 
 
-
-
-
-    public void makePayment(Payment payment) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = DBUtils.getDbConnection().prepareStatement("INSERT into payments(client_login, amount, date) " +
-                    "values (?,?,?)");
-            preparedStatement.setString(1, payment.getClient().getLogin());
-            preparedStatement.setDouble(2, payment.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(payment.getDate().getTimeInMillis()));
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
 }

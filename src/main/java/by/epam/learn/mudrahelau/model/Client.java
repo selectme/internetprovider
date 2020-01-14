@@ -18,6 +18,11 @@ public class Client extends User{
         this.tariffPlan = tariffPlan;
     }
 
+    public Client(String login, String password, String name, String surname, TariffPlan tariffPlan) {
+        super(login, password, name, surname);
+        this.tariffPlan = tariffPlan;
+    }
+
     public TariffPlan getTariffPlan() {
         return tariffPlan;
     }

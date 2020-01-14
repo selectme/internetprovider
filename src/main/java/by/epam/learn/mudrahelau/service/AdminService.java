@@ -16,19 +16,19 @@ public class AdminService {
 
     }
 
-    public void editClient(long id){
+    public void editClient(Client client) {
 
     }
 
-    public void editTariffPlan(int id){
+    public void editTariffPlan(TariffPlan tariffPlan) {
 
     }
 
-    public List<Client> retrieveClients(){
+    public List<Client> retrieveClients() {
         return new ArrayList<>();
     }
 
-    public List<TariffPlan> retrieveTariffPlans(){
+    public List<TariffPlan> retrieveTariffPlans() {
         return new ArrayList<>();
     }
 
