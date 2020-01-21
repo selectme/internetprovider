@@ -3,7 +3,7 @@ package by.epam.learn.mudrahelau.model;
 import by.epam.learn.mudrahelau.role.Role;
 
 public class User {
-    private long id;
+    private Long id;
     private String login;
     private String password;
     private String name;
@@ -28,6 +28,14 @@ public class User {
         this.surname = surname;
     }
 
+    public User(String login, String password, String name, String surname, Role role) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.role = role;
+    }
+
     public User(String login, String password, String name, String surname) {
         this.login = login;
         this.password = password;
@@ -35,11 +43,11 @@ public class User {
         this.surname = surname;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,5 +89,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

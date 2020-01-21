@@ -4,21 +4,22 @@
 <body>
 <h2>hello</h2>
 
-${test}
-<c:out value="123"/>
+${user.name} ${user.surname}
+<form action="/do" method="get">
+    <input type="hidden" name="action" value="do_logout">
+    <input type="submit" value="Logout">
+</form>
 
 <table border="2">
     <tr>
         <td>Title</td>
         <td>speed</td>
-        <td>type</td>
         <td>price</td>
     </tr>
     <c:forEach items="${tariffPlans}" var="tarifPlan">
     <tr>
         <td>${tarifPlan.title}</td>
         <td>${tarifPlan.speed}</td>
-        <td>${tarifPlan.tariffType}</td>
         <td>${tarifPlan.price}</td>
     </tr>
     </c:forEach>
