@@ -22,7 +22,7 @@ public class Main {
         AdminDao adminDao = new AdminDao();
         List<TariffPlan> tariffPlans = adminDao.retrieveTariffPlans();
 
-
+        System.out.println("ff");
 
         TariffPlan tariffPlan = adminDao.findTariffPlanById(1);
         System.out.println(tariffPlan);
