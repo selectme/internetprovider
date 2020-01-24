@@ -1,58 +1,26 @@
 package by.epam.learn.mudrahelau.model;
 
+import by.epam.learn.mudrahelau.role.Role;
+
 import java.util.List;
 
 /**
  * @author Viktar on 26.12.2019
  */
-public class Client {
+public class Client extends User{
 
-    private String login;
-    private String password;
-    private String name;
-    private String surname;
     private TariffPlan tariffPlan;
-
     private List<Payment> payments;
 
-    public Client(String login, String password, String name, String surname, TariffPlan tariffPlan) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
+
+    public Client(long id, String login, String password, String name, String surname, TariffPlan tariffPlan) {
+        super(id, login, password, name, surname);
         this.tariffPlan = tariffPlan;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public Client(String login, String password, String name, String surname, TariffPlan tariffPlan) {
+        super(login, password, name, surname);
+        this.tariffPlan = tariffPlan;
     }
 
     public TariffPlan getTariffPlan() {
@@ -74,11 +42,8 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", tariffPlan=" + tariffPlan +
+                super.getId() + " name " + super.getName() +
+                " tariffPlan=" + tariffPlan +
                 '}';
     }
 }

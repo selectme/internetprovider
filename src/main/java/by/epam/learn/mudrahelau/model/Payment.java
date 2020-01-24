@@ -10,10 +10,15 @@ public class Payment {
 
     private Client client;
     private double amount;
-    private Calendar date;
+    private Date date;
 
-    public Payment(Client client, double amount, Calendar date) {
+    public Payment(Client client, double amount, Date date) {
         this.client = client;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public Payment(double amount, Date date) {
         this.amount = amount;
         this.date = date;
     }
@@ -34,11 +39,19 @@ public class Payment {
         this.amount = amount;
     }
 
-    public Calendar getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "amount=" + amount +
+                ", date=" + date +
+                '}';
     }
 }

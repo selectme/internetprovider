@@ -1,16 +1,17 @@
 package by.epam.learn.mudrahelau;
 
+import by.epam.learn.mudrahelau.dao.AdminDao;
+import by.epam.learn.mudrahelau.dao.ClientDao;
 import by.epam.learn.mudrahelau.dao.ProviderDaoImpl;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
-import by.epam.learn.mudrahelau.tariffplans.Tariffs;
-import by.epam.learn.mudrahelau.tarifftypes.TariffType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -21,26 +22,26 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws SQLException {
-        ProviderDaoImpl providerDao = new ProviderDaoImpl();
-        List<TariffPlan> tariffPlans = new ProviderDaoImpl().retrieveTariffPlans();
-        for (TariffPlan tariffPlan : tariffPlans) {
-            System.out.println(tariffPlan);
-        }
+        AdminDao adminDao = new AdminDao();
 
-        TariffPlan tariffSuper = new TariffPlan("super", 100, TariffType.UNLIM, 30);
+
+        List<Client> clients = adminDao.retrieveClients();
+        Client client = clients.get(0);
+        Calendar calendar = new GregorianCalendar();
+        Payment payment = new Payment(client, 24, new Date());
+
+        ClientDao clientDao = new ClientDao();
+//        clientDao.makePayment(payment);
+
+       List<Payment> payments = clientDao.retrievePayments(client);
+
+        for (Payment payment1 : payments) {
+            logger.info(payment1);
+        }
+//        TariffPlan tariffPlan = new TariffPlan(3,"superXXL", 200, 35);
+//        adminDao.editTariffPlan(tariffPlan);
 //
-//        providerDao.editTariffPlan(tariffPlan);
+//
 
-        providerDao.createClient("141414", "f2f2", "витя", "м", tariffSuper);
-
-        logger.info("list of clients: ");
-        List<Client> clients = new ProviderDaoImpl().retrieveClients();
-        for (Client client : clients) {
-            logger.info(client);
-        }
-
-        Payment payment = new Payment(clients.get(0), 24,
-                new GregorianCalendar(2020, Calendar.JANUARY, 9));
-        providerDao.makePayment(payment);
     }
 }

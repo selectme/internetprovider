@@ -16,10 +16,10 @@ ${test}
     </tr>
     <c:forEach items="${tariffPlans}" var="tarifPlan">
     <tr>
-        <td>${tarifPlan.getTitle}</td>
-        <td>${tarifPlan.getSpeed}</td>
-        <td>${tarifPlan.getTariffType}</td>
-        <td>${tarifPlan.getPrice}</td>
+        <td>${tarifPlan.title}</td>
+        <td>${tarifPlan.speed}</td>
+        <td>${tarifPlan.tariffType}</td>
+        <td>${tarifPlan.price}</td>
     </tr>
     </c:forEach>
 </body>
