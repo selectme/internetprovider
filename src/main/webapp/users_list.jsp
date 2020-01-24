@@ -12,7 +12,7 @@
     <title>Users</title>
 </head>
 <body>
-
+<button onclick="location.href='/'">Home</button>
 <table border="2">
     <tr>
         <td>ID</td>
@@ -26,7 +26,20 @@
         <td>${client.name}</td>
         <td>${client.surname}</td>
         <td>${client.getTariffPlan().getTitle()}</td>
+        <td>
+            <form action="do" method="get">
+                <input type="hidden" name="action" value="show_edit_user_page"/>
+                <input type="hidden" name="user_id" value="${client.id}"/>
+                <input type="submit" value="Edit"/>
+            </form>
+        </td>
     </tr>
     </c:forEach>
+<br>
+</table>
+    <form action="do" method="get">
+        <input type="hidden" name="action" value="show_add_client_page">
+        <input type="submit" value="Add client">
+    </form>
 </body>
 </html>

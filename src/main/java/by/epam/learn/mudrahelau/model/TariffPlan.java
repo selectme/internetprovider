@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Viktar on 26.12.2019
  */
@@ -7,16 +9,19 @@ public class TariffPlan {
     private int id;
     private String title;
     private int speed;
-    private double price;
+    private BigDecimal price;
 
-    public TariffPlan(int id, String title, int speed, double price) {
+    public TariffPlan() {
+    }
+
+    public TariffPlan(int id, String title, int speed, BigDecimal price) {
         this.id = id;
         this.title = title;
         this.speed = speed;
         this.price = price;
     }
 
-    public TariffPlan(String title, int speed, double price) {
+    public TariffPlan(String title, int speed, BigDecimal price) {
         this.title = title;
         this.speed = speed;
         this.price = price;
@@ -46,17 +51,18 @@ public class TariffPlan {
         this.speed = speed;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Override
     public String toString() {
         return "TariffPlan{" +
+                "id: " + id + ", " +
                 "title='" + title + '\'' +
                 ", speed=" + speed +
                 ", price=" + price +

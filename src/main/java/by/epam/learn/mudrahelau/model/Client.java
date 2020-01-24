@@ -23,6 +23,10 @@ public class Client extends User{
         this.tariffPlan = tariffPlan;
     }
 
+    public Client() {
+        super();
+    }
+
     public TariffPlan getTariffPlan() {
         return tariffPlan;
     }

@@ -6,6 +6,7 @@ import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.util.DBUtils;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,17 +65,43 @@ public class AdminDao {
         return clients;
     }
 
-    private TariffPlan findTariffPlanByClientId(long userId) {
+    public Client findClientById(long id){
+        Client client = new Client();
+        Connection connection = DBUtils.getConnection();
+        try(PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, name, surname FROM user " +
+                "WHERE id = ?");
+        ) {
+            preparedStatementClient.setLong(1, id);
+            ResultSet clientInfo = preparedStatementClient.executeQuery();
+            while (clientInfo.next()){
+                long client_id = clientInfo.getLong("id");
+                String name = clientInfo.getString("name");
+                String surname = clientInfo.getString("surname");
+                client.setId(client_id);
+                client.setName(name);
+                client.setSurname(surname);
+            }
+            client.setTariffPlan(findTariffPlanByClientId(id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtils.releaseConnection(connection);
+        }
+        return client;
+    }
+
+    public TariffPlan findTariffPlanByClientId(long userId) {
         TariffPlan tariffPlan = null;
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TARIFF_PLAN_BY_CLIENT_ID_SQL)) {
             preparedStatement.setLong(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                int id = resultSet.getInt(1);
                 String title = resultSet.getString(TARIFF_TITLE_COLUMN);
                 int speed = resultSet.getInt(TARIFF_SPEED_COLUMN);
-                double price = resultSet.getDouble(TARIFF_PRICE_COLUMN);
-                tariffPlan = new TariffPlan(title, speed, price);
+                BigDecimal price = resultSet.getBigDecimal(TARIFF_PRICE_COLUMN);
+                tariffPlan = new TariffPlan(id, title, speed, price);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,55 +113,29 @@ public class AdminDao {
         return tariffPlan;
     }
 
-//    public void createClient(String login, String password, String name, String surname, TariffPlan tariffPlan) {
-//        ResultSet resultSet;
-//        PreparedStatement insertClient = null;
-//        PreparedStatement insertUserAndTariffId = null;
-//        Connection connection = null;
-//        try {
-//            connection = DBUtils.getConnection();
-//            insertClient = connection.prepareStatement(CREATE_CLIENT_SQL);
-//            insertUserAndTariffId = connection.prepareStatement(INSERT_USER_AND_TARIFF_ID_SQL);
-//
-//            connection.setAutoCommit(false);
-//
-//            insertClient.setString(1, login);
-//            insertClient.setString(2, PasswordHash.hashPassword(password));
-//            insertClient.setString(3, name);
-//            insertClient.setString(4, surname);
-//            insertClient.setString(5, Role.CLIENT.name());
-//            insertClient.executeUpdate();
-//
-//            insertUserAndTariffId.setString(1, login);
-//            insertUserAndTariffId.setInt(2, tariffPlan.getId());
-//            insertUserAndTariffId.execute();
-//
-//            connection.commit();
-//            connection.setAutoCommit(true);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        finally {
-//            if (insertClient != null) {
-//                try {
-//                    insertClient.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            if (insertUserAndTariffId != null) {
-//                try {
-//                    insertClient.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            if (connection != null) {
-//                DBUtils.closeConnection(connection);
-//            }
-//        }
-//    }
+    public TariffPlan findTariffPlanById(int tariffPlanId) {
+        TariffPlan tariffPlan = null;
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM tariff_plan" +
+                " WHERE id=?")) {
+            preparedStatement.setLong(1, tariffPlanId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt(1);
+                String title = resultSet.getString(2);
+                int speed = resultSet.getInt(3);
+                BigDecimal price = resultSet.getBigDecimal(4);
+                tariffPlan = new TariffPlan(id, title, speed, price);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                DBUtils.releaseConnection(connection);
+            }
+        }
+        return tariffPlan;
+    }
 
     public void createUser(String login, String password, String name, String surname, Role role) {
         Connection connection = DBUtils.getConnection();
@@ -185,12 +186,12 @@ public class AdminDao {
         }
     }
 
-    public void createTariffPlan(String title, int speed, double price) {
+    public void createTariffPlan(String title, int speed, BigDecimal price) {
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
             preparedStatement.setString(1, title);
             preparedStatement.setInt(2, speed);
-            preparedStatement.setDouble(3, price);
+            preparedStatement.setBigDecimal(3, price);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,7 +212,7 @@ public class AdminDao {
                 int id = resultSet.getInt(1);
                 String title = resultSet.getString(2);
                 int speed = resultSet.getInt(3);
-                double price = resultSet.getDouble(4);
+                BigDecimal price = resultSet.getBigDecimal(4);
                 if (id != 0) {
                     TariffPlan tariffPlan = new TariffPlan(id, title, speed, price);
                     tariffPlans.add(tariffPlan);
@@ -233,8 +234,9 @@ public class AdminDao {
                 prepareStatement(UPDATE_TARIFF_PLAN_SQL)) {
             preparedStatement.setString(1, tariffPlan.getTitle());
             preparedStatement.setInt(2, tariffPlan.getSpeed());
-            preparedStatement.setDouble(3, tariffPlan.getPrice());
+            preparedStatement.setBigDecimal(3, tariffPlan.getPrice());
             preparedStatement.setInt(4, tariffPlan.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

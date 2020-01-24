@@ -19,7 +19,7 @@
         <input id="login" name="login" size="30" />
         <br><br>
         <label for="password">Password:</label>
-        <input type="password" name="password" size="30" />
+        <input id="password" name="password" size="30" />
         <br>${message}
         <br><br>
         <button type="submit">Login</button>

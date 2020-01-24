@@ -16,41 +16,58 @@ public class ClientDao {
     private static final String UPDATE_CLIENT_DATA_SQL = "UPDATE user SET login=?, password=?, name=?, surname=? where id=?";
     private static final String UPDATE_CLIENT_TARIFF_PLAN_SQL = "UPDATE user_tariffplan SET tariff_id=? where user_id=?";
 
-
     public void editClient(Client client) {
-        Connection connection = DBUtils.getDbConnection();
+        Connection connection = DBUtils.getConnection();
         try (
-                PreparedStatement updatePersonalData = connection.prepareStatement(UPDATE_CLIENT_DATA_SQL);
-                PreparedStatement updateTariff = connection.prepareStatement(UPDATE_CLIENT_TARIFF_PLAN_SQL);
+                PreparedStatement updatePersonalData = connection.prepareStatement("UPDATE user SET  name=?, surname=? where id=?");
         ) {
-            connection.setAutoCommit(false);
-
-            updatePersonalData.setString(1, client.getLogin());
-            updatePersonalData.setString(2, client.getPassword());
-            updatePersonalData.setString(3, client.getName());
-            updatePersonalData.setString(4, client.getSurname());
-            updatePersonalData.setLong(5, client.getId());
+            updatePersonalData.setString(1, client.getName());
+            updatePersonalData.setString(2, client.getSurname());
+            updatePersonalData.setLong(3, client.getId());
             updatePersonalData.executeUpdate();
-
-            updateTariff.setInt(1, client.getTariffPlan().getId());
-            updateTariff.setLong(2, client.getId());
-            updateTariff.executeUpdate();
-
-            connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
                 DBUtils.releaseConnection(connection);
             }
-        }
     }
+
+
+//    public void editClient(Client client) {
+//        Connection connection = DBUtils.getDbConnection();
+//        try (
+//                PreparedStatement updatePersonalData = connection.prepareStatement(UPDATE_CLIENT_DATA_SQL);
+//                PreparedStatement updateTariff = connection.prepareStatement(UPDATE_CLIENT_TARIFF_PLAN_SQL);
+//        ) {
+//            connection.setAutoCommit(false);
+//
+//            updatePersonalData.setString(1, client.getLogin());
+//            updatePersonalData.setString(2, client.getPassword());
+//            updatePersonalData.setString(3, client.getName());
+//            updatePersonalData.setString(4, client.getSurname());
+//            updatePersonalData.setLong(5, client.getId());
+//            updatePersonalData.executeUpdate();
+//
+//            updateTariff.setInt(1, client.getTariffPlan().getId());
+//            updateTariff.setLong(2, client.getId());
+//            updateTariff.executeUpdate();
+//
+//            connection.commit();
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (connection != null) {
+//                try {
+//                    connection.setAutoCommit(true);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//                DBUtils.releaseConnection(connection);
+//            }
+//        }
+//    }
 
     public void makePayment(Payment payment) {
         Connection connection = DBUtils.getConnection();
@@ -87,7 +104,7 @@ public class ClientDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (connection != null) {
                 DBUtils.releaseConnection(connection);
             }

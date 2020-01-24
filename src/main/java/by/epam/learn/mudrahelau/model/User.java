@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.model;
 
 import by.epam.learn.mudrahelau.role.Role;
 
+
 public class User {
     private Long id;
     private String login;
@@ -10,6 +11,8 @@ public class User {
     private String surname;
     private Role role;
 
+    public User() {
+    }
 
     public User(long id, String login, String password, String name, String surname, Role role) {
         this.id = id;
