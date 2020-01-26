@@ -35,6 +35,11 @@
     <input type="submit" value="Тарифные планы">
 </form>
 
+    <form action="/do" method="get">
+        <input type="hidden" name="action" value="show_client_account_page">
+        <input type="submit" value="My account">
+    </form>
+
 </div>
 </body>
 </html>

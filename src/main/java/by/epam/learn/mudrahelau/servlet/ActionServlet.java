@@ -25,33 +25,39 @@ public class ActionServlet extends HttpServlet {
     private static UserDao userDao;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         adminDao = new AdminDao();
         userDao = new UserDao();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String action = req.getParameter("action");
-
-        if (action.equals("do_logout")) {
-            doLogout(req, resp);
-        } else if (action.equals("show_users")) {
-            showUsersList(req, resp);
-        } else if (action.equals("show_tariffs")) {
-            showTariffsList(req, resp);
-        } else if (action.equals("add_tariff_page")) {
-            showAddTariffPage(req, resp);
-        } else if (action.equals("show_add_client_page")) {
-            showAddUserPage(req, resp);
-        } else if (action.equals("show_edit_user_page")) {
-            showEditUSerPage(req, resp);
-        } else if (action.equals("show_edit_tariffplan_page")) {
-            showEditTariffPlanPage(req, resp);
-        } else if (action.equals("show_login_page")) {
-            showLoginPage(req, resp);
+        try {
+            if (action.equals("do_logout")) {
+                doLogout(req, resp);
+            } else if (action.equals("show_users")) {
+                showUsersList(req, resp);
+            } else if (action.equals("show_tariffs")) {
+                showTariffsList(req, resp);
+            } else if (action.equals("add_tariff_page")) {
+                showAddTariffPage(req, resp);
+            } else if (action.equals("show_add_client_page")) {
+                showAddUserPage(req, resp);
+            } else if (action.equals("show_edit_user_page")) {
+                showEditUSerPage(req, resp);
+            } else if (action.equals("show_edit_tariffplan_page")) {
+                showEditTariffPlanPage(req, resp);
+            } else if (action.equals("show_login_page")) {
+                showLoginPage(req, resp);
+            } else if (action.equals("show_client_account_page")) {
+                showClientAccountPage(req, resp);
+            }
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -174,7 +180,6 @@ public class ActionServlet extends HttpServlet {
         int tariffPlanId = 0;
         try {
             tariffPlanId = Integer.parseInt(req.getParameter("tariff_id"));
-            System.out.println(tariffPlanId);
         } catch (NumberFormatException e) {
             System.out.println("tariff id = 0");
         }
@@ -256,4 +261,10 @@ public class ActionServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher dispatcher = req.getRequestDispatcher("client_account_page.jsp");
+        dispatcher.forward(req, resp);
+    }
+
 }

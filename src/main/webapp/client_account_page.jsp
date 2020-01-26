@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-
+<div>
+    <%--My money: ${user.tariffPlan}--%>
+</div>
 </body>
 </html>
