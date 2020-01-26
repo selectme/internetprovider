@@ -8,6 +8,7 @@ import by.epam.learn.mudrahelau.model.TariffPlan;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,11 +21,7 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         AdminDao adminDao = new AdminDao();
-        List<TariffPlan> tariffPlans = adminDao.retrieveTariffPlans();
 
-        System.out.println("ff");
-
-        TariffPlan tariffPlan = adminDao.findTariffPlanById(1);
-        System.out.println(tariffPlan);
+        System.out.println(new ClientDao().retrieveClientMoneyAmountByClientId(4));
     }
 }

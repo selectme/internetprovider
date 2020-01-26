@@ -69,7 +69,7 @@ public class AdminDao {
         Client client = new Client();
         Connection connection = DBUtils.getConnection();
         try(PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, name, surname FROM user " +
-                "WHERE id = ?");
+                "WHERE id = ?")
         ) {
             preparedStatementClient.setLong(1, id);
             ResultSet clientInfo = preparedStatementClient.executeQuery();

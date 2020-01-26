@@ -107,8 +107,8 @@ public class ActionServlet extends HttpServlet {
     private void doLogout(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession(false);
         if (session != null) {
-            session.removeAttribute("user");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
+            session.invalidate();
+            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
             try {
                 dispatcher.forward(req, resp);
             } catch (ServletException | IOException e) {
@@ -204,13 +204,10 @@ public class ActionServlet extends HttpServlet {
     }
 
     private void showTariffsList(HttpServletRequest req, HttpServletResponse resp) {
-        RequestDispatcher dispatcher;
-        HttpSession session = req.getSession();
-        List<TariffPlan> tariffPlans = new ArrayList<>();
         try {
-            tariffPlans = adminDao.retrieveTariffPlans();
+            List<TariffPlan> tariffPlans = adminDao.retrieveTariffPlans();
             req.setAttribute("tariffPlans", tariffPlans);
-            dispatcher = req.getRequestDispatcher("tariff_plans_list.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("tariff_plans_list.jsp");
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
             e.printStackTrace();

@@ -10,21 +10,7 @@ import java.util.concurrent.BlockingQueue;
 
 
 public class DBUtils {
-    public static Connection getDbConnection() {
-        Connection connection = null;
-        try {
-            String url = "jdbc:mysql://localhost:3306/providerdb?serverTimezone=Europe/Minsk&allowPublicKeyRetrieval=true&useSSL=false";
-            String login = "root";
-            String password = "root";
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            connection = DriverManager.getConnection(url, login, password);
 
-        } catch (Exception e) {
-            System.out.println("connection failed");
-            e.printStackTrace();
-        }
-        return connection;
-    }
 
     private static BlockingQueue<Connection> connectionPool = new ArrayBlockingQueue<>(10);
     private final static String URL = "jdbc:mysql://localhost:3306/providerdb?serverTimezone=Europe/Minsk&allowPublicKeyRetrieval=true&useSSL=false";

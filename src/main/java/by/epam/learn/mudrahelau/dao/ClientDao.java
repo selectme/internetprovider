@@ -29,45 +29,10 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-                DBUtils.releaseConnection(connection);
-            }
+            DBUtils.releaseConnection(connection);
+        }
     }
 
-
-//    public void editClient(Client client) {
-//        Connection connection = DBUtils.getDbConnection();
-//        try (
-//                PreparedStatement updatePersonalData = connection.prepareStatement(UPDATE_CLIENT_DATA_SQL);
-//                PreparedStatement updateTariff = connection.prepareStatement(UPDATE_CLIENT_TARIFF_PLAN_SQL);
-//        ) {
-//            connection.setAutoCommit(false);
-//
-//            updatePersonalData.setString(1, client.getLogin());
-//            updatePersonalData.setString(2, client.getPassword());
-//            updatePersonalData.setString(3, client.getName());
-//            updatePersonalData.setString(4, client.getSurname());
-//            updatePersonalData.setLong(5, client.getId());
-//            updatePersonalData.executeUpdate();
-//
-//            updateTariff.setInt(1, client.getTariffPlan().getId());
-//            updateTariff.setLong(2, client.getId());
-//            updateTariff.executeUpdate();
-//
-//            connection.commit();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (connection != null) {
-//                try {
-//                    connection.setAutoCommit(true);
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//                DBUtils.releaseConnection(connection);
-//            }
-//        }
-//    }
 
     public void makePayment(Payment payment) {
         Connection connection = DBUtils.getConnection();
@@ -110,5 +75,21 @@ public class ClientDao {
             }
         }
         return payments;
+    }
+
+    public BigDecimal retrieveClientMoneyAmountByClientId(long clientId) {
+        BigDecimal amount = new BigDecimal(0);
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(amount) FROM payments " +
+                "WHERE client_id = ?")) {
+            preparedStatement.setLong(1, clientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                amount = resultSet.getBigDecimal(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return amount;
     }
 }

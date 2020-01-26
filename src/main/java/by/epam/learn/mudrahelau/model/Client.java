@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.model;
 
 import by.epam.learn.mudrahelau.role.Role;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -10,8 +11,10 @@ import java.util.List;
 public class Client extends User{
 
     private TariffPlan tariffPlan;
+
     private List<Payment> payments;
 
+  private   BigDecimal moneyOnAccount;
 
     public Client(long id, String login, String password, String name, String surname, TariffPlan tariffPlan) {
         super(id, login, password, name, surname);
@@ -25,6 +28,14 @@ public class Client extends User{
 
     public Client() {
         super();
+    }
+
+    public BigDecimal getMoneyOnAccount() {
+        return moneyOnAccount;
+    }
+
+    public void setMoneyOnAccount(BigDecimal moneyOnAccount) {
+        this.moneyOnAccount = moneyOnAccount;
     }
 
     public TariffPlan getTariffPlan() {
