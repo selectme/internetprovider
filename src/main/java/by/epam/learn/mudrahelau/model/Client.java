@@ -23,6 +23,10 @@ public class Client extends User{
         this.tariffPlan = tariffPlan;
     }
 
+    public Client() {
+        super();
+    }
+
     public TariffPlan getTariffPlan() {
         return tariffPlan;
     }
@@ -42,7 +46,7 @@ public class Client extends User{
     @Override
     public String toString() {
         return "Client{" +
-                super.getId() + " name " + super.getName() +
+                super.getId() + " name:" + super.getName() +
                 " tariffPlan=" + tariffPlan +
                 '}';
     }
