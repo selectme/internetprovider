@@ -4,9 +4,13 @@ import by.epam.learn.mudrahelau.dao.AdminDao;
 import by.epam.learn.mudrahelau.dao.ClientDao;
 import by.epam.learn.mudrahelau.dao.UserDao;
 import by.epam.learn.mudrahelau.model.Client;
+import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
+import by.epam.learn.mudrahelau.service.AdminService;
+import by.epam.learn.mudrahelau.service.ClientService;
+import by.epam.learn.mudrahelau.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,18 +20,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ActionServlet extends HttpServlet {
 
-    private static AdminDao adminDao;
-    private static UserDao userDao;
+    private static AdminService adminService;
+    private static UserService userService;
+    private static ClientService clientService;
 
     @Override
     public void init() {
-        adminDao = new AdminDao();
-        userDao = new UserDao();
+        adminService = new AdminService();
+        clientService = new ClientService();
+        userService = new UserService();
     }
 
     @Override
@@ -52,6 +58,8 @@ public class ActionServlet extends HttpServlet {
                 showLoginPage(req, resp);
             } else if (action.equals("show_client_account_page")) {
                 showClientAccountPage(req, resp);
+            } else if (action.equals("show_payment_page")) {
+                showPaymentPage(req, resp);
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
@@ -69,26 +77,24 @@ public class ActionServlet extends HttpServlet {
         } else if (action.equals("add_user")) {
             addUSer(req, resp);
         } else if (action.equals("edit")) {
-            editClient(req, resp);
+            editUser(req, resp);
         } else if (action.equals("editTariffPlan")) {
             editTariffPlan(req, resp);
+        } else if (action.equals("make_payment")) {
+            makePayment(req, resp);
         }
     }
 
 
-    private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) {
+    private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
-        try {
             dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void doLogin(HttpServletRequest req, HttpServletResponse resp) {
+    private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        User user = userDao.getUser(login, password);
+        User user = userService.getUser(login, password);
         String destPage = "login.jsp";
         if (user != null) {
             HttpSession session = req.getSession();
@@ -103,59 +109,41 @@ public class ActionServlet extends HttpServlet {
             req.setAttribute("message", message);
         }
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(destPage);
-        try {
-            requestDispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        requestDispatcher.forward(req, resp);
     }
 
-    private void doLogout(HttpServletRequest req, HttpServletResponse resp) {
+    private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
             RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            try {
-                dispatcher.forward(req, resp);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
+            dispatcher.forward(req, resp);
         }
     }
 
-    private void addUSer(HttpServletRequest req, HttpServletResponse resp) {
+    private void addUSer(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         Role role = Role.valueOf(req.getParameter("role"));
-        User user = new User(login, password, name, surname, role);
-        adminDao.createUser(login, password, name, surname, role);
-        try {
-            resp.sendRedirect("/do?action=show_users");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        adminService.createUser(login, password, name, surname, role);
+        resp.sendRedirect("/do?action=show_users");
     }
 
-    private void showEditUSerPage(HttpServletRequest req, HttpServletResponse resp) {
+    private void showEditUSerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("user_id"));
-        Client client = adminDao.findClientById(id);
-        List<TariffPlan> tariffPlans = adminDao.retrieveTariffPlans();
+        Client client = adminService.getClientById(id);
+        List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
         req.setAttribute("client", client);
         req.setAttribute("tariffPlans", tariffPlans);
         RequestDispatcher dispatcher = req.getRequestDispatcher("edit_user_page.jsp");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        dispatcher.forward(req, resp);
     }
 
-    private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) {
+    private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TariffPlan tariffPlan = new TariffPlan();
         int id = Integer.parseInt(req.getParameter("id"));
-        System.out.println(id);
         String title = req.getParameter("title");
         int speed = Integer.parseInt(req.getParameter("speed"));
         BigDecimal price = new BigDecimal(req.getParameter("price"));
@@ -163,108 +151,94 @@ public class ActionServlet extends HttpServlet {
         tariffPlan.setTitle(title);
         tariffPlan.setSpeed(speed);
         tariffPlan.setPrice(price);
-        System.out.println(tariffPlan);
-        adminDao.editTariffPlan(tariffPlan);
-        try {
-            resp.sendRedirect("/do?action=show_tariffs");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        adminService.editTariffPlan(tariffPlan);
+        resp.sendRedirect("/do?action=show_tariffs");
     }
 
-    private void editClient(HttpServletRequest req, HttpServletResponse resp) {
+    private void editUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Client client = new Client();
-        long id = Long.parseLong(req.getParameter("id"));
+        String login = req.getParameter("login");
+        long clientId = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
-        int tariffPlanId = 0;
+        int tariffPlanId;
         try {
             tariffPlanId = Integer.parseInt(req.getParameter("tariff_id"));
         } catch (NumberFormatException e) {
-            System.out.println("tariff id = 0");
+            tariffPlanId = 0;
         }
-        client.setId(id);
+        client.setId(clientId);
+        client.setLogin(login);
         client.setName(name);
         client.setSurname(surname);
         ClientDao clientDao = new ClientDao();
         clientDao.editClient(client);
-        adminDao.assignTariffPlanToClient(id, tariffPlanId);
-        try {
-            resp.sendRedirect("/do?action=show_users");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        adminService.assignTariffPlanToClient(clientId, tariffPlanId);
+        resp.sendRedirect("/do?action=show_users");
     }
 
-    private void showUsersList(HttpServletRequest req, HttpServletResponse resp) {
-        List<Client> clients = adminDao.retrieveClients();
-        req.setAttribute("users", clients);
+    private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Client> clients = adminService.retrieveClients();
+        req.setAttribute("clients", clients);
         RequestDispatcher dispatcher = req.getRequestDispatcher("users_list.jsp");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        dispatcher.forward(req, resp);
     }
 
-    private void showTariffsList(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            List<TariffPlan> tariffPlans = adminDao.retrieveTariffPlans();
-            req.setAttribute("tariffPlans", tariffPlans);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("tariff_plans_list.jsp");
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+    private void showTariffsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+        req.setAttribute("tariffPlans", tariffPlans);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("tariff_plans_list.jsp");
+        dispatcher.forward(req, resp);
     }
 
-    private void showAddTariffPage(HttpServletRequest req, HttpServletResponse resp) {
+    private void showAddTariffPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("add_tariff_plan.jsp");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        dispatcher.forward(req, resp);
     }
 
-
-    private void showEditTariffPlanPage(HttpServletRequest req, HttpServletResponse resp) {
+    private void showEditTariffPlanPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("tariff_id"));
-        TariffPlan tariffPlan = adminDao.findTariffPlanById(id);
+        TariffPlan tariffPlan = adminService.getTariffPlanById(id);
         req.setAttribute("tariffPlan", tariffPlan);
         RequestDispatcher dispatcher = req.getRequestDispatcher("edit_tariffplan_page.jsp");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        dispatcher.forward(req, resp);
     }
 
-    private void showAddUserPage(HttpServletRequest req, HttpServletResponse resp) {
+    private void showAddUserPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("add_user.jsp");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+        dispatcher.forward(req, resp);
     }
 
-    private void addTariffPlan(HttpServletRequest req, HttpServletResponse resp) {
+    private void addTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String title = req.getParameter("title");
         int speed = Integer.parseInt(req.getParameter("speed"));
         BigDecimal price = new BigDecimal(req.getParameter("price"));
-        adminDao.createTariffPlan(title, speed, price);
-        try {
-            resp.sendRedirect("/do?action=show_tariffs");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        adminService.createTariffPlan(title, speed, price);
+        showTariffsList(req, resp);
     }
 
     private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("user_id"));
+        Client client = adminService.getClientById(id);
+        req.setAttribute("client", client);
         RequestDispatcher dispatcher = req.getRequestDispatcher("client_account_page.jsp");
         dispatcher.forward(req, resp);
     }
 
+    private void showPaymentPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("user_id"));
+        Client client = adminService.getClientById(id);
+        req.setAttribute("client", client);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("make_payment_page.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    private void makePayment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long clientId = Long.parseLong(req.getParameter("user_id"));
+        BigDecimal amount = new BigDecimal(req.getParameter("amount"));
+        LocalDateTime time = LocalDateTime.now();
+        Payment payment = new Payment(clientId, amount, time);
+        clientService.makePayment(payment);
+        showClientAccountPage(req, resp);
+    }
 }

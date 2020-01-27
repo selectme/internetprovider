@@ -27,7 +27,6 @@ public class UserDao {
                 String userName = resultSet.getString(4);
                 String userSurname = resultSet.getString(5);
                 Role role = Role.valueOf(resultSet.getString(6));
-
                 user = new User(userId, userLogin, userPassword, userName, userSurname, role);
             }
         } catch (SQLException e) {

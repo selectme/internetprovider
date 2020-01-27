@@ -18,8 +18,7 @@ public class ClientDao {
 
     public void editClient(Client client) {
         Connection connection = DBUtils.getConnection();
-        try (
-                PreparedStatement updatePersonalData = connection.prepareStatement("UPDATE user SET  name=?, surname=? where id=?");
+        try (PreparedStatement updatePersonalData = connection.prepareStatement("UPDATE user SET  name=?, surname=? where id=?");
         ) {
             updatePersonalData.setString(1, client.getName());
             updatePersonalData.setString(2, client.getSurname());
@@ -38,7 +37,7 @@ public class ClientDao {
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT into payments(client_id, amount, date) " +
                 "values (?,?,?)")) {
-            preparedStatement.setLong(1, payment.getClient().getId());
+            preparedStatement.setLong(1, payment.getClientId());
             preparedStatement.setBigDecimal(2, payment.getAmount());
             LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Minsk"));
             preparedStatement.setTimestamp(3, Timestamp.valueOf(localDateTime));
@@ -87,7 +86,7 @@ public class ClientDao {
             while (resultSet.next()) {
                 amount = resultSet.getBigDecimal(1);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return amount;

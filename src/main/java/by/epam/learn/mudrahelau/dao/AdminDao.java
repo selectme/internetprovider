@@ -50,7 +50,7 @@ public class AdminDao {
                 String surname = resultSet.getString(5);
                 Role role = Role.valueOf(resultSet.getString(6).toUpperCase());
                 if (role == Role.CLIENT) {
-                    TariffPlan tariffPlan = findTariffPlanByClientId(clientId);
+                    TariffPlan tariffPlan = getTariffPlanByClientId(clientId);
                     Client client = new Client(clientId, login, password, name, surname, tariffPlan);
                     clients.add(client);
                 }
@@ -65,36 +65,39 @@ public class AdminDao {
         return clients;
     }
 
-    public Client findClientById(long id){
+    public Client getClientById(long id) {
         Client client = new Client();
         Connection connection = DBUtils.getConnection();
-        try(PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, name, surname FROM user " +
+        try (PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, login, name, surname FROM user " +
                 "WHERE id = ?")
         ) {
             preparedStatementClient.setLong(1, id);
             ResultSet clientInfo = preparedStatementClient.executeQuery();
-            while (clientInfo.next()){
+            while (clientInfo.next()) {
                 long client_id = clientInfo.getLong("id");
+                String login = clientInfo.getString("login");
                 String name = clientInfo.getString("name");
                 String surname = clientInfo.getString("surname");
                 client.setId(client_id);
+                client.setLogin(login);
                 client.setName(name);
                 client.setSurname(surname);
             }
-            client.setTariffPlan(findTariffPlanByClientId(id));
+            client.setTariffPlan(getTariffPlanByClientId(id));
+            client.setMoneyOnAccount(new ClientDao().retrieveClientMoneyAmountByClientId(id));
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             DBUtils.releaseConnection(connection);
         }
         return client;
     }
 
-    public TariffPlan findTariffPlanByClientId(long userId) {
+    public TariffPlan getTariffPlanByClientId(long clientId) {
         TariffPlan tariffPlan = null;
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TARIFF_PLAN_BY_CLIENT_ID_SQL)) {
-            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -113,7 +116,7 @@ public class AdminDao {
         return tariffPlan;
     }
 
-    public TariffPlan findTariffPlanById(int tariffPlanId) {
+    public TariffPlan getTariffPlanById(int tariffPlanId) {
         TariffPlan tariffPlan = null;
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM tariff_plan" +
@@ -143,7 +146,6 @@ public class AdminDao {
                 PreparedStatement createUserStatement = connection.prepareStatement(CREATE_CLIENT_SQL);
                 PreparedStatement assignToTariffPlanTableStatement = connection.prepareStatement("INSERT INTO" +
                         " user_tariffplan(user_id, tariff_id) VALUES (LAST_INSERT_ID(), ?)")) {
-
             connection.setAutoCommit(false);
             createUserStatement.setString(1, login);
             createUserStatement.setString(2, PasswordHash.hashPassword(password));

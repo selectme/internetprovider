@@ -20,7 +20,7 @@
         <td>Surname</td>
         <td>Tariff Plane</td>
     </tr>
-    <c:forEach items="${users}" var="client">
+    <c:forEach items="${clients}" var="client">
     <tr>
         <td>${client.id}</td>
         <td>${client.name}</td>

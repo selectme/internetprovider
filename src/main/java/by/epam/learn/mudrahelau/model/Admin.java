@@ -8,8 +8,6 @@ public class Admin extends User {
         super.setRole(Role.ADMIN);
     }
 
-    public Admin(String login, String password, String name, String surname) {
-        super(login, password, name, surname);
-        super.setRole(Role.ADMIN);
+    public Admin() {
     }
 }

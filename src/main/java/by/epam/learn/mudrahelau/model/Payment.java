@@ -8,12 +8,16 @@ import java.time.LocalDateTime;
  */
 public class Payment {
 
-    private Client client;
+    private int id;
+    private long clientId;
     private BigDecimal amount;
     private LocalDateTime date;
 
-    public Payment(Client client, BigDecimal amount, LocalDateTime date) {
-        this.client = client;
+    public Payment() {
+    }
+
+    public Payment(long clientId, BigDecimal amount, LocalDateTime date) {
+        this.clientId = clientId;
         this.amount = amount;
         this.date = date;
     }
@@ -23,12 +27,20 @@ public class Payment {
         this.date = date;
     }
 
-    public Client getClient() {
-        return client;
+    public int getId() {
+        return id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 
     public BigDecimal getAmount() {

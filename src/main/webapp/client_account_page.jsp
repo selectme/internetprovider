@@ -11,8 +11,34 @@
     <title>Title</title>
 </head>
 <body>
-<div>
-    <%--My money: ${user.tariffPlan}--%>
-</div>
+<button onclick="location.href='/'">Home</button>
+<table border="2">
+    <tr>
+        <td>Login</td>
+        <td>Name</td>
+        <td>Surname</td>
+        <td>Tariff Plane</td>
+        <td>Money balance</td>
+    </tr>
+    <tr>
+        <td>${client.getLogin()}</td>
+        <td>${client.name}</td>
+        <td>${client.surname}</td>
+        <td>${client.getTariffPlan().getTitle()}</td>
+        <td>${client.moneyOnAccount}</td>
+    </tr>
+    <br>
+</table>
+<form action="do" method="get">
+    <input type="hidden" name="action" value="show_edit_user_page"/>
+    <input type="hidden" name="user_id" value="${client.id}"/>
+    <input type="submit" value="Edit personal data"/>
+</form>
+
+<form action="do" method="get">
+    <input type="hidden" name="action" value="show_payment_page"/>
+    <input type="hidden" name="user_id" value="${client.id}"/>
+    <input type="submit" value="Make payment"/>
+</form>
 </body>
 </html>

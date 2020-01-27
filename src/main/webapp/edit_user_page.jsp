@@ -17,12 +17,14 @@
     <table>
         <tr>
             <th>ID</th>
+            <th>Login</th>
             <th>Name</th>
             <th>Surname</th>
             <th>Tariff</th>
         </tr>
         <tr>
             <td><label><input type="number" name="id" value="${client.id}" readonly="readonly"/></label></td>
+            <td><label><input type="number" name="login" value="${client.login}" readonly="readonly"/></label></td>
             <td><label><input type="text" name="name" value="${client.name}"/></label></td>
             <td><label><input type="text" name="surname" value="${client.surname}"/></label></td>
             <td><label>
@@ -38,22 +40,5 @@
     </table>
     <input type="submit" value="Done"/>
 </form>
-
-<%--<form action="do" method="post">--%>
-<%--    <input type="hidden" name="action" value="edit"/>--%>
-<%--    <label>--%>
-<%--        <input type="text" name="id" value="${client.id}"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        <input type="text" name="name" value="${client.name}"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        <input type="text" name="surname"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        <input type="text" name="tariff_id"/>--%>
-<%--    </label>--%>
-<%--    <input type="submit" value="done"/>--%>
-<%--</form>--%>
 </body>
 </html>

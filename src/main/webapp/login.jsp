@@ -16,10 +16,10 @@
     <form action="/do" method="post">
         <input type="hidden" name="action" value="do_login">
         <label for="login">Login:</label>
-        <input id="login" name="login" size="30" />
+        <input id="login" name="login" size="30" required/>
         <br><br>
         <label for="password">Password:</label>
-        <input id="password" name="password" size="30" />
+        <input id="password" name="password" size="30" required/>
         <br>${message}
         <br><br>
         <button type="submit">Login</button>

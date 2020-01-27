@@ -21,7 +21,8 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         AdminDao adminDao = new AdminDao();
+        ClientDao clientDao = new ClientDao();
+        Client client = new Client();
 
-        System.out.println(new ClientDao().retrieveClientMoneyAmountByClientId(4));
     }
 }
