@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,5 +25,10 @@ public class Main {
         ClientDao clientDao = new ClientDao();
         Client client = new Client();
 
+        BigDecimal bigDecimal = new BigDecimal(10.5);
+        BigDecimal bigDecimal2 = new BigDecimal(5.3);
+        MathContext mathContext = new MathContext(2);
+
+        System.out.println(bigDecimal.subtract(bigDecimal2, mathContext));
     }
 }

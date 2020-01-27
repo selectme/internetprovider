@@ -12,8 +12,9 @@
     <title>Title</title>
 </head>
 <body>
+<c:if test="${user.role == 'ADMIN'}">
 <form action="do" method="post">
-    <input type="hidden" name="action" value="edit"/>
+    <input type="hidden" name="action" value="edit_user_by_admin"/>
     <table>
         <tr>
             <th>ID</th>
@@ -23,7 +24,7 @@
             <th>Tariff</th>
         </tr>
         <tr>
-            <td><label><input type="number" name="id" value="${client.id}" readonly="readonly"/></label></td>
+            <td><label><input type="number" name="user_id" value="${client.id}" readonly="readonly"/></label></td>
             <td><label><input type="number" name="login" value="${client.login}" readonly="readonly"/></label></td>
             <td><label><input type="text" name="name" value="${client.name}"/></label></td>
             <td><label><input type="text" name="surname" value="${client.surname}"/></label></td>
@@ -40,5 +41,25 @@
     </table>
     <input type="submit" value="Done"/>
 </form>
+
+</c:if>
+<c:if test="${user.role == 'CLIENT'}">
+    <form action="do" method="post">
+        <input type="hidden" name="action" value="edit_client_by_client"/>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+            </tr>
+            <tr>
+                <td><label><input type="number" name="user_id" value="${client.id}" readonly="readonly"/></label></td>
+                <td><label><input type="text" name="name" value="${client.name}"/></label></td>
+                <td><label><input type="text" name="surname" value="${client.surname}"/></label></td>
+            </tr>
+        </table>
+        <input type="submit" value="Done"/>
+    </form>
+</c:if>
 </body>
 </html>

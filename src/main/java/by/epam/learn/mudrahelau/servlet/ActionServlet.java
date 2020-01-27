@@ -1,8 +1,5 @@
 package by.epam.learn.mudrahelau.servlet;
 
-import by.epam.learn.mudrahelau.dao.AdminDao;
-import by.epam.learn.mudrahelau.dao.ClientDao;
-import by.epam.learn.mudrahelau.dao.UserDao;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,6 +58,8 @@ public class ActionServlet extends HttpServlet {
                 showClientAccountPage(req, resp);
             } else if (action.equals("show_payment_page")) {
                 showPaymentPage(req, resp);
+            } else if (action.equals("show_change_tariff_page")) {
+                showChangeTariffPage(req, resp);
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
@@ -76,19 +76,23 @@ public class ActionServlet extends HttpServlet {
             addTariffPlan(req, resp);
         } else if (action.equals("add_user")) {
             addUSer(req, resp);
-        } else if (action.equals("edit")) {
-            editUser(req, resp);
+        } else if (action.equals("edit_user_by_admin")) {
+            editUserByAdmin(req, resp);
+        } else if (action.equals("edit_client_by_client")) {
+            editClientByClient(req, resp);
         } else if (action.equals("editTariffPlan")) {
             editTariffPlan(req, resp);
         } else if (action.equals("make_payment")) {
             makePayment(req, resp);
+        } else if (action.equals("change_tariff_plan")) {
+            changeTariffPlan(req, resp);
         }
     }
 
 
     private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
-            dispatcher.forward(req, resp);
+        dispatcher.forward(req, resp);
     }
 
     private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -137,13 +141,13 @@ public class ActionServlet extends HttpServlet {
         List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
         req.setAttribute("client", client);
         req.setAttribute("tariffPlans", tariffPlans);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("edit_user_page.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("edit_user_by_admin_page.jsp");
         dispatcher.forward(req, resp);
     }
 
     private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TariffPlan tariffPlan = new TariffPlan();
-        int id = Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("user_id"));
         String title = req.getParameter("title");
         int speed = Integer.parseInt(req.getParameter("speed"));
         BigDecimal price = new BigDecimal(req.getParameter("price"));
@@ -155,10 +159,10 @@ public class ActionServlet extends HttpServlet {
         resp.sendRedirect("/do?action=show_tariffs");
     }
 
-    private void editUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void editUserByAdmin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Client client = new Client();
         String login = req.getParameter("login");
-        long clientId = Long.parseLong(req.getParameter("id"));
+        long clientId = Long.parseLong(req.getParameter("user_id"));
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         int tariffPlanId;
@@ -171,10 +175,23 @@ public class ActionServlet extends HttpServlet {
         client.setLogin(login);
         client.setName(name);
         client.setSurname(surname);
-        ClientDao clientDao = new ClientDao();
-        clientDao.editClient(client);
-        adminService.assignTariffPlanToClient(clientId, tariffPlanId);
+        clientService.editClient(client);
+        if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
+            adminService.assignTariffPlanToClient(clientId, tariffPlanId);
+        }
         resp.sendRedirect("/do?action=show_users");
+    }
+
+    private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        Client client = new Client();
+        long clientId = Long.parseLong(req.getParameter("user_id"));
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        client.setId(clientId);
+        client.setName(name);
+        client.setSurname(surname);
+        clientService.editClient(client);
+        showClientAccountPage(req, resp);
     }
 
     private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -240,5 +257,34 @@ public class ActionServlet extends HttpServlet {
         Payment payment = new Payment(clientId, amount, time);
         clientService.makePayment(payment);
         showClientAccountPage(req, resp);
+    }
+
+    public void showChangeTariffPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("user_id"));
+        Client client = adminService.getClientById(id);
+        TariffPlan tariff = adminService.getTariffPlanByClientId(id);
+        List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+        req.setAttribute("client", client);
+        req.setAttribute("tariff", tariff);
+        req.setAttribute("tariffPlans", tariffPlans);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("change_tariff_page.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    public void changeTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long clientId = Long.parseLong(req.getParameter("user_id"));
+        int tariffId = Integer.parseInt(req.getParameter("tariff_id"));
+        BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
+        BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
+
+        if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0){
+            Payment payment = new Payment(clientId, tariffPlanPrice.negate(), LocalDateTime.now());
+            clientService.makePayment(payment);
+            adminService.assignTariffPlanToClient(clientId, tariffId);
+            showClientAccountPage(req, resp);
+        } else{
+            req.setAttribute("message", "You don't have enough money");
+            showChangeTariffPage(req, resp);
+        }
     }
 }

@@ -109,9 +109,7 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
                 DBUtils.releaseConnection(connection);
-            }
         }
         return tariffPlan;
     }
@@ -133,9 +131,7 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
                 DBUtils.releaseConnection(connection);
-            }
         }
         return tariffPlan;
     }
@@ -161,14 +157,12 @@ public class AdminDao {
                 SQLException e) {
             e.printStackTrace();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                DBUtils.releaseConnection(connection);
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            DBUtils.releaseConnection(connection);
         }
     }
 

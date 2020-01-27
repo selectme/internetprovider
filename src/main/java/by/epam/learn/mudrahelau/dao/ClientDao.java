@@ -24,7 +24,6 @@ public class ClientDao {
             updatePersonalData.setString(2, client.getSurname());
             updatePersonalData.setLong(3, client.getId());
             updatePersonalData.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -88,6 +87,8 @@ public class ClientDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
         }
         return amount;
     }

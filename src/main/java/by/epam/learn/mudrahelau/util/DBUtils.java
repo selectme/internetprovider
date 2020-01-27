@@ -37,6 +37,7 @@ public class DBUtils {
     }
 
     public static Connection getConnection() {
+        System.out.println(connectionPool.size());
         Connection connection = null;
         try {
             connection = connectionPool.take();
