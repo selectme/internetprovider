@@ -22,6 +22,7 @@
             <th>Name</th>
             <th>Surname</th>
             <th>Tariff</th>
+            <th>Status</th>
         </tr>
         <tr>
             <td><label><input type="number" name="user_id" value="${client.id}" readonly="readonly"/></label></td>
@@ -37,29 +38,21 @@
                 </select>
             </label>
             </td>
+            <td><label>
+                <select name="status">
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                        <option value="BLOCKED">BLOCKED</option>
+                        <option selected hidden value="${client.status}">${client.status}</option>
+                </select>
+            </label>
+            </td>
         </tr>
     </table>
     <input type="submit" value="Done"/>
 </form>
 
 </c:if>
-<c:if test="${user.role == 'CLIENT'}">
-    <form action="do" method="post">
-        <input type="hidden" name="action" value="edit_client_by_client"/>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-            </tr>
-            <tr>
-                <td><label><input type="number" name="user_id" value="${client.id}" readonly="readonly"/></label></td>
-                <td><label><input type="text" name="name" value="${client.name}"/></label></td>
-                <td><label><input type="text" name="surname" value="${client.surname}"/></label></td>
-            </tr>
-        </table>
-        <input type="submit" value="Done"/>
-    </form>
-</c:if>
+
 </body>
 </html>

@@ -28,7 +28,7 @@
         <td>${client.getTariffPlan().getTitle()}</td>
         <td>
             <form action="do" method="get">
-                <input type="hidden" name="action" value="show_edit_user_page"/>
+                <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>
                 <input type="hidden" name="user_id" value="${client.id}"/>
                 <input type="submit" value="Edit"/>
             </form>

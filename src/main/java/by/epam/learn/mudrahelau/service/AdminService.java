@@ -21,6 +21,10 @@ public class AdminService {
        return adminDao.getClientById(id);
    }
 
+    public void editClientByAdmin(Client client) {
+        adminDao.editClientByAdmin(client);
+    }
+
     public List<Client> retrieveClients() {
         return adminDao.retrieveClients();
     }

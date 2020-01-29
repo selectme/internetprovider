@@ -5,6 +5,7 @@ import by.epam.learn.mudrahelau.dao.ClientDao;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import by.epam.learn.mudrahelau.status.ClientStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,10 +26,6 @@ public class Main {
         ClientDao clientDao = new ClientDao();
         Client client = new Client();
 
-        BigDecimal bigDecimal = new BigDecimal(10.5);
-        BigDecimal bigDecimal2 = new BigDecimal(5.3);
-        MathContext mathContext = new MathContext(2);
-
-        System.out.println(bigDecimal.subtract(bigDecimal2, mathContext));
+        clientDao.changeClientStatus(45, ClientStatus.INACTIVE);
     }
 }

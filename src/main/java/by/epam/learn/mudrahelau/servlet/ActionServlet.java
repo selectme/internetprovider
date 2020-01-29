@@ -8,6 +8,7 @@ import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
+import by.epam.learn.mudrahelau.status.ClientStatus;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,8 +48,10 @@ public class ActionServlet extends HttpServlet {
                 showAddTariffPage(req, resp);
             } else if (action.equals("show_add_client_page")) {
                 showAddUserPage(req, resp);
-            } else if (action.equals("show_edit_user_page")) {
-                showEditUSerPage(req, resp);
+            } else if (action.equals("show_edit_user_page_by_admin")) {
+                showEditUSerPageByAdmin(req, resp);
+            }else if(action.equals("show_edit_client_by_client_page")){
+                showEditClientPageByClient(req, resp);
             } else if (action.equals("show_edit_tariffplan_page")) {
                 showEditTariffPlanPage(req, resp);
             } else if (action.equals("show_login_page")) {
@@ -135,13 +137,21 @@ public class ActionServlet extends HttpServlet {
         resp.sendRedirect("/do?action=show_users");
     }
 
-    private void showEditUSerPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void showEditUSerPageByAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("user_id"));
         Client client = adminService.getClientById(id);
         List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
         req.setAttribute("client", client);
         req.setAttribute("tariffPlans", tariffPlans);
         RequestDispatcher dispatcher = req.getRequestDispatcher("edit_user_by_admin_page.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    private void showEditClientPageByClient(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("user_id"));
+        Client client = adminService.getClientById(id);
+        req.setAttribute("client", client);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("edit_client_by_client.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -171,11 +181,13 @@ public class ActionServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             tariffPlanId = 0;
         }
+        ClientStatus status = ClientStatus.valueOf(req.getParameter("status").toUpperCase());
         client.setId(clientId);
         client.setLogin(login);
         client.setName(name);
         client.setSurname(surname);
-        clientService.editClient(client);
+        client.setStatus(status);
+        adminService.editClientByAdmin(client);
         if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
             adminService.assignTariffPlanToClient(clientId, tariffPlanId);
         }
@@ -190,7 +202,7 @@ public class ActionServlet extends HttpServlet {
         client.setId(clientId);
         client.setName(name);
         client.setSurname(surname);
-        clientService.editClient(client);
+        clientService.editClientByClient(client);
         showClientAccountPage(req, resp);
     }
 

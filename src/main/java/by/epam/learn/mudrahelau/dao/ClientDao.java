@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
+import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
 
 import java.math.BigDecimal;
@@ -16,14 +17,15 @@ public class ClientDao {
     private static final String UPDATE_CLIENT_DATA_SQL = "UPDATE user SET login=?, password=?, name=?, surname=? where id=?";
     private static final String UPDATE_CLIENT_TARIFF_PLAN_SQL = "UPDATE user_tariffplan SET tariff_id=? where user_id=?";
 
-    public void editClient(Client client) {
+
+    public void editClientByClient(Client client) {
         Connection connection = DBUtils.getConnection();
-        try (PreparedStatement updatePersonalData = connection.prepareStatement("UPDATE user SET  name=?, surname=? where id=?");
+        try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET name=?, surname=? WHERE id=?")
         ) {
-            updatePersonalData.setString(1, client.getName());
-            updatePersonalData.setString(2, client.getSurname());
-            updatePersonalData.setLong(3, client.getId());
-            updatePersonalData.executeUpdate();
+            updateClient.setString(1, client.getName());
+            updateClient.setString(2, client.getSurname());
+            updateClient.setLong(3, client.getId());
+            updateClient.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -91,5 +93,35 @@ public class ClientDao {
             DBUtils.releaseConnection(connection);
         }
         return amount;
+    }
+
+    public void changeClientStatus(long clientId, ClientStatus status) {
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET status=? " +
+                "WHERE id=?")) {
+            preparedStatement.setString(1, status.name());
+            preparedStatement.setLong(2, clientId);
+            preparedStatement.executeUpdate();
+            if (status == ClientStatus.INACTIVE) {
+                removeTariffPlanFromClient(clientId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+    }
+
+    public void removeTariffPlanFromClient(long clientId) {
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=0 " +
+                "WHERE user_id=?")) {
+            preparedStatement.setLong(1, clientId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
     }
 }

@@ -19,6 +19,7 @@
         <td>Surname</td>
         <td>Tariff Plane</td>
         <td>Money balance</td>
+        <td>Status</td>
     </tr>
     <tr>
         <td>${client.getLogin()}</td>
@@ -26,11 +27,12 @@
         <td>${client.surname}</td>
         <td>${client.getTariffPlan().getTitle()}</td>
         <td>${client.moneyOnAccount}</td>
+        <td>${client.status}</td>
     </tr>
     <br>
 </table>
 <form action="do" method="get">
-    <input type="hidden" name="action" value="show_edit_user_page"/>
+    <input type="hidden" name="action" value="show_edit_client_by_client_page"/>
     <input type="hidden" name="user_id" value="${client.id}"/>
     <input type="submit" value="Edit personal data"/>
 </form>

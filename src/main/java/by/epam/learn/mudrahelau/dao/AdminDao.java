@@ -4,6 +4,7 @@ import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.role.Role;
+import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
 
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class AdminDao {
             "JOIN user_tariffplan ut ON tp.id=ut.tariff_id where user_id = ?";
     private static final String UPDATE_TARIFF_PLAN_SQL = "UPDATE tariff_plan SET title = ?, speed = ?, price = ? where id = ?";
     private final static String CREATE_CLIENT_SQL = "INSERT INTO " +
-            "user (login, password, name, surname, role) VALUES (?,?,?,?,?) ";
+            "user (login, password, name, surname, role, status) VALUES (?,?,?,?,?,?) ";
     //    private final static String INSERT_USER_AND_TARIFF_ID_SQL = "INSERT INTO " +
 //            "user_tariffplan (user_id) " +
 //            "SELECT u.id " +
@@ -49,9 +50,10 @@ public class AdminDao {
                 String name = resultSet.getString(4);
                 String surname = resultSet.getString(5);
                 Role role = Role.valueOf(resultSet.getString(6).toUpperCase());
+                ClientStatus status = ClientStatus.valueOf(resultSet.getString(7).toUpperCase());
                 if (role == Role.CLIENT) {
                     TariffPlan tariffPlan = getTariffPlanByClientId(clientId);
-                    Client client = new Client(clientId, login, password, name, surname, tariffPlan);
+                    Client client = new Client(clientId, login, password, name, surname, tariffPlan, status);
                     clients.add(client);
                 }
             }
@@ -68,7 +70,7 @@ public class AdminDao {
     public Client getClientById(long id) {
         Client client = new Client();
         Connection connection = DBUtils.getConnection();
-        try (PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, login, name, surname FROM user " +
+        try (PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, login, name, surname, status FROM user " +
                 "WHERE id = ?")
         ) {
             preparedStatementClient.setLong(1, id);
@@ -78,10 +80,12 @@ public class AdminDao {
                 String login = clientInfo.getString("login");
                 String name = clientInfo.getString("name");
                 String surname = clientInfo.getString("surname");
+                ClientStatus status = ClientStatus.valueOf(clientInfo.getString("status"));
                 client.setId(client_id);
                 client.setLogin(login);
                 client.setName(name);
                 client.setSurname(surname);
+                client.setStatus(status);
             }
             client.setTariffPlan(getTariffPlanByClientId(id));
             client.setMoneyOnAccount(new ClientDao().retrieveClientMoneyAmountByClientId(id));
@@ -109,7 +113,7 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-                DBUtils.releaseConnection(connection);
+            DBUtils.releaseConnection(connection);
         }
         return tariffPlan;
     }
@@ -131,7 +135,7 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-                DBUtils.releaseConnection(connection);
+            DBUtils.releaseConnection(connection);
         }
         return tariffPlan;
     }
@@ -148,11 +152,13 @@ public class AdminDao {
             createUserStatement.setString(3, name);
             createUserStatement.setString(4, surname);
             createUserStatement.setString(5, role.name());
+            if (role == Role.CLIENT) {
+                createUserStatement.setString(6, ClientStatus.INACTIVE.name());
+                assignToTariffPlanTableStatement.setLong(1, 0);
+            }
             createUserStatement.execute();
-            assignToTariffPlanTableStatement.setLong(1, 0);
             assignToTariffPlanTableStatement.execute();
             connection.commit();
-
         } catch (
                 SQLException e) {
             e.printStackTrace();
@@ -166,17 +172,43 @@ public class AdminDao {
         }
     }
 
+    public void editClientByAdmin(Client client) {
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET  name=?, surname=?, status=? where id=?");
+        ) {
+            updateClient.setString(1, client.getName());
+            updateClient.setString(2, client.getSurname());
+            updateClient.setString(3, client.getStatus().name());
+            updateClient.setLong(4, client.getId());
+            updateClient.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+    }
+
     public void assignTariffPlanToClient(long clientId, int tariffPlanId) {
         Connection connection = DBUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_AND_TARIFF_ID_SQL)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_AND_TARIFF_ID_SQL);
+             PreparedStatement changeClientStatusStatement = connection.prepareStatement("UPDATE user SET status='ACTIVE' " +
+                     "WHERE id = ?")) {
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, tariffPlanId);
             preparedStatement.setLong(2, clientId);
+            changeClientStatusStatement.setLong(1, clientId);
             preparedStatement.execute();
-        } catch (
-                SQLException e) {
+            changeClientStatusStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 DBUtils.releaseConnection(connection);
             }
         }
