@@ -4,10 +4,12 @@ import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
+import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
+import by.epam.learn.mudrahelau.sheduler.ScheduleExecutor;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 
 import javax.servlet.RequestDispatcher;
@@ -32,6 +34,8 @@ public class ActionServlet extends HttpServlet {
         adminService = new AdminService();
         clientService = new ClientService();
         userService = new UserService();
+
+
     }
 
     @Override
@@ -50,7 +54,7 @@ public class ActionServlet extends HttpServlet {
                 showAddUserPage(req, resp);
             } else if (action.equals("show_edit_user_page_by_admin")) {
                 showEditUSerPageByAdmin(req, resp);
-            }else if(action.equals("show_edit_client_by_client_page")){
+            } else if (action.equals("show_edit_client_by_client_page")) {
                 showEditClientPageByClient(req, resp);
             } else if (action.equals("show_edit_tariffplan_page")) {
                 showEditTariffPlanPage(req, resp);
@@ -85,7 +89,7 @@ public class ActionServlet extends HttpServlet {
         } else if (action.equals("editTariffPlan")) {
             editTariffPlan(req, resp);
         } else if (action.equals("make_payment")) {
-            makePayment(req, resp);
+            makeCreditPayment(req, resp);
         } else if (action.equals("change_tariff_plan")) {
             changeTariffPlan(req, resp);
         }
@@ -262,11 +266,11 @@ public class ActionServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void makePayment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void makeCreditPayment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long clientId = Long.parseLong(req.getParameter("user_id"));
         BigDecimal amount = new BigDecimal(req.getParameter("amount"));
         LocalDateTime time = LocalDateTime.now();
-        Payment payment = new Payment(clientId, amount, time);
+        Payment payment = new Payment(clientId, amount, PaymentType.CREDIT, time);
         clientService.makePayment(payment);
         showClientAccountPage(req, resp);
     }
@@ -288,15 +292,16 @@ public class ActionServlet extends HttpServlet {
         int tariffId = Integer.parseInt(req.getParameter("tariff_id"));
         BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
         BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
-
-        if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0){
-            Payment payment = new Payment(clientId, tariffPlanPrice.negate(), LocalDateTime.now());
+        if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
+            Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
             clientService.makePayment(payment);
             adminService.assignTariffPlanToClient(clientId, tariffId);
             showClientAccountPage(req, resp);
-        } else{
+        } else {
             req.setAttribute("message", "You don't have enough money");
             showChangeTariffPage(req, resp);
         }
     }
+
+
 }

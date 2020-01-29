@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
+import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
 
@@ -10,7 +11,9 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClientDao {
 
@@ -36,12 +39,13 @@ public class ClientDao {
 
     public void makePayment(Payment payment) {
         Connection connection = DBUtils.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT into payments(client_id, amount, date) " +
-                "values (?,?,?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT into payments(client_id, amount, type, date) " +
+                "values (?,?,?,?)")) {
             preparedStatement.setLong(1, payment.getClientId());
             preparedStatement.setBigDecimal(2, payment.getAmount());
             LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Minsk"));
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(localDateTime));
+            preparedStatement.setString(3, payment.getPaymentType().name());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(localDateTime));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,11 +56,12 @@ public class ClientDao {
         }
     }
 
+
     public List<Payment> retrievePayments(Long clientId) {
         List<Payment> payments = new ArrayList<>();
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payments" +
-                " WHERE client_id = ?");
+                " WHERE client_id = ?")
         ) {
             preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -124,4 +129,55 @@ public class ClientDao {
             DBUtils.releaseConnection(connection);
         }
     }
+
+    public LocalDateTime retrieveLastDebitDate(long clientId) {
+        LocalDateTime localDateTime = null ;
+        Connection connection = DBUtils.getConnection();
+//        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(date) FROM payments " +
+//                "WHERE client_id=? group by type='DEBIT'")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT date FROM payments " +
+                "WHERE date=(SELECT MAX(date) FROM payments WHERE client_id=? AND type='DEBIT')")) {
+            preparedStatement.setLong(1, clientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                try {
+                    localDateTime = resultSet.getTimestamp(1).toLocalDateTime();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+        return localDateTime;
+    }
+
+    public Map<Long, Integer> retrieveActiveClientsId() {
+//        List<Long> idList = new ArrayList<>();
+        Map<Long, Integer> clientIdAndTariffId = new HashMap<>();
+        Connection connection = DBUtils.getConnection();
+////        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id FROM user_tariffplan " +
+////                "WHERE tariff_id > 0")) {
+////            ResultSet resultSet = preparedStatement.executeQuery();
+////            while (resultSet.next()) {
+////                idList.add(resultSet.getLong(1));
+////            }
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_tariffplan " +
+                "WHERE tariff_id > 0")) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Long clientId = resultSet.getLong(1);
+                Integer tariffId = resultSet.getInt(2);
+                clientIdAndTariffId.put(clientId, tariffId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+        return clientIdAndTariffId;
+    }
+
 }

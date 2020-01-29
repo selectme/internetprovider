@@ -18,6 +18,12 @@
         <url-pattern>/do</url-pattern>
     </servlet-mapping>
 
+    <listener>
+        <listener-class>
+           by.epam.learn.mudrahelau.service.serverservice.Listener
+        </listener-class>
+    </listener>
+
 <!--    <servlet>-->
 <!--        <servlet-name>login</servlet-name>-->
 <!--        <jsp-file>login.jsp</jsp-file>-->

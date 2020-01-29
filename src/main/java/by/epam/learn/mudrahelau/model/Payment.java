@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.model;
 
+import by.epam.learn.mudrahelau.payment.PaymentType;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,13 +14,15 @@ public class Payment {
     private long clientId;
     private BigDecimal amount;
     private LocalDateTime date;
+    private PaymentType paymentType;
 
     public Payment() {
     }
 
-    public Payment(long clientId, BigDecimal amount, LocalDateTime date) {
+    public Payment(long clientId, BigDecimal amount, PaymentType paymentType, LocalDateTime date) {
         this.clientId = clientId;
         this.amount = amount;
+        this.paymentType = paymentType;
         this.date = date;
     }
 
@@ -41,6 +45,14 @@ public class Payment {
 
     public void setClientId(long clientId) {
         this.clientId = clientId;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 
     public BigDecimal getAmount() {
