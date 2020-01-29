@@ -147,7 +147,7 @@ public class ActionServlet extends HttpServlet {
 
     private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TariffPlan tariffPlan = new TariffPlan();
-        int id = Integer.parseInt(req.getParameter("user_id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         String title = req.getParameter("title");
         int speed = Integer.parseInt(req.getParameter("speed"));
         BigDecimal price = new BigDecimal(req.getParameter("price"));
