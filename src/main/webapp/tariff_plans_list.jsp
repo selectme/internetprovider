@@ -6,10 +6,19 @@
 <h2>Tariffs</h2>
 
 ${user.name} ${user.surname}
-<form action="do" method="get">
-    <input type="hidden" name="action" value="do_logout">
-    <input type="submit" value="Logout">
-</form>
+<c:if test="${user!=null}">
+    <form action="do" method="get">
+        <input type="hidden" name="action" value="do_logout">
+        <input type="submit" value="Logout">
+    </form>
+</c:if>
+
+<c:if test="${user == null}">
+    <form action="do" method="get">
+        <input type="hidden" name="action" value="show_login_page"/>
+        <input type="submit" value="Login">
+    </form>
+</c:if>
 
 <table border="2">
     <tr>
@@ -35,10 +44,12 @@ ${user.name} ${user.surname}
     </c:forEach>
 </table>
 <br>
-<form action="do" method="get">
-    <input type="hidden" name="action" value="add_tariff_page">
-    <input type="submit" value="Add tariff">
-</form>
 
+<c:if test="${user.role == 'ADMIN'}">
+    <form action="do" method="get">
+        <input type="hidden" name="action" value="add_tariff_page">
+        <input type="submit" value="Add tariff">
+    </form>
+</c:if>
 </body>
 </html>

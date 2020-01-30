@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,8 +41,10 @@ public class ActionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        String action = req.getParameter("action");
+
         try {
+            String action = req.getParameter("action");
+
             if (action.equals("do_logout")) {
                 doLogout(req, resp);
             } else if (action.equals("show_users")) {
@@ -74,7 +77,9 @@ public class ActionServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+       try {
+
         String action = req.getParameter("action");
         if (action.equals("do_login")) {
             doLogin(req, resp);
@@ -92,7 +97,9 @@ public class ActionServlet extends HttpServlet {
             makeCreditPayment(req, resp);
         } else if (action.equals("change_tariff_plan")) {
             changeTariffPlan(req, resp);
-        }
+        }} catch (ServletException | IOException e) {
+           e.printStackTrace();
+       }
     }
 
 
