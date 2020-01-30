@@ -131,7 +131,7 @@ public class ClientDao {
     }
 
     public LocalDateTime retrieveLastDebitDate(long clientId) {
-        LocalDateTime localDateTime = null ;
+        LocalDateTime localDateTime = null;
         Connection connection = DBUtils.getConnection();
 //        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(date) FROM payments " +
 //                "WHERE client_id=? group by type='DEBIT'")) {
@@ -155,15 +155,8 @@ public class ClientDao {
     }
 
     public Map<Long, Integer> retrieveActiveClientsId() {
-//        List<Long> idList = new ArrayList<>();
         Map<Long, Integer> clientIdAndTariffId = new HashMap<>();
         Connection connection = DBUtils.getConnection();
-////        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id FROM user_tariffplan " +
-////                "WHERE tariff_id > 0")) {
-////            ResultSet resultSet = preparedStatement.executeQuery();
-////            while (resultSet.next()) {
-////                idList.add(resultSet.getLong(1));
-////            }
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_tariffplan " +
                 "WHERE tariff_id > 0")) {
             ResultSet resultSet = preparedStatement.executeQuery();
