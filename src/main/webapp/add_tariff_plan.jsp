@@ -14,13 +14,13 @@
 <form action="/do" method="post">
     <input type="hidden" name="action" value="add_tariff">
     <label>Title:
-        <input type="text" name="title"/>
+        <input type="text" name="title" required/>
     </label>
     <label>Speed:
-        <input type="number" name="speed"/>
+        <input type="number" name="speed" required/>
     </label>
     <label>Price:
-        <input type="number" step="0.05" name="price"/>
+        <input type="number" step="0.01" name="price" required/>
     </label>
     <input type="submit" value="Add">
 </form>

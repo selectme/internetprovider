@@ -11,22 +11,22 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/do" method="post">
+<form action="do" method="post">
     <input type="hidden" name="action" value="add_user">
     <label>Login:
-        <input type="text" name="login"/>
+        <input type="text" name="login" required/>
     </label>
     <br>
     <label>Password:
-        <input type="password" name="password"/>
+        <input type="password" name="password" required/>
     </label>
     <br>
     <label>Name:
-        <input type="text" name="name"/>
+        <input type="text" name="name" required/>
     </label>
     <br>
     <label>Surname:
-        <input type="text" name="surname"/>
+        <input type="text" name="surname" required/>
     </label>
     <br>
     <label>Role:

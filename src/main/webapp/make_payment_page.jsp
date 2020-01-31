@@ -16,9 +16,7 @@
     <input type="hidden" name="user_id" value="${client.id}"/>
     <label>
         Amount:
-        <input type="number" name="amount" min="0"></label>
-
-    </label>
+        <input type="number" name="amount" min="0" step="0.01"></label>
     <input type="submit" value="Pay"/>
 </form>
 </body>
