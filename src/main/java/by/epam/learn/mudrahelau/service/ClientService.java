@@ -6,7 +6,9 @@ import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class ClientService {
 
@@ -35,5 +37,13 @@ public class ClientService {
 
     public void removeTariffPlanFromClient(long clientId) {
         clientDao.removeTariffPlanFromClient(clientId);
+    }
+
+    public Map<Long, Integer> retrieveActiveClientsId() {
+        return clientDao.retrieveActiveClientsId();
+    }
+
+    public LocalDateTime retrieveLastDebitDate(long clientId) {
+        return clientDao.retrieveLastDebitDate(clientId);
     }
 }

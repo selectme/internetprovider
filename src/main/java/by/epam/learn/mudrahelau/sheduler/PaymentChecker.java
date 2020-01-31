@@ -4,6 +4,8 @@ import by.epam.learn.mudrahelau.dao.AdminDao;
 import by.epam.learn.mudrahelau.dao.ClientDao;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.payment.PaymentType;
+import by.epam.learn.mudrahelau.service.AdminService;
+import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 
 import java.math.BigDecimal;
@@ -18,21 +20,21 @@ import java.util.TimerTask;
 public class PaymentChecker extends TimerTask {
 
     private LocalDateTime today;
-    private AdminDao adminDao = new AdminDao();
-    private ClientDao clientDao = new ClientDao();
+
+    private AdminService adminService = new AdminService();
+    private ClientService clientService = new ClientService();
 
     @Override
     public void run() {
         today = LocalDateTime.now();
-        System.out.println(today);
-        Map<Long, Integer> clientsId = clientDao.retrieveActiveClientsId();
+        Map<Long, Integer> clientsId = clientService.retrieveActiveClientsId();
 
         for (Map.Entry<Long, Integer> client : clientsId.entrySet()) {
             System.out.println(client.getKey());
-            System.out.println(clientDao.retrieveLastDebitDate(client.getKey()));
-            if (clientDao.retrieveLastDebitDate(client.getKey()).plusDays(30).compareTo(today) < 0) {
-                BigDecimal clientBalance = clientDao.retrieveClientMoneyAmountByClientId(client.getKey());
-                BigDecimal tariffPlanPrice = adminDao.getTariffPlanById(client.getValue()).getPrice();
+            System.out.println(clientService.retrieveLastDebitDate(client.getKey()));
+            if (clientService.retrieveLastDebitDate(client.getKey()).plusDays(30).compareTo(today) < 0) {
+                BigDecimal clientBalance = clientService.retrieveClientMoneyAmountByClientId(client.getKey());
+                BigDecimal tariffPlanPrice = adminService.getTariffPlanById(client.getValue()).getPrice();
 
                 if (clientBalance.compareTo(tariffPlanPrice) >= 0) {
                     Payment payment = new Payment();
@@ -40,12 +42,12 @@ public class PaymentChecker extends TimerTask {
                     payment.setAmount(tariffPlanPrice.negate());
                     payment.setPaymentType(PaymentType.DEBIT);
                     payment.setDate(today);
-                    clientDao.makePayment(payment);
-                    if (adminDao.getClientById(client.getKey()).getStatus() != ClientStatus.ACTIVE) {
-                        clientDao.changeClientStatus(client.getKey(), ClientStatus.ACTIVE);
+                    clientService.makePayment(payment);
+                    if (adminService.getClientById(client.getKey()).getStatus() != ClientStatus.ACTIVE) {
+                        clientService.changeClientStatus(client.getKey(), ClientStatus.ACTIVE);
                     }
                 } else {
-                    clientDao.changeClientStatus(client.getKey(), ClientStatus.BLOCKED);
+                    clientService.changeClientStatus(client.getKey(), ClientStatus.BLOCKED);
                 }
             } else {
                 System.out.println("all is ok");

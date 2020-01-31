@@ -17,9 +17,17 @@ public class AdminService {
         adminDao.createUser(login, password, name, surname, role);
     }
 
-   public Client getClientById(long id){
-       return adminDao.getClientById(id);
-   }
+    public void deleteUserById(long userId) {
+        adminDao.deleteUserById(userId);
+    }
+
+    public void deleteTariffPlanById(int tariffPlanId) {
+        adminDao.deleteTariffPlanById(tariffPlanId);
+    }
+
+    public Client getClientById(long id) {
+        return adminDao.getClientById(id);
+    }
 
     public void editClientByAdmin(Client client) {
         adminDao.editClientByAdmin(client);
@@ -45,7 +53,7 @@ public class AdminService {
         return adminDao.getTariffPlanByClientId(clientId);
     }
 
-    public TariffPlan getTariffPlanById(int tariffPlanId){
+    public TariffPlan getTariffPlanById(int tariffPlanId) {
         return adminDao.getTariffPlanById(tariffPlanId);
     }
 

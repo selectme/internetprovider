@@ -172,6 +172,30 @@ public class AdminDao {
         }
     }
 
+    public void deleteUserById(long userId) {
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+    }
+
+    public void deleteTariffPlanById(int tariffPlanId) {
+        Connection connection = DBUtils.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM tariff_plan WHERE id=?")) {
+            preparedStatement.setLong(1, tariffPlanId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.releaseConnection(connection);
+        }
+    }
+
     public void editClientByAdmin(Client client) {
         Connection connection = DBUtils.getConnection();
         try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET  name=?, surname=?, status=? where id=?");

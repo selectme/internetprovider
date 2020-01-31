@@ -39,6 +39,13 @@ ${user.name} ${user.surname}
                         <input type="submit" value="Edit"/>
                     </form>
                 </td>
+                <td>
+                    <form action="do" method="post">
+                        <input type="hidden" name="action" value="delete_tariff_plan"/>
+                        <input name="tariff_id" value="${tariffPlan.id}" hidden/>
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
             </c:if>
         </tr>
     </c:forEach>

@@ -21,25 +21,32 @@
         <td>Tariff Plane</td>
     </tr>
     <c:forEach items="${clients}" var="client">
-    <tr>
-        <td>${client.id}</td>
-        <td>${client.name}</td>
-        <td>${client.surname}</td>
-        <td>${client.getTariffPlan().getTitle()}</td>
-        <td>
-            <form action="do" method="get">
-                <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>
-                <input type="hidden" name="user_id" value="${client.id}"/>
-                <input type="submit" value="Edit"/>
-            </form>
-        </td>
-    </tr>
+        <tr>
+            <td>${client.id}</td>
+            <td>${client.name}</td>
+            <td>${client.surname}</td>
+            <td>${client.getTariffPlan().getTitle()}</td>
+            <td>
+                <form action="do" method="get">
+                    <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>
+                    <input type="hidden" name="user_id" value="${client.id}"/>
+                    <input type="submit" value="Edit"/>
+                </form>
+            </td>
+            <td>
+                <form action="do" method="post">
+                    <input type="hidden" name="action" value="delete_user"/>
+                    <input type="hidden" name="user_id" value="${client.id}"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
     </c:forEach>
-<br>
+    <br>
 </table>
-    <form action="do" method="get">
-        <input type="hidden" name="action" value="show_add_client_page">
-        <input type="submit" value="Add client">
-    </form>
+<form action="do" method="get">
+    <input type="hidden" name="action" value="show_add_client_page">
+    <input type="submit" value="Add client">
+</form>
 </body>
 </html>
