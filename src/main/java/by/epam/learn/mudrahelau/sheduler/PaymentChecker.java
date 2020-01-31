@@ -32,22 +32,26 @@ public class PaymentChecker extends TimerTask {
         for (Map.Entry<Long, Integer> client : clientsId.entrySet()) {
             System.out.println(client.getKey());
             System.out.println(clientService.retrieveLastDebitDate(client.getKey()));
-            if (clientService.retrieveLastDebitDate(client.getKey()).plusDays(30).compareTo(today) < 0) {
+            if (clientService.retrieveLastDebitDate(client.getKey()).plusDays(1).compareTo(today) < 0) {
+                System.out.println("must pay");
                 BigDecimal clientBalance = clientService.retrieveClientMoneyAmountByClientId(client.getKey());
                 BigDecimal tariffPlanPrice = adminService.getTariffPlanById(client.getValue()).getPrice();
 
                 if (clientBalance.compareTo(tariffPlanPrice) >= 0) {
+                    System.out.println("check balance");
                     Payment payment = new Payment();
                     payment.setClientId(client.getKey());
                     payment.setAmount(tariffPlanPrice.negate());
                     payment.setPaymentType(PaymentType.DEBIT);
                     payment.setDate(today);
                     clientService.makePayment(payment);
+                    System.out.println("paid " + payment.getAmount());
                     if (adminService.getClientById(client.getKey()).getStatus() != ClientStatus.ACTIVE) {
                         clientService.changeClientStatus(client.getKey(), ClientStatus.ACTIVE);
                     }
                 } else {
                     clientService.changeClientStatus(client.getKey(), ClientStatus.BLOCKED);
+                    System.out.println("no money. blocked");
                 }
             } else {
                 System.out.println("all is ok");
