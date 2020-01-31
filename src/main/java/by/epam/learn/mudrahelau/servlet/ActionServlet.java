@@ -74,6 +74,7 @@ public class ActionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+
         try {
             String action = req.getParameter("action");
             if (action.equals("do_login")) {
@@ -319,6 +320,9 @@ public class ActionServlet extends HttpServlet {
                 req.setAttribute("clients", clients);
                 RequestDispatcher dispatcher = req.getRequestDispatcher("users_list.jsp");
                 dispatcher.forward(req, resp);
+            }else {
+                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+                dispatcher.forward(req, resp);
             }
         } else {
             RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
@@ -405,17 +409,17 @@ public class ActionServlet extends HttpServlet {
             ServletException, IOException {
         if (checkUserLoggedIn(req)) {
             long id = Long.parseLong(req.getParameter("user_id"));
-//        User user = (User) req.getSession().getAttribute("user");
-//        long sessionUserId = user.getId();
-//        if (sessionUserId == id) {
-            Client client = adminService.getClientById(id);
-            req.setAttribute("client", client);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("client_account_page.jsp");
-            dispatcher.forward(req, resp);
-//        } else {
-//            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-//            dispatcher.forward(req, resp);
-//        }
+            User user = (User) req.getSession().getAttribute("user");
+            long sessionUserId = user.getId();
+            if (sessionUserId == id) {
+                Client client = adminService.getClientById(id);
+                req.setAttribute("client", client);
+                RequestDispatcher dispatcher = req.getRequestDispatcher("client_account_page.jsp");
+                dispatcher.forward(req, resp);
+            } else {
+                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+                dispatcher.forward(req, resp);
+            }
         } else {
             RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
             dispatcher.forward(req, resp);
