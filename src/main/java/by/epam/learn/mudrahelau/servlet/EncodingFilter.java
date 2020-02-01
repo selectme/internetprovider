@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Viktar on 30.01.2020
  */
-public class ServletFilter implements Filter {
+public class EncodingFilter implements Filter {
 
 
     @Override

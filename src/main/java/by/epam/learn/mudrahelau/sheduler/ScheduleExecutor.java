@@ -8,10 +8,9 @@ import java.util.Timer;
 public class ScheduleExecutor {
 
     private PaymentChecker paymentChecker;
-    Timer timer;
 
     public void execute() {
-        timer = new Timer();
+        Timer timer = new Timer();
 
         timer.schedule(new PaymentChecker(), 1000, 30000);
     }

@@ -26,7 +26,7 @@
 
     <filter>
         <filter-name>ServletFilter</filter-name>
-        <filter-class>by.epam.learn.mudrahelau.servlet.ServletFilter</filter-class>
+        <filter-class>by.epam.learn.mudrahelau.servlet.EncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ServletFilter</filter-name>

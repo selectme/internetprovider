@@ -112,8 +112,7 @@ public class ActionServlet extends HttpServlet {
                 resp.sendRedirect("/do?action=show_tariffs");
             }
         } else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-            requestDispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -125,19 +124,16 @@ public class ActionServlet extends HttpServlet {
                 adminService.deleteUserById(userId);
                 resp.sendRedirect("/do?action=show_users");
             } else {
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-                requestDispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-            requestDispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
 
     private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
-        dispatcher.forward(req, resp);
+        forwardToPage(req, resp, "login.jsp");
     }
 
     private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -157,8 +153,7 @@ public class ActionServlet extends HttpServlet {
             String message = "Invalid login/password";
             req.setAttribute("message", message);
         }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher(destPage);
-        requestDispatcher.forward(req, resp);
+        forwardToPage(req, resp, destPage);
     }
 
     private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -166,8 +161,7 @@ public class ActionServlet extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-        dispatcher.forward(req, resp);
+        forwardToPage(req, resp, "index.jsp");
     }
 
 
@@ -183,8 +177,7 @@ public class ActionServlet extends HttpServlet {
                 adminService.createUser(login, password, name, surname, role);
                 resp.sendRedirect("/do?action=show_users");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
             resp.sendRedirect("/do?action=show_login_page");
@@ -199,11 +192,9 @@ public class ActionServlet extends HttpServlet {
             List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
             req.setAttribute("client", client);
             req.setAttribute("tariffPlans", tariffPlans);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("edit_user_by_admin_page.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "edit_user_by_admin_page.jsp");
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
 
     }
@@ -215,15 +206,12 @@ public class ActionServlet extends HttpServlet {
             if (checkUserId(id, user)) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("edit_client_by_client.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "edit_client_by_client.jsp");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -240,23 +228,17 @@ public class ActionServlet extends HttpServlet {
         if (user != null) {
             if (checkUserIsAdmin(user)) {
                 TariffPlan tariffPlan = new TariffPlan();
-                int id = Integer.parseInt(req.getParameter("id"));
-                String title = req.getParameter("title");
-                int speed = Integer.parseInt(req.getParameter("speed"));
-                BigDecimal price = new BigDecimal(req.getParameter("price"));
-                tariffPlan.setId(id);
-                tariffPlan.setTitle(title);
-                tariffPlan.setSpeed(speed);
-                tariffPlan.setPrice(price);
+                tariffPlan.setId(Integer.parseInt(req.getParameter("id")));
+                tariffPlan.setTitle(req.getParameter("title"));
+                tariffPlan.setSpeed(Integer.parseInt(req.getParameter("speed")));
+                tariffPlan.setPrice(new BigDecimal(req.getParameter("price")));
                 adminService.editTariffPlan(tariffPlan);
                 resp.sendRedirect("/do?action=show_tariffs");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -264,7 +246,6 @@ public class ActionServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
             if (checkUserIsAdmin(user)) {
-                Client client = new Client();
                 String login = req.getParameter("login");
                 long clientId = Long.parseLong(req.getParameter("user_id"));
                 String name = req.getParameter("name");
@@ -276,6 +257,7 @@ public class ActionServlet extends HttpServlet {
                     tariffPlanId = 0;
                 }
                 ClientStatus status = ClientStatus.valueOf(req.getParameter("status").toUpperCase());
+                Client client = new Client();
                 client.setId(clientId);
                 client.setLogin(login);
                 client.setName(name);
@@ -288,12 +270,10 @@ public class ActionServlet extends HttpServlet {
                 }
                 resp.sendRedirect("/do?action=show_users");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -318,15 +298,12 @@ public class ActionServlet extends HttpServlet {
             if (user.getRole() == Role.ADMIN) {
                 List<Client> clients = adminService.retrieveClients();
                 req.setAttribute("clients", clients);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("users_list.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "users_list.jsp");
             }else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -334,19 +311,16 @@ public class ActionServlet extends HttpServlet {
             ServletException, IOException {
         List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
         req.setAttribute("tariffPlans", tariffPlans);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("tariff_plans_list.jsp");
-        dispatcher.forward(req, resp);
+        forwardToPage(req, resp, "tariff_plans_list.jsp");
     }
 
     private void showAddTariffPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if (checkUserIsAdmin(user)) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("add_tariff_plan.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "add_tariff_plan.jsp");
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -357,11 +331,9 @@ public class ActionServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("tariff_id"));
             TariffPlan tariffPlan = adminService.getTariffPlanById(id);
             req.setAttribute("tariffPlan", tariffPlan);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("edit_tariffplan_page.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "edit_tariffplan_page.jsp");
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -372,8 +344,7 @@ public class ActionServlet extends HttpServlet {
         if (checkUserIsAdmin(user)) {
             destinationPage = "add_user.jsp";
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher(destinationPage);
-        dispatcher.forward(req, resp);
+        forwardToPage(req, resp, destinationPage);
     }
 
     private boolean checkUserIsAdmin(User user) {
@@ -395,12 +366,10 @@ public class ActionServlet extends HttpServlet {
                 adminService.createTariffPlan(title, speed, price);
                 showTariffsList(req, resp);
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -414,16 +383,18 @@ public class ActionServlet extends HttpServlet {
             if (sessionUserId == id) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("client_account_page.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "client_account_page.jsp");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
+    }
+
+    private void forwardToPage(HttpServletRequest req, HttpServletResponse resp, String s) throws ServletException, IOException {
+        RequestDispatcher dispatcher = req.getRequestDispatcher(s);
+        dispatcher.forward(req, resp);
     }
 
     private void showPaymentPage(HttpServletRequest req, HttpServletResponse resp) throws
@@ -434,15 +405,12 @@ public class ActionServlet extends HttpServlet {
             if (id == user.getId()) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("make_payment_page.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "make_payment_page.jsp");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -458,12 +426,10 @@ public class ActionServlet extends HttpServlet {
                 clientService.makePayment(payment);
                 showClientAccountPage(req, resp);
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 
@@ -480,15 +446,12 @@ public class ActionServlet extends HttpServlet {
                 req.setAttribute("client", client);
                 req.setAttribute("tariff", tariff);
                 req.setAttribute("tariffPlans", tariffPlans);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("change_tariff_page.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "change_tariff_page.jsp");
             } else {
-                RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-                dispatcher.forward(req, resp);
+                forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
-            dispatcher.forward(req, resp);
+            forwardToPage(req, resp, "index.jsp");
         }
     }
 

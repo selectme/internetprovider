@@ -19,14 +19,12 @@ import java.util.TimerTask;
  */
 public class PaymentChecker extends TimerTask {
 
-    private LocalDateTime today;
-
     private AdminService adminService = new AdminService();
     private ClientService clientService = new ClientService();
 
     @Override
     public void run() {
-        today = LocalDateTime.now();
+        LocalDateTime today = LocalDateTime.now();
         Map<Long, Integer> clientsId = clientService.retrieveActiveClientsId();
 
         for (Map.Entry<Long, Integer> client : clientsId.entrySet()) {
