@@ -67,9 +67,10 @@ public class ClientDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 BigDecimal amount = resultSet.getBigDecimal(3);
-                Timestamp timestamp = resultSet.getTimestamp(4);
+                PaymentType type = PaymentType.valueOf(resultSet.getString(4).toUpperCase());
+                Timestamp timestamp = resultSet.getTimestamp(5);
                 LocalDateTime date = timestamp.toLocalDateTime();
-                Payment payment = new Payment(amount, date);
+                Payment payment = new Payment(amount,type, date);
                 payments.add(payment);
             }
         } catch (SQLException e) {
@@ -133,8 +134,6 @@ public class ClientDao {
     public LocalDateTime retrieveLastDebitDate(long clientId) {
         LocalDateTime localDateTime = null;
         Connection connection = DBUtils.getInstance().getConnection();
-//        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(date) FROM payments " +
-//                "WHERE client_id=? group by type='DEBIT'")) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT date FROM payments " +
                 "WHERE date=(SELECT MAX(date) FROM payments WHERE client_id=? AND type='DEBIT')")) {
             preparedStatement.setLong(1, clientId);
@@ -172,5 +171,6 @@ public class ClientDao {
         }
         return clientIdAndTariffId;
     }
+
 
 }

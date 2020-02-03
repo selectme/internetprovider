@@ -19,6 +19,7 @@
         <td>Name</td>
         <td>Surname</td>
         <td>Tariff Plane</td>
+        <td>Status</td>
     </tr>
     <c:forEach items="${clients}" var="client">
         <tr>
@@ -26,6 +27,7 @@
             <td>${client.name}</td>
             <td>${client.surname}</td>
             <td>${client.getTariffPlan().getTitle()}</td>
+            <td>${client.status}</td>
             <td>
                 <form action="do" method="get">
                     <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>

@@ -10,6 +10,8 @@ import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
 import by.epam.learn.mudrahelau.status.ClientStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ActionServlet extends HttpServlet {
-
+    private static final Logger logger = LogManager.getLogger(ActionServlet.class);
     private static AdminService adminService;
     private static UserService userService;
     private static ClientService clientService;
@@ -65,6 +67,8 @@ public class ActionServlet extends HttpServlet {
                 showPaymentPage(req, resp);
             } else if (action.equals("show_change_tariff_page")) {
                 showChangeTariffPage(req, resp);
+            } else if (action.equals("show_clients_payments_page")) {
+                showClientPaymentsPage(req, resp);
             }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
@@ -131,7 +135,6 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-
     private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         forwardToPage(req, resp, "login.jsp");
     }
@@ -144,11 +147,7 @@ public class ActionServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            if (user.getRole() == Role.CLIENT) {
-                destPage = "index.jsp";
-            } else {
-                destPage = "index.jsp";
-            }
+            forwardToPage(req, resp, "index.jsp");
         } else {
             String message = "Invalid login/password";
             req.setAttribute("message", message);
@@ -264,9 +263,11 @@ public class ActionServlet extends HttpServlet {
                 client.setSurname(surname);
                 client.setStatus(status);
                 adminService.editClientByAdmin(client);
-                if (tariffPlanId != 0) {
-                    clientService.makePayment(new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now()));
-                    adminService.assignTariffPlanToClient(clientId, tariffPlanId);
+                if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
+                    if (tariffPlanId != 0) {
+                        Payment payment = new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now());
+                        adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
+                    }
                 }
                 resp.sendRedirect("/do?action=show_users");
             } else {
@@ -276,8 +277,6 @@ public class ActionServlet extends HttpServlet {
             forwardToPage(req, resp, "index.jsp");
         }
     }
-
-
 
 
     private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -294,6 +293,19 @@ public class ActionServlet extends HttpServlet {
         showClientAccountPage(req, resp);
     }
 
+
+    private void showClientPaymentsPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
+
+        if (user != null) {
+            List<Payment> payments = clientService.retrievePayments(user.getId());
+            req.setAttribute("payments", payments);
+            forwardToPage(req, resp, "payments_page.jsp");
+        } else {
+            forwardToPage(req, resp, "index.jsp");
+        }
+    }
+
     private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
@@ -305,7 +317,8 @@ public class ActionServlet extends HttpServlet {
                 forwardToPage(req, resp, "index.jsp");
             }
         } else {
-            forwardToPage(req, resp, "index.jsp");
+//            forwardToPage(req, resp, "index.jsp");
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -375,14 +388,12 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    //todo check user session id here or in filter
     private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
-            long sessionUserId = user.getId();
             long id = Long.parseLong(req.getParameter("user_id"));
-            if (sessionUserId == id) {
+            if (checkUserId(id, user)) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
                 forwardToPage(req, resp, "client_account_page.jsp");
@@ -404,7 +415,7 @@ public class ActionServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
             long id = Long.parseLong(req.getParameter("user_id"));
-            if (id == user.getId()) {
+            if (checkUserId(id, user)) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
                 forwardToPage(req, resp, "make_payment_page.jsp");
@@ -420,16 +431,11 @@ public class ActionServlet extends HttpServlet {
             ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
-            long clientId = Long.parseLong(req.getParameter("user_id"));
-            if (clientId == user.getId()) {
-                BigDecimal amount = new BigDecimal(req.getParameter("amount"));
-                LocalDateTime time = LocalDateTime.now();
-                Payment payment = new Payment(clientId, amount, PaymentType.CREDIT, time);
-                clientService.makePayment(payment);
-                showClientAccountPage(req, resp);
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
+            BigDecimal amount = new BigDecimal(req.getParameter("amount"));
+            LocalDateTime time = LocalDateTime.now();
+            Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
+            clientService.makePayment(payment);
+            showClientAccountPage(req, resp);
         } else {
             forwardToPage(req, resp, "index.jsp");
         }
@@ -441,7 +447,7 @@ public class ActionServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
             long id = Long.parseLong(req.getParameter("user_id"));
-            if (id == user.getId()) {
+            if (checkUserId(id, user)) {
                 Client client = adminService.getClientById(id);
                 TariffPlan tariff = adminService.getTariffPlanByClientId(id);
                 List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
@@ -467,8 +473,7 @@ public class ActionServlet extends HttpServlet {
             BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
             if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
                 Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
-                clientService.makePayment(payment);
-                adminService.assignTariffPlanToClient(clientId, tariffId);
+                adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
                 showClientAccountPage(req, resp);
             } else {
                 req.setAttribute("message", "You don't have enough money");
@@ -480,8 +485,4 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private boolean checkUserLoggedIn(HttpServletRequest req) {
-        User user = (User) req.getSession().getAttribute("user");
-        return user != null;
-    }
 }

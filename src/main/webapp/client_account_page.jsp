@@ -48,5 +48,12 @@
     <input type="hidden" name="user_id" value="${client.id}"/>
     <input type="submit" value="Change tariff"/>
 </form>
+
+<form action="do" method="get">
+    <input type="hidden" name="action" value="show_clients_payments_page"/>
+    <%--<input type="hidden" name="user_id" value="${client.id}"/>--%>
+    <input type="submit" value="My payments"/>
+</form>
+
 </body>
 </html>

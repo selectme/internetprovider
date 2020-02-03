@@ -26,8 +26,9 @@ public class Payment {
         this.date = date;
     }
 
-    public Payment(BigDecimal amount, LocalDateTime date) {
+    public Payment(BigDecimal amount, PaymentType type, LocalDateTime date) {
         this.amount = amount;
+        this.paymentType = type;
         this.date = date;
     }
 

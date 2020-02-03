@@ -2,13 +2,16 @@ package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.Client;
+import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,7 +217,8 @@ public class AdminDao {
 
     public void assignTariffPlanToClient(long clientId, int tariffPlanId) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_AND_TARIFF_ID_SQL);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=? " +
+                "WHERE user_id = ?");
              PreparedStatement changeClientStatusStatement = connection.prepareStatement("UPDATE user SET status='ACTIVE' " +
                      "WHERE id = ?")) {
             connection.setAutoCommit(false);
@@ -239,6 +243,43 @@ public class AdminDao {
     }
 
 
+    public void makePaymentAndChangeTariffPlan(long clientId, int tariffPlanId, Payment payment) {
+        Connection connection = DBUtils.getInstance().getConnection();
+        try (PreparedStatement paymentStatement = connection.prepareStatement("INSERT into payments(client_id, amount, type, date) " +
+                "values (?,?,?,?)");
+             PreparedStatement changeTariffStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=? " +
+                     "WHERE user_id = ?");
+             PreparedStatement activeClientStatement = connection.prepareStatement("UPDATE user SET status='ACTIVE' " +
+                     "WHERE id=?")) {
+            connection.setAutoCommit(false);
+
+            paymentStatement.setLong(1, clientId);
+            paymentStatement.setBigDecimal(2, payment.getAmount());
+            paymentStatement.setString(3, payment.getPaymentType().name());
+            paymentStatement.setTimestamp(4, Timestamp.valueOf(payment.getDate()));
+
+            changeTariffStatement.setInt(1, tariffPlanId);
+            changeTariffStatement.setLong(2, clientId);
+
+            activeClientStatement.setLong(1, clientId);
+
+            paymentStatement.executeUpdate();
+            changeTariffStatement.executeUpdate();
+            activeClientStatement.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DBUtils.getInstance().releaseConnection(connection);
+        }
+    }
+
 
     public void createTariffPlan(String title, int speed, BigDecimal price) {
         Connection connection = DBUtils.getInstance().getConnection();
@@ -259,7 +300,7 @@ public class AdminDao {
     public List<TariffPlan> retrieveTariffPlans() {
         List<TariffPlan> tariffPlans = new ArrayList<>();
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TARIFFS_SQL);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TARIFFS_SQL)
         ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
