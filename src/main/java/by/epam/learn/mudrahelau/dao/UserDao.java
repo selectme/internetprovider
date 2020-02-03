@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class UserDao {
 
     public User getUser(String login, String password) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from user WHERE login = ? and password = ? ");
         ) {
@@ -33,7 +33,7 @@ public class UserDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
         return user;

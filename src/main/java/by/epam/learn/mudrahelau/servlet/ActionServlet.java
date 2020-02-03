@@ -278,6 +278,8 @@ public class ActionServlet extends HttpServlet {
     }
 
 
+
+
     private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 //        long id = Long.parseLong(req.getParameter("user_id"));
 //        User user = (User) req.getSession().getAttribute("user");

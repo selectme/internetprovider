@@ -31,20 +31,6 @@ public class User {
         this.surname = surname;
     }
 
-    public User(String login, String password, String name, String surname, Role role) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
-    }
-
-    public User(String login, String password, String name, String surname) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-    }
 
     public Long getId() {
         return id;

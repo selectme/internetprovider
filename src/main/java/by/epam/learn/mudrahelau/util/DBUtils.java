@@ -11,13 +11,23 @@ import java.util.concurrent.BlockingQueue;
 
 public class DBUtils {
 
-
+    private static DBUtils dbUtils;
     private static BlockingQueue<Connection> connectionPool = new ArrayBlockingQueue<>(10);
     private final static String URL = "jdbc:mysql://localhost:3306/providerdb?serverTimezone=Europe/Minsk&allowPublicKeyRetrieval=true&useSSL=false";
     private final static String LOGIN = "root";
     private final static String PASSWORD = "root";
 
-    static {
+    private DBUtils() {
+    }
+
+    public static DBUtils getInstance() {
+        if (dbUtils == null) {
+            dbUtils = new DBUtils();
+        }
+        return dbUtils;
+    }
+
+    {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
         } catch (InstantiationException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
@@ -26,7 +36,7 @@ public class DBUtils {
         createConnectionPool();
     }
 
-    private static void createConnectionPool() {
+    private void createConnectionPool() {
         for (int i = 0; i < 10; i++) {
             try {
                 connectionPool.add(DriverManager.getConnection(URL, LOGIN, PASSWORD));
@@ -36,7 +46,7 @@ public class DBUtils {
         }
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         Connection connection = null;
         try {
             connection = connectionPool.take();
@@ -46,7 +56,7 @@ public class DBUtils {
         return connection;
     }
 
-    public static void releaseConnection(Connection connection) {
+    public void releaseConnection(Connection connection) {
         if (connection != null) {
             try {
                 connectionPool.put(connection);

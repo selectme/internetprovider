@@ -40,7 +40,7 @@ public class AdminDao {
 
     public List<Client> retrieveClients() {
         List<Client> clients = new ArrayList<>();
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_CLIENTS_SQL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -61,7 +61,7 @@ public class AdminDao {
             ex.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
         return clients;
@@ -69,7 +69,7 @@ public class AdminDao {
 
     public Client getClientById(long id) {
         Client client = new Client();
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT id, login, name, surname, status FROM user " +
                 "WHERE id = ?")
         ) {
@@ -92,14 +92,14 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return client;
     }
 
     public TariffPlan getTariffPlanByClientId(long clientId) {
         TariffPlan tariffPlan = null;
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TARIFF_PLAN_BY_CLIENT_ID_SQL)) {
             preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -113,14 +113,14 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return tariffPlan;
     }
 
     public TariffPlan getTariffPlanById(int tariffPlanId) {
         TariffPlan tariffPlan = null;
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM tariff_plan" +
                 " WHERE id=?")) {
             preparedStatement.setLong(1, tariffPlanId);
@@ -135,13 +135,13 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return tariffPlan;
     }
 
     public void createUser(String login, String password, String name, String surname, Role role) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (
                 PreparedStatement createUserStatement = connection.prepareStatement(CREATE_CLIENT_SQL);
                 PreparedStatement assignToTariffPlanTableStatement = connection.prepareStatement("INSERT INTO" +
@@ -168,36 +168,36 @@ public class AdminDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public void deleteUserById(long userId) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id=?")) {
             preparedStatement.setLong(1, userId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public void deleteTariffPlanById(int tariffPlanId) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM tariff_plan WHERE id=?")) {
             preparedStatement.setLong(1, tariffPlanId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public void editClientByAdmin(Client client) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET  name=?, surname=?, status=? where id=?");
         ) {
             updateClient.setString(1, client.getName());
@@ -208,12 +208,12 @@ public class AdminDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public void assignTariffPlanToClient(long clientId, int tariffPlanId) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_AND_TARIFF_ID_SQL);
              PreparedStatement changeClientStatusStatement = connection.prepareStatement("UPDATE user SET status='ACTIVE' " +
                      "WHERE id = ?")) {
@@ -233,13 +233,15 @@ public class AdminDao {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
     }
 
+
+
     public void createTariffPlan(String title, int speed, BigDecimal price) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
             preparedStatement.setString(1, title);
             preparedStatement.setInt(2, speed);
@@ -249,14 +251,14 @@ public class AdminDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
     }
 
     public List<TariffPlan> retrieveTariffPlans() {
         List<TariffPlan> tariffPlans = new ArrayList<>();
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_TARIFFS_SQL);
         ) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -274,14 +276,14 @@ public class AdminDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
         return tariffPlans;
     }
 
     public void editTariffPlan(TariffPlan tariffPlan) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.
                 prepareStatement(UPDATE_TARIFF_PLAN_SQL)) {
             preparedStatement.setString(1, tariffPlan.getTitle());
@@ -293,7 +295,7 @@ public class AdminDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
     }

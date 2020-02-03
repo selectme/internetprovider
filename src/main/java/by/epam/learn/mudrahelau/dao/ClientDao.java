@@ -22,7 +22,7 @@ public class ClientDao {
 
 
     public void editClientByClient(Client client) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET name=?, surname=? WHERE id=?")
         ) {
             updateClient.setString(1, client.getName());
@@ -32,13 +32,13 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
 
     public void makePayment(Payment payment) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT into payments(client_id, amount, type, date) " +
                 "values (?,?,?,?)")) {
             preparedStatement.setLong(1, payment.getClientId());
@@ -51,7 +51,7 @@ public class ClientDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
     }
@@ -59,7 +59,7 @@ public class ClientDao {
 
     public List<Payment> retrievePayments(Long clientId) {
         List<Payment> payments = new ArrayList<>();
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payments" +
                 " WHERE client_id = ?")
         ) {
@@ -76,7 +76,7 @@ public class ClientDao {
             e.printStackTrace();
         } finally {
             if (connection != null) {
-                DBUtils.releaseConnection(connection);
+                DBUtils.getInstance().releaseConnection(connection);
             }
         }
         return payments;
@@ -84,7 +84,7 @@ public class ClientDao {
 
     public BigDecimal retrieveClientMoneyAmountByClientId(long clientId) {
         BigDecimal amount = new BigDecimal(0);
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(amount) FROM payments " +
                 "WHERE client_id = ?")) {
             preparedStatement.setLong(1, clientId);
@@ -95,13 +95,13 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return amount;
     }
 
     public void changeClientStatus(long clientId, ClientStatus status) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET status=? " +
                 "WHERE id=?")) {
             preparedStatement.setString(1, status.name());
@@ -113,12 +113,12 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public void removeTariffPlanFromClient(long clientId) {
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=0 " +
                 "WHERE user_id=?")) {
             preparedStatement.setLong(1, clientId);
@@ -126,13 +126,13 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
     }
 
     public LocalDateTime retrieveLastDebitDate(long clientId) {
         LocalDateTime localDateTime = null;
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
 //        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(date) FROM payments " +
 //                "WHERE client_id=? group by type='DEBIT'")) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT date FROM payments " +
@@ -149,14 +149,14 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return localDateTime;
     }
 
     public Map<Long, Integer> retrieveActiveClientsId() {
         Map<Long, Integer> clientIdAndTariffId = new HashMap<>();
-        Connection connection = DBUtils.getConnection();
+        Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_tariffplan " +
                 "WHERE tariff_id > 0")) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -168,7 +168,7 @@ public class ClientDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.releaseConnection(connection);
+            DBUtils.getInstance().releaseConnection(connection);
         }
         return clientIdAndTariffId;
     }

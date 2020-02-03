@@ -21,11 +21,6 @@ public class TariffPlan {
         this.price = price;
     }
 
-    public TariffPlan(String title, int speed, BigDecimal price) {
-        this.title = title;
-        this.speed = speed;
-        this.price = price;
-    }
 
     public int getId() {
         return id;
