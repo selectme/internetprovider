@@ -293,13 +293,13 @@ public class ActionServlet extends HttpServlet {
     }
 
     private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (checkUserLoggedIn(req)) {
-            User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("user");
+        if (user != null) {
             if (user.getRole() == Role.ADMIN) {
                 List<Client> clients = adminService.retrieveClients();
                 req.setAttribute("clients", clients);
                 forwardToPage(req, resp, "users_list.jsp");
-            }else {
+            } else {
                 forwardToPage(req, resp, "index.jsp");
             }
         } else {
@@ -376,10 +376,10 @@ public class ActionServlet extends HttpServlet {
     //todo check user session id here or in filter
     private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
-        if (checkUserLoggedIn(req)) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("user");
+        if (user != null) {
             long sessionUserId = user.getId();
+            long id = Long.parseLong(req.getParameter("user_id"));
             if (sessionUserId == id) {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
