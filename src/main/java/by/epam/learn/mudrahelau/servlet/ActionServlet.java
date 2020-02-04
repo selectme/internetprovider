@@ -10,6 +10,7 @@ import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
 import by.epam.learn.mudrahelau.status.ClientStatus;
+import by.epam.learn.mudrahelau.validator.LoginValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +46,8 @@ public class ActionServlet extends HttpServlet {
 
             if (action.equals("do_logout")) {
                 doLogout(req, resp);
+            } else if (action.equals("show_administration_panel")) {
+                showAdministrationPanel(req, resp);
             } else if (action.equals("show_users")) {
                 showUsersList(req, resp);
             } else if (action.equals("show_tariffs")) {
@@ -114,6 +117,8 @@ public class ActionServlet extends HttpServlet {
                 int userId = Integer.parseInt(req.getParameter("tariff_id"));
                 adminService.deleteTariffPlanById(userId);
                 resp.sendRedirect("/do?action=show_tariffs");
+            }else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
             forwardToPage(req, resp, "index.jsp");
@@ -143,7 +148,6 @@ public class ActionServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = userService.getUser(login, password);
-        String destPage = "login.jsp";
         if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
@@ -151,8 +155,8 @@ public class ActionServlet extends HttpServlet {
         } else {
             String message = "Invalid login/password";
             req.setAttribute("message", message);
+            forwardToPage(req, resp, "login.jsp");
         }
-        forwardToPage(req, resp, destPage);
     }
 
     private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -173,10 +177,16 @@ public class ActionServlet extends HttpServlet {
                 String name = req.getParameter("name");
                 String surname = req.getParameter("surname");
                 Role role = Role.valueOf(req.getParameter("role"));
-                adminService.createUser(login, password, name, surname, role);
-                resp.sendRedirect("/do?action=show_users");
+                if (LoginValidator.checkLoginForDuplicate(login)){
+                    adminService.createUser(login, password, name, surname, role);
+                    resp.sendRedirect("/do?action=show_users");
+                }else {
+                    req.setAttribute("message", "Login exists");
+                    forwardToPage(req, resp, "add_user.jsp");
+                }
             } else {
-                forwardToPage(req, resp, "index.jsp");
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                forwardToPage(req, resp, "index.jsp");
             }
         } else {
             resp.sendRedirect("/do?action=show_login_page");
@@ -280,17 +290,24 @@ public class ActionServlet extends HttpServlet {
 
 
     private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-//        long id = Long.parseLong(req.getParameter("user_id"));
-//        User user = (User) req.getSession().getAttribute("user");
-        Client client = new Client();
-        long clientId = Long.parseLong(req.getParameter("user_id"));
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        client.setId(clientId);
-        client.setName(name);
-        client.setSurname(surname);
-        clientService.editClientByClient(client);
-        showClientAccountPage(req, resp);
+        User user = (User) req.getSession().getAttribute("user");
+        if (user != null) {
+            long clientId = Long.parseLong(req.getParameter("user_id"));
+            if (checkUserId(clientId, user)) {
+                Client client = new Client();
+                String name = req.getParameter("name");
+                String surname = req.getParameter("surname");
+                client.setId(clientId);
+                client.setName(name);
+                client.setSurname(surname);
+                clientService.editClientByClient(client);
+                showClientAccountPage(req, resp);
+            } else {
+                forwardToPage(req, resp, "index.jsp");
+            }
+        } else {
+            forwardToPage(req, resp, "index.jsp");
+        }
     }
 
 
@@ -314,7 +331,8 @@ public class ActionServlet extends HttpServlet {
                 req.setAttribute("clients", clients);
                 forwardToPage(req, resp, "users_list.jsp");
             } else {
-                forwardToPage(req, resp, "index.jsp");
+//                forwardToPage(req, resp, "index.jsp");
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
 //            forwardToPage(req, resp, "index.jsp");
@@ -405,6 +423,19 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
+    private void showAdministrationPanel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
+        if (user != null) {
+            if (checkUserIsAdmin(user)) {
+                forwardToPage(req, resp, "administration_panel.jsp");
+            } else {
+                forwardToPage(req, resp, "index.jsp");
+            }
+        } else {
+            forwardToPage(req, resp, "index.jsp");
+        }
+    }
+
     private void forwardToPage(HttpServletRequest req, HttpServletResponse resp, String s) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher(s);
         dispatcher.forward(req, resp);
@@ -484,5 +515,6 @@ public class ActionServlet extends HttpServlet {
             showChangeTariffPage(req, resp);
         }
     }
+
 
 }

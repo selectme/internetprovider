@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Admin
-  Date: 17.01.2020
-  Time: 13:54
+  User: Viktar
+  Date: 04.02.2020
+  Time: 11:57
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,24 +15,21 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
-    <title>Login</title>
+
+    <title>Title</title>
 </head>
 <body>
-<div style="text-align: center">
-    <h1>Login</h1>
-    <form action="do" method="post">
-        <input type="hidden" name="action" value="do_login">
-        <label>Login:</label>
-        <input id="login" name="login" size="30" pattern="([0-9]{4}|admin)" required/>
-        <br><br>
-        <label>Password:</label>
-        <input type="password" id="password" name="password" size="30" required/>
-        <br>
-        <br class="alert-warning">${message}<br>
-        <button type="submit">Login</button>
-    </form>
-</div>
+hello ${user.name}
 
+
+    <div class="container">
+        <c:if test="${user.role=='ADMIN'}">
+            <form action="do" method="get">
+                <input type="hidden" name="action" value="show_users">
+                <input type="submit" value="Clients">
+            </form>
+        </c:if>
+    </div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

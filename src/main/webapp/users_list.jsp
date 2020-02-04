@@ -9,18 +9,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+
     <title>Users</title>
+
 </head>
-<body>
+<body class="bg-light">
 <button onclick="location.href='/'">Home</button>
-<table border="2">
+
+<div class="container-fluid">
+<table class="table table-striped table-responsive-xl">
+    <thead class="table-dark">
     <tr>
-        <td>ID</td>
-        <td>Name</td>
-        <td>Surname</td>
-        <td>Tariff Plane</td>
-        <td>Status</td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Tariff Plan</th>
+        <th>Status</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach items="${clients}" var="client">
         <tr>
             <td>${client.id}</td>
@@ -44,11 +54,16 @@
             </td>
         </tr>
     </c:forEach>
-    <br>
+    </tbody>
 </table>
+</div>
 <form action="do" method="get">
     <input type="hidden" name="action" value="show_add_client_page">
     <input type="submit" value="Add client">
 </form>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -14,8 +14,9 @@
 <form action="do" method="post">
     <input type="hidden" name="action" value="add_user">
     <label>Login:
-        <input type="text" name="login" required/>
+        <input name="login" pattern="([0-9]{4}|admin)" required/>
     </label>
+    <tr>${message}</tr>
     <br>
     <label>Password:
         <input type="password" name="password" required/>
