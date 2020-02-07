@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 17.01.2020
-  Time: 13:54
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,22 +8,37 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
     <title>Login</title>
 </head>
 <body>
-<div style="text-align: center">
-    <h1>Login</h1>
+
+<h1 align="center" class="font-weight-light">Login</h1>
+
+<div class="container w-25">
     <form action="do" method="post">
-        <input type="hidden" name="action" value="do_login">
-        <label>Login:</label>
-        <input id="login" name="login" size="30" pattern="([0-9]{4}|admin)" required/>
-        <br><br>
-        <label>Password:</label>
-        <input type="password" id="password" name="password" size="30" required/>
+        <div class="form-group">
+            <input type="hidden" name="action" value="do_login">
+            <label for="inputLogin">Login</label>
+            <input type="login" name="login" class="form-control" id="inputLogin" aria-describedby="loginHelp"
+                   pattern="([0-9]{4}|admin)" required>
+            <small id="loginHelp" class="form-text text-muted">Login is 4 digit sequence</small>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" class="form-control" id="inputPassword">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
         <br>
-        <br class="alert-warning">${message}<br>
-        <button type="submit">Login</button>
+        <p class="font-italic">${error}</p>
     </form>
+
 </div>
 
 

@@ -54,8 +54,8 @@ public class AdminService {
         logger.info("Tariff plan{" + tariffPlan.getId() + "} edited");
     }
 
-    public void assignTariffPlanToClient(long clientId, int tariffPlanId) {
-        adminDao.assignTariffPlanToClient(clientId, tariffPlanId);
+    public void makeInactiveClient(long clientId) {
+        adminDao.makeInactiveClient(clientId);
     }
 
     public TariffPlan getTariffPlanByClientId(long clientId) {

@@ -215,15 +215,14 @@ public class AdminDao {
         }
     }
 
-    public void assignTariffPlanToClient(long clientId, int tariffPlanId) {
+    public void makeInactiveClient(long clientId) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=? " +
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=0 " +
                 "WHERE user_id = ?");
-             PreparedStatement changeClientStatusStatement = connection.prepareStatement("UPDATE user SET status='ACTIVE' " +
+             PreparedStatement changeClientStatusStatement = connection.prepareStatement("UPDATE user SET status='INACTIVE' " +
                      "WHERE id = ?")) {
             connection.setAutoCommit(false);
-            preparedStatement.setInt(1, tariffPlanId);
-            preparedStatement.setLong(2, clientId);
+            preparedStatement.setLong(1, clientId);
             changeClientStatusStatement.setLong(1, clientId);
             preparedStatement.execute();
             changeClientStatusStatement.executeUpdate();

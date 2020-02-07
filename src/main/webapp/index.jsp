@@ -1,76 +1,92 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:bundle basename="messages"/>
+
 <html>
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
-
+    <link rel="stylesheet" href="css/main.css">
     <title>Hello</title>
+
 </head>
 
-<body class="container bg-light">
+<body class="container">
 
-<div class="row">
-    <div class="col-5"></div>
-    <div class="col border-bottom"> Welcome ${user.name} ${user.surname} !</div>
+<div class="container">
+    <nav class="navbar navbar-light">
 
-    <c:if test="${user != null}">
-        <div class="col border-bottom">
-            <c:if test="${user.role == 'CLIENT'}">
-                <form action="do" method="get">
-                    <input type="hidden" name="action" value="show_client_account_page">
-                    <input type="hidden" name="user_id" value="${user.id}">
-                    <input class="btn btn-light" type="submit" value="My account">
-                </form>
-            </c:if>
-            <c:if test="${user.role == 'ADMIN'}">
-                <form action="do" method="get">
-                    <input type="hidden" name="action" value="show_administration_panel">
-                    <input class="btn btn-light" type="submit" value="Administration panel">
-                </form>
-            </c:if>
-        </div>
-        <div class="col border-bottom">
-            <form action="do" method="get">
-                <input type="hidden" name="action" value="do_logout">
-                <input class="btn btn-light" type="submit" value="Logout">
+        <form class="form-inline">
+            <form class="form-inline">
+                <input class="btn btn-light shadow" type="submit" value="Home"/>
             </form>
-        </div>
-    </c:if>
-    <div class="col border-bottom">
-        <c:if test="${user == null}">
-            <form action="do" method="get">
-                <input type="hidden" name="action" value="show_login_page"/>
-                <input class="btn btn-light" type="submit" value="Login">
-            </form>
-        </c:if>
-    </div>
+
+            <c:if test="${user != null}">
+                <c:if test="${user.role == 'CLIENT'}">
+                    <button type="button" class="btn bg-white">
+                        <form class="form-inline" action="do" method="get">
+                            <input type="hidden" name="action" value="show_client_account_page">
+                            <input type="hidden" name="user_id" value="${user.id}">
+                            <input class="btn btn-light shadow" type="submit" value="My account">
+                        </form>
+                    </button>
+                </c:if>
+                <c:if test="${user.role == 'ADMIN'}">
+                    <button type="button" class="btn bg-white">
+                    <form class="form-inline" action="do" method="get">
+                        <input type="hidden" name="action" value="show_administration_panel">
+                        <input class="btn btn-light shadow" type="submit" value="Administration panel">
+                    </form>
+                </c:if>
+                </button>
+            </c:if>
+            <c:choose>
+                <c:when test="${user == null}">
+                    <button type="button" class="btn bg-white btn-right">
+                        <form action="do" method="get">
+                            <input type="hidden" name="action" value="show_login_page"/>
+                            <input class="btn btn-light shadow" type="submit" value="Login">
+                        </form>
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button type="button" class="btn bg-white btn-left">
+                        <form class="form-inline" action="do" method="get">
+                            <input type="hidden" name="action" value="do_logout">
+                            <input class="btn btn-light shadow" type="submit" value="Logout">
+                        </form>
+                    </button>
+                </c:otherwise>
+            </c:choose>
+        </form>
+    </nav>
 </div>
 
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
+<div class="jumbotron">
+    <c:choose>
+        <c:when test="${user != null}">
+            <h1 class="display-4 ">Hello, ${user.name} ${user.surname}!</h1>
+        </c:when>
+        <c:otherwise>
+            <h1 class="display-4">Hello!</h1>
+        </c:otherwise>
+    </c:choose>
+    <p class="lead">Our internet provider welcomes you!</p>
+    <hr class="my-4">
+    <p>To view our tariff plans, click the button below</p>
+    <a>
+        <form action="do" method="get">
+            <input type="hidden" name="action" value="show_tariffs">
+            <input class="btn btn-primary btn-lg shadow-lg p-3" type="submit" value="Tariff plans">
+        </form>
+    </a>
 </div>
 
-<section>
-    <div class="container">
-        <div class="row">
-            <form action="do" method="get">
-                <input type="hidden" name="action" value="show_tariffs">
-                <input class="btn btn-light" type="submit" value="Tariff plans">
-            </form>
-        </div>
-    </div>
-</section>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 

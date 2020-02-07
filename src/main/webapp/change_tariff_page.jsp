@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <form action="do" method="get">
@@ -80,5 +82,8 @@ Choose new tariff plan:
 </div>
 <br>
 ${message}
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

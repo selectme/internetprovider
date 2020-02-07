@@ -33,6 +33,15 @@
         <servlet-name>ActionServlet</servlet-name>
     </filter-mapping>
 
+    <filter>
+        <filter-name>ServletLocaleFilter</filter-name>
+        <filter-class>by.epam.learn.mudrahelau.servlet.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ServletLocaleFilter</filter-name>
+        <servlet-name>ActionServlet</servlet-name>
+    </filter-mapping>
+
     <resource-ref>
         <res-ref-name>jdbc/providerdb</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

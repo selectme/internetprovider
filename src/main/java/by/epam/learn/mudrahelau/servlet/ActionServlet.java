@@ -43,8 +43,9 @@ public class ActionServlet extends HttpServlet {
 
         try {
             String action = req.getParameter("action");
-
-            if (action.equals("do_logout")) {
+            if (action == null || action.equals("")) {
+                resp.sendRedirect("/");
+            } else if (action.equals("do_logout")) {
                 doLogout(req, resp);
             } else if (action.equals("show_administration_panel")) {
                 showAdministrationPanel(req, resp);
@@ -52,10 +53,12 @@ public class ActionServlet extends HttpServlet {
                 showUsersList(req, resp);
             } else if (action.equals("show_tariffs")) {
                 showTariffsList(req, resp);
-            } else if (action.equals("add_tariff_page")) {
+            } else if (action.equals("show_add_tariff_page")) {
                 showAddTariffPage(req, resp);
             } else if (action.equals("show_add_client_page")) {
                 showAddUserPage(req, resp);
+            } else if (action.equals("show_add_client_page_error")) {
+                showAddUserPageWithError(req, resp);
             } else if (action.equals("show_edit_user_page_by_admin")) {
                 showEditUSerPageByAdmin(req, resp);
             } else if (action.equals("show_edit_client_by_client_page")) {
@@ -94,7 +97,7 @@ public class ActionServlet extends HttpServlet {
                 editClientByAdmin(req, resp);
             } else if (action.equals("edit_client_by_client")) {
                 editClientByClient(req, resp);
-            } else if (action.equals("editTariffPlan")) {
+            } else if (action.equals("edit_tariff_plan")) {
                 editTariffPlan(req, resp);
             } else if (action.equals("make_payment")) {
                 makeCreditPayment(req, resp);
@@ -114,10 +117,10 @@ public class ActionServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
             if (checkUserIsAdmin(user)) {
-                int userId = Integer.parseInt(req.getParameter("tariff_id"));
-                adminService.deleteTariffPlanById(userId);
+                int tariff_id = Integer.parseInt(req.getParameter("tariff_id"));
+                adminService.deleteTariffPlanById(tariff_id);
                 resp.sendRedirect("/do?action=show_tariffs");
-            }else {
+            } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
@@ -153,8 +156,8 @@ public class ActionServlet extends HttpServlet {
             session.setAttribute("user", user);
             forwardToPage(req, resp, "index.jsp");
         } else {
-            String message = "Invalid login/password";
-            req.setAttribute("message", message);
+            String error = "Invalid login/password";
+            req.setAttribute("error", error);
             forwardToPage(req, resp, "login.jsp");
         }
     }
@@ -177,16 +180,14 @@ public class ActionServlet extends HttpServlet {
                 String name = req.getParameter("name");
                 String surname = req.getParameter("surname");
                 Role role = Role.valueOf(req.getParameter("role"));
-                if (LoginValidator.checkLoginForDuplicate(login)){
+                if (LoginValidator.checkLoginForDuplicate(login)) {
                     adminService.createUser(login, password, name, surname, role);
                     resp.sendRedirect("/do?action=show_users");
-                }else {
-                    req.setAttribute("message", "Login exists");
-                    forwardToPage(req, resp, "add_user.jsp");
+                } else {
+                    resp.sendRedirect("/do?action=show_add_client_page_error");
                 }
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-//                forwardToPage(req, resp, "index.jsp");
             }
         } else {
             resp.sendRedirect("/do?action=show_login_page");
@@ -255,8 +256,8 @@ public class ActionServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user != null) {
             if (checkUserIsAdmin(user)) {
-                String login = req.getParameter("login");
                 long clientId = Long.parseLong(req.getParameter("user_id"));
+                String login = req.getParameter("login");
                 String name = req.getParameter("name");
                 String surname = req.getParameter("surname");
                 int tariffPlanId;
@@ -273,7 +274,9 @@ public class ActionServlet extends HttpServlet {
                 client.setSurname(surname);
                 client.setStatus(status);
                 adminService.editClientByAdmin(client);
-                if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
+                if (status == ClientStatus.INACTIVE) {
+                    adminService.makeInactiveClient(clientId);
+                } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
                     if (tariffPlanId != 0) {
                         Payment payment = new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now());
                         adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
@@ -380,6 +383,20 @@ public class ActionServlet extends HttpServlet {
         forwardToPage(req, resp, destinationPage);
     }
 
+    private void showAddUserPageWithError(HttpServletRequest req, HttpServletResponse resp) throws
+            ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
+        String errorMessage;
+        String destinationPage = "index.jsp";
+        if (checkUserIsAdmin(user)) {
+            destinationPage = "add_user.jsp";
+            errorMessage = "Login is already exists";
+            req.setAttribute("error", errorMessage);
+        }
+        req.getRequestDispatcher(destinationPage).forward(req, resp);
+    }
+
+
     private boolean checkUserIsAdmin(User user) {
         if (user != null) {
             return user.getRole() == Role.ADMIN;
@@ -450,6 +467,7 @@ public class ActionServlet extends HttpServlet {
                 Client client = adminService.getClientById(id);
                 req.setAttribute("client", client);
                 forwardToPage(req, resp, "make_payment_page.jsp");
+
             } else {
                 forwardToPage(req, resp, "index.jsp");
             }
@@ -466,7 +484,8 @@ public class ActionServlet extends HttpServlet {
             LocalDateTime time = LocalDateTime.now();
             Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
             clientService.makePayment(payment);
-            showClientAccountPage(req, resp);
+//            showClientAccountPage(req, resp);
+            resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
         } else {
             forwardToPage(req, resp, "index.jsp");
         }
@@ -505,7 +524,7 @@ public class ActionServlet extends HttpServlet {
             if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
                 Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
                 adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
-                showClientAccountPage(req, resp);
+                resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
             } else {
                 req.setAttribute("message", "You don't have enough money");
                 showChangeTariffPage(req, resp);
