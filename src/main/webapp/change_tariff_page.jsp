@@ -102,9 +102,12 @@
                             </form>
                         </c:when>
                         <c:otherwise>
-                            <h6 align="center">
-                                <button class="btn-success" disabled>My tariff</button>
-                            </h6>
+                            <form class="button" action="do" method="post" align="center">
+                                <input type="hidden" name="action" value="change_tariff_plan"/>
+                                <input name="tariff_id" value="${tariffPlan.id}" hidden/>
+                                <input name="user_id" value="${client.id}" hidden/>
+                                <input class="btn-success" type="submit" value="My tariff" disabled/>
+                            </form>
                         </c:otherwise>
                     </c:choose>
 
