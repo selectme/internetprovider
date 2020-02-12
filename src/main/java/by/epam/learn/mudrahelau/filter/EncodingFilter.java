@@ -1,14 +1,10 @@
-package by.epam.learn.mudrahelau.servlet;
-
-import by.epam.learn.mudrahelau.model.User;
-import by.epam.learn.mudrahelau.role.Role;
+package by.epam.learn.mudrahelau.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+
 
 /**
  * @author Viktar on 30.01.2020

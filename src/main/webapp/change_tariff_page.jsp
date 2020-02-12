@@ -1,87 +1,125 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Viktar
-  Date: 27.01.2020
-  Time: 15:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
 <head>
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
+    <title>Hello</title>
 </head>
-<body>
-<form action="do" method="get">
-    <input type="hidden" name="action" value="show_client_account_page">
-    <input name="user_id" value="${client.id}" hidden/>
-    <input type="submit" value="My account">
-</form>
-Your balance:
-<div>
-    <table border="2">
-        <tr>
-            <td>Money</td>
-        </tr>
-        <tr>
-            <td>${client.moneyOnAccount}</td>
-            <td>
-                <form action="do" method="get">
+
+<body class="container">
+
+
+<div class="container">
+    <nav class="navbar navbar-light">
+
+        <form class="form-inline">
+            <form class="form-inline">
+                <input class="btn btn-light shadow" type="submit" value="Home"/>
+            </form>
+            <c:if test="${user != null}">
+                <c:if test="${user.role == 'CLIENT'}">
+                    <button type="button" class="btn bg-white">
+                        <form class="form-inline" action="do" method="get">
+                            <input type="hidden" name="action" value="show_client_account_page">
+                            <input type="hidden" name="user_id" value="${user.id}">
+                            <input class="btn btn-light shadow" type="submit" value="My account">
+                        </form>
+                    </button>
+                </c:if>
+                <c:if test="${user.role == 'ADMIN'}">
+                    <button type="button" class="btn bg-white">
+                    <form class="form-inline" action="do" method="get">
+                        <input type="hidden" name="action" value="show_administration_panel">
+                        <input class="btn btn-light shadow" type="submit" value="Administration panel">
+                    </form>
+                </c:if>
+                </button>
+            </c:if>
+            <c:choose>
+                <c:when test="${user == null}">
+                    <button type="button" class="btn bg-white btn-right">
+                        <form action="do" method="get">
+                            <input type="hidden" name="action" value="show_login_page"/>
+                            <input class="btn btn-light shadow" type="submit" value="Login">
+                        </form>
+                    </button>
+                </c:when>
+                <c:otherwise>
+                    <button type="button" class="btn bg-white btn-left">
+                        <form class="form-inline" action="do" method="get">
+                            <input type="hidden" name="action" value="do_logout">
+                            <input class="btn btn-light shadow" type="submit" value="Logout">
+                        </form>
+                    </button>
+                </c:otherwise>
+            </c:choose>
+        </form>
+    </nav>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-lg-center">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Current balance:</h5>
+                <h4 class="card-subtitle mb-2 text-muted">${client.moneyOnAccount} rub </h4>
+                <form class="button" action="do" method="get">
                     <input type="hidden" name="action" value="show_payment_page"/>
                     <input type="hidden" name="user_id" value="${client.id}"/>
-                    <input type="submit" value="Make payment"/>
+                    <input class="btn-success" type="submit" value="Make payment"/>
                 </form>
-            </td>
-        </tr>
-
-    </table>
-</div>
-Your tariff plane:
-<div>
-    <table border="2">
-        <tr>
-            <td>Title</td>
-            <td>speed</td>
-            <td>price</td>
-        </tr>
-        <tr>
-            <td>${tariff.title}</td>
-            <td>${tariff.speed}</td>
-            <td>${tariff.price}</td>
-        </tr>
-    </table>
-</div>
-Choose new tariff plan:
-<div>
-    <table border="2">
-        <tr>
-            <td>Title</td>
-            <td>speed</td>
-            <td>price</td>
-        </tr>
-        <c:forEach items="${tariffPlans}" var="tariffPlan">
-            <tr>
-                <td>${tariffPlan.title}</td>
-                <td>${tariffPlan.speed}</td>
-                <td>${tariffPlan.price}</td>
-
-                <td>
-                    <form action="do" method="post">
-                        <input type="hidden" name="action" value="change_tariff_plan"/>
-                        <input name="tariff_id" value="${tariffPlan.id}" hidden/>
-                        <input name="user_id" value="${client.id}" hidden/>
-                        <input type="submit" value="Connect"/>
-                    </form>
-                </td>
-
-            </tr>
-        </c:forEach>
-    </table>
+            </div>
+        </div>
+    </div>
 </div>
 <br>
-${message}
+
+<div class="card-deck row row-cols-1 row-cols-md-3">
+    <c:forEach items="${tariffPlans}" var="tariffPlan">
+        <div class="col mb-4">
+            <div class="card">
+                    <%--<img src="..." class="card-img-top" alt="...">--%>
+                <div class="card-body">
+                    <h5 class="card-title" align="center">${tariffPlan.title}</h5>
+                    <p class="card-text" align="center">
+                        Speed: ${tariffPlan.speed}
+                    </p>
+                    <p class="card-text" align="center">
+                        Price: ${tariffPlan.price}
+                    </p>
+                    <c:choose>
+                        <c:when test="${client.getTariffPlan().getTitle()!=tariffPlan.title}">
+                            <form class="button" action="do" method="post" align="center">
+                                <input type="hidden" name="action" value="change_tariff_plan"/>
+                                <input name="tariff_id" value="${tariffPlan.id}" hidden/>
+                                <input name="user_id" value="${client.id}" hidden/>
+                                <input class="btn-primary" type="submit" value="Connect"/>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <h6 align="center">
+                                <button class="btn-success" disabled>My tariff</button>
+                            </h6>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+</div>
+
+<div class="container">
+    <div class="row justify-content-lg-center">
+        <h4 class="card-subtitle mb-2 text-danger">${message}</h4>
+    </div>
+</div>
+
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

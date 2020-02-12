@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,6 +17,13 @@
 </head>
 
 <body class="container">
+
+<%--<div class="col-5">--%>
+    <%--<li><a href="?sessionLocale=en">EN</a></li>--%>
+    <%--<li><a href="?sessionLocale=ru">RU</a></li>--%>
+<%--</div>--%>
+
+<%--<div class="col border-bottom"><fmt:message key="welcome"/> ${user.name} ${user.surname} !</div>--%>
 
 <div class="container">
     <nav class="navbar navbar-light">
