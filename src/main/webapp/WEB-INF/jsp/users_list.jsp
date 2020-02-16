@@ -79,6 +79,7 @@
         <thead class="table-dark">
         <tr>
             <th scope="col">ID</th>
+            <th scope="col">Login</th>
             <th scope="col">Name</th>
             <th scope="col">Surname</th>
             <th scope="col">Tariff Plan</th>
@@ -89,6 +90,7 @@
         <c:forEach items="${clients}" var="client">
             <tr>
                 <td>${client.id}</td>
+                <td>${client.login}</td>
                 <td>${client.name}</td>
                 <td>${client.surname}</td>
                 <td>${client.getTariffPlan().getTitle()}</td>

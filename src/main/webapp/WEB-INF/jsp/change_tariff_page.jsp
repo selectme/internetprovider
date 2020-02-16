@@ -93,12 +93,20 @@
                         Price: ${tariffPlan.price}
                     </p>
                     <c:choose>
-                        <c:when test="${client.getTariffPlan().getTitle()!=tariffPlan.title}">
+                        <c:when test="${client.getTariffPlan().getTitle()==tariffPlan.title}">
                             <form class="button" action="do" method="post" align="center">
                                 <input type="hidden" name="action" value="change_tariff_plan"/>
                                 <input name="tariff_id" value="${tariffPlan.id}" hidden/>
                                 <input name="user_id" value="${client.id}" hidden/>
-                                <input class="btn-primary" type="submit" value="Connect"/>
+                                <input class="btn-success" type="submit" value="My tariff" disabled/>
+                            </form>
+                        </c:when>
+                        <c:when test="${client.moneyOnAccount == null || client.moneyOnAccount  < tariffPlan.price}">
+                            <form class="button" action="do" method="post" align="center">
+                                <input type="hidden" name="action" value="change_tariff_plan"/>
+                                <input name="tariff_id" value="${tariffPlan.id}" hidden/>
+                                <input name="user_id" value="${client.id}" hidden/>
+                                <input class="btn-secondary" type="submit" value="Not enough money" disabled/>
                             </form>
                         </c:when>
                         <c:otherwise>
@@ -106,7 +114,7 @@
                                 <input type="hidden" name="action" value="change_tariff_plan"/>
                                 <input name="tariff_id" value="${tariffPlan.id}" hidden/>
                                 <input name="user_id" value="${client.id}" hidden/>
-                                <input class="btn-success" type="submit" value="My tariff" disabled/>
+                                <input class="btn-primary" type="submit" value="Connect"/>
                             </form>
                         </c:otherwise>
                     </c:choose>
@@ -117,11 +125,11 @@
     </c:forEach>
 </div>
 
-<div class="container">
-    <div class="row justify-content-lg-center">
-        <h4 class="card-subtitle mb-2 text-danger">${message}</h4>
-    </div>
-</div>
+<%--<div class="container">--%>
+<%--<div class="row justify-content-lg-center">--%>
+<%--<h4 class="card-subtitle mb-2 text-danger">${message}</h4>--%>
+<%--</div>--%>
+<%--</div>--%>
 
 
 <script src="../../js/jquery-3.4.1.min.js"></script>
