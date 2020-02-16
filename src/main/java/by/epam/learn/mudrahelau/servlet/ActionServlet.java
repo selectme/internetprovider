@@ -1,5 +1,8 @@
 package by.epam.learn.mudrahelau.servlet;
 
+import by.epam.learn.mudrahelau.command.CommandStorage;
+import by.epam.learn.mudrahelau.command.ServletCommand;
+import by.epam.learn.mudrahelau.command.CommandStorage;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
@@ -87,80 +90,83 @@ public class ActionServlet extends HttpServlet {
 
         try {
             String action = req.getParameter("action");
-            if (action.equals("do_login")) {
-                doLogin(req, resp);
-            } else if (action.equals("add_tariff")) {
-                addTariffPlan(req, resp);
-            } else if (action.equals("add_user")) {
-                addUSer(req, resp);
-            } else if (action.equals("edit_user_by_admin")) {
-                editClientByAdmin(req, resp);
-            } else if (action.equals("edit_client_by_client")) {
-                editClientByClient(req, resp);
-            } else if (action.equals("edit_tariff_plan")) {
-                editTariffPlan(req, resp);
-            } else if (action.equals("make_payment")) {
-                makeCreditPayment(req, resp);
-            } else if (action.equals("change_tariff_plan")) {
-                changeTariffPlan(req, resp);
-            } else if (action.equals("delete_user")) {
-                deleteUserById(req, resp);
-            } else if (action.equals("delete_tariff_plan")) {
-                deleteTariffPlanById(req, resp);
-            }
+            System.out.println(action);
+            ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
+            command.execute(req, resp);
+//            if (action.equals("do_login")) {
+//                doLogin(req, resp);
+//            } else if (action.equals("add_tariff")) {
+//                addTariffPlan(req, resp);
+//            } else if (action.equals("add_user")) {
+//                addUSer(req, resp);
+//            } else if (action.equals("edit_user_by_admin")) {
+//                editClientByAdmin(req, resp);
+//            } else if (action.equals("edit_client_by_client")) {
+//                editClientByClient(req, resp);
+//            } else if (action.equals("edit_tariff_plan")) {
+//                editTariffPlan(req, resp);
+//            } else if (action.equals("make_payment")) {
+//                makeCreditPayment(req, resp);
+//            } else if (action.equals("change_tariff_plan")) {
+//                changeTariffPlan(req, resp);
+//            } else if (action.equals("delete_user")) {
+//                deleteUserById(req, resp);
+//            } else if (action.equals("delete_tariff_plan")) {
+//                deleteTariffPlanById(req, resp);
+//            }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void deleteTariffPlanById(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                int tariff_id = Integer.parseInt(req.getParameter("tariff_id"));
-                adminService.deleteTariffPlanById(tariff_id);
-                resp.sendRedirect("/do?action=show_tariffs");
-            } else {
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void deleteTariffPlanById(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                int tariff_id = Integer.parseInt(req.getParameter("tariff_id"));
+//                adminService.deleteTariffPlanById(tariff_id);
+//                resp.sendRedirect("/do?action=show_tariffs");
+//            } else {
+//                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
-    private void deleteUserById(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                long userId = Long.parseLong(req.getParameter("user_id"));
-                adminService.deleteUserById(userId);
-                resp.sendRedirect("/do?action=show_users");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void deleteUserById(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                long userId = Long.parseLong(req.getParameter("user_id"));
+//                adminService.deleteUserById(userId);
+//                resp.sendRedirect("/do?action=show_users");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
     private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         forwardToPage(req, resp, "login.jsp");
     }
-
-    private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        User user = userService.getUser(login, password);
-        if (user != null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            forwardToPage(req, resp, "index.jsp");
-        } else {
-            String error = "Invalid login/password";
-            req.setAttribute("error", error);
-            forwardToPage(req, resp, "login.jsp");
-        }
-    }
+//
+//    private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String login = req.getParameter("login");
+//        String password = req.getParameter("password");
+//        User user = userService.getUser(login, password);
+//        if (user != null) {
+//            HttpSession session = req.getSession();
+//            session.setAttribute("user", user);
+//            forwardToPage(req, resp, "index.jsp");
+//        } else {
+//            String error = "Invalid login/password";
+//            req.setAttribute("error", error);
+//            forwardToPage(req, resp, "login.jsp");
+//        }
+//    }
 
     private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
@@ -171,28 +177,28 @@ public class ActionServlet extends HttpServlet {
     }
 
 
-    private void addUSer(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                String login = req.getParameter("login");
-                String password = req.getParameter("password");
-                String name = req.getParameter("name");
-                String surname = req.getParameter("surname");
-                Role role = Role.valueOf(req.getParameter("role"));
-                if (LoginValidator.checkLoginForDuplicate(login)) {
-                    adminService.createUser(login, password, name, surname, role);
-                    resp.sendRedirect("/do?action=show_users");
-                } else {
-                    resp.sendRedirect("/do?action=show_add_client_page_error");
-                }
-            } else {
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            }
-        } else {
-            resp.sendRedirect("/do?action=show_login_page");
-        }
-    }
+//    private void addUSer(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                String login = req.getParameter("login");
+//                String password = req.getParameter("password");
+//                String name = req.getParameter("name");
+//                String surname = req.getParameter("surname");
+//                Role role = Role.valueOf(req.getParameter("role"));
+//                if (LoginValidator.checkLoginIsUnique(login)) {
+//                    adminService.createUser(login, password, name, surname, role);
+//                    resp.sendRedirect("/do?action=show_users");
+//                } else {
+//                    resp.sendRedirect("/do?action=show_add_client_page_error");
+//                }
+//            } else {
+//                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//            }
+//        } else {
+//            resp.sendRedirect("/do?action=show_login_page");
+//        }
+//    }
 
     private void showEditUSerPageByAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
@@ -233,85 +239,86 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                TariffPlan tariffPlan = new TariffPlan();
-                tariffPlan.setId(Integer.parseInt(req.getParameter("id")));
-                tariffPlan.setTitle(req.getParameter("title"));
-                tariffPlan.setSpeed(Integer.parseInt(req.getParameter("speed")));
-                tariffPlan.setPrice(new BigDecimal(req.getParameter("price")));
-                adminService.editTariffPlan(tariffPlan);
-                resp.sendRedirect("/do?action=show_tariffs");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void editTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                TariffPlan tariffPlan = new TariffPlan();
+//                tariffPlan.setId(Integer.parseInt(req.getParameter("id")));
+//                tariffPlan.setTitle(req.getParameter("title"));
+//                tariffPlan.setSpeed(Integer.parseInt(req.getParameter("speed")));
+//                tariffPlan.setPrice(new BigDecimal(req.getParameter("price")));
+//                adminService.editTariffPlan(tariffPlan);
+//                resp.sendRedirect("/do?action=show_tariffs");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
-    private void editClientByAdmin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                long clientId = Long.parseLong(req.getParameter("user_id"));
-                String login = req.getParameter("login");
-                String name = req.getParameter("name");
-                String surname = req.getParameter("surname");
-                int tariffPlanId;
-                try {
-                    tariffPlanId = Integer.parseInt(req.getParameter("tariff_id"));
-                } catch (NumberFormatException e) {
-                    tariffPlanId = 0;
-                }
-                ClientStatus status = ClientStatus.valueOf(req.getParameter("status").toUpperCase());
-                Client client = new Client();
-                client.setId(clientId);
-                client.setLogin(login);
-                client.setName(name);
-                client.setSurname(surname);
-                client.setStatus(status);
-                adminService.editClientByAdmin(client);
-                if (status == ClientStatus.INACTIVE) {
-                    adminService.makeInactiveClient(clientId);
-                } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
-                    if (tariffPlanId != 0) {
-                        Payment payment = new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now());
-                        adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
-                    }
-                }
-                resp.sendRedirect("/do?action=show_users");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void editClientByAdmin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                long clientId = Long.parseLong(req.getParameter("user_id"));
+//                String login = req.getParameter("login");
+//                String name = req.getParameter("name");
+//                String surname = req.getParameter("surname");
+//                int tariffPlanId;
+//                try {
+//                    tariffPlanId = Integer.parseInt(req.getParameter("tariff_id"));
+//                } catch (NumberFormatException e) {
+//                    tariffPlanId = 0;
+//                }
+//                ClientStatus status = ClientStatus.valueOf(req.getParameter("status").toUpperCase());
+//                Client client = new Client();
+//                client.setId(clientId);
+//                client.setLogin(login);
+//                client.setName(name);
+//                client.setSurname(surname);
+//                client.setStatus(status);
+//                adminService.editClientByAdmin(client);
+//                if (status == ClientStatus.INACTIVE) {
+//                    adminService.makeInactiveClient(clientId);
+//                } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
+//                    if (tariffPlanId != 0) {
+//                        Payment payment = new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now());
+//                        adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
+//                    }
+//                }
+//                resp.sendRedirect("/do?action=show_users");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
 
-    private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long clientId = Long.parseLong(req.getParameter("user_id"));
-            if (checkUserId(clientId, user)) {
-                Client client = new Client();
-                String name = req.getParameter("name");
-                String surname = req.getParameter("surname");
-                client.setId(clientId);
-                client.setName(name);
-                client.setSurname(surname);
-                clientService.editClientByClient(client);
-                showClientAccountPage(req, resp);
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void editClientByClient(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long clientId = Long.parseLong(req.getParameter("user_id"));
+//            if (checkUserId(clientId, user)) {
+//                Client client = new Client();
+//                String name = req.getParameter("name");
+//                String surname = req.getParameter("surname");
+//                client.setId(clientId);
+//                client.setName(name);
+//                client.setSurname(surname);
+//                clientService.editClientByClient(client);
+//                showClientAccountPage(req, resp);
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
 
     private void showClientPaymentsPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -405,23 +412,23 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private void addTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                String title = req.getParameter("title");
-                int speed = Integer.parseInt(req.getParameter("speed"));
-                BigDecimal price = new BigDecimal(req.getParameter("price"));
-                adminService.createTariffPlan(title, speed, price);
-                showTariffsList(req, resp);
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void addTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                String title = req.getParameter("title");
+//                int speed = Integer.parseInt(req.getParameter("speed"));
+//                BigDecimal price = new BigDecimal(req.getParameter("price"));
+//                adminService.createTariffPlan(title, speed, price);
+//                showTariffsList(req, resp);
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
     private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
@@ -476,20 +483,20 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private void makeCreditPayment(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            BigDecimal amount = new BigDecimal(req.getParameter("amount"));
-            LocalDateTime time = LocalDateTime.now();
-            Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
-            clientService.makePayment(payment);
-//            showClientAccountPage(req, resp);
-            resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void makeCreditPayment(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            BigDecimal amount = new BigDecimal(req.getParameter("amount"));
+//            LocalDateTime time = LocalDateTime.now();
+//            Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
+//            clientService.makePayment(payment);
+////            showClientAccountPage(req, resp);
+//            resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
     public void showChangeTariffPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
@@ -513,27 +520,27 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    public void changeTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long clientId = Long.parseLong(req.getParameter("user_id"));
-            int tariffId = Integer.parseInt(req.getParameter("tariff_id"));
-            BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
-            BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
-            if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
-                Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
-                adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
-                resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
-            } else {
-                req.setAttribute("message", "You don't have enough money");
-                showChangeTariffPage(req, resp);
-            }
-        } else {
-            req.setAttribute("message", "You don't have enough money");
-            showChangeTariffPage(req, resp);
-        }
-    }
+//    public void changeTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long clientId = Long.parseLong(req.getParameter("user_id"));
+//            int tariffId = Integer.parseInt(req.getParameter("tariff_id"));
+//            BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
+//            BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
+//            if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
+//                Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
+//                adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
+//                resp.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
+//            } else {
+//                req.setAttribute("message", "You don't have enough money");
+//                showChangeTariffPage(req, resp);
+//            }
+//        } else {
+//            req.setAttribute("message", "You don't have enough money");
+//            showChangeTariffPage(req, resp);
+//        }
+//    }
 
 
 }

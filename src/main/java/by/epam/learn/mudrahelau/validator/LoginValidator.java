@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class LoginValidator {
 
-    public static boolean checkLoginForDuplicate(String login) {
+    public static boolean checkLoginIsUnique(String login) {
 
         boolean result = true;
         Connection connection = DBUtils.getInstance().getConnection();

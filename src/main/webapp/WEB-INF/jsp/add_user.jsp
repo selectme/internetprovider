@@ -16,7 +16,6 @@
 </head>
 
 <body class="container">
-
 <div class="container">
     <nav class="navbar navbar-light">
         <form class="form-inline">
