@@ -35,3 +35,84 @@
 14:43:31.954 [http-nio-8080-exec-10] INFO  by.epam.learn.mudrahelau.service.AdminService - User{73} deleted
 14:43:41.111 [http-nio-8080-exec-3] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{59} edited
 14:43:49.094 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{58} edited
+15:42:39.195 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+15:42:39.235 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {59} does not have enough money on balance. Status changed to BLOCKED
+15:43:05.549 [http-nio-8080-exec-3] INFO  by.epam.learn.mudrahelau.service.AdminService - Tariff plan{24} edited
+15:43:09.998 [http-nio-8080-exec-5] INFO  by.epam.learn.mudrahelau.service.AdminService - Tariff plan{24} deleted
+15:46:49.274 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+15:47:29.742 [http-nio-8080-exec-3] INFO  by.epam.learn.mudrahelau.service.AdminService - Tariff plan {title: quadripple-mega, speed: 400, price: 99.99} created
+15:47:36.942 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.AdminService - Tariff plan{25} edited
+15:48:08.083 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.AdminService - User{Mihail Mihailov.CLIENT} created
+15:48:17.815 [http-nio-8080-exec-6] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{75} edited
+15:48:41.499 [http-nio-8080-exec-1] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{75} edited
+15:48:47.328 [http-nio-8080-exec-5] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{75} edited
+15:48:47.344 [http-nio-8080-exec-5] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{75} changed tariff plan to {2}
+15:48:53.505 [http-nio-8080-exec-9] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{50} edited
+15:49:50.955 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{50} edited
+15:49:50.962 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{50} changed tariff plan to {20}
+15:51:48.498 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+15:51:48.525 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+15:51:48.528 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+15:53:39.214 [http-nio-8080-exec-9] INFO  by.epam.learn.mudrahelau.service.AdminService - User{gg ff.CLIENT} created
+15:55:18.981 [http-nio-8080-exec-5] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{76} edited
+15:56:01.914 [http-nio-8080-exec-9] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{76} edited
+15:56:48.497 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+15:56:48.523 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+15:56:48.527 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:01:48.499 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:01:48.528 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:01:48.532 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:05:11.636 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:05:11.683 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:05:11.686 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:08:20.861 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:08:20.924 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:08:20.927 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:09:55.641 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:09:55.688 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:09:55.695 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:14:54.928 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:14:54.960 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:14:54.962 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:16:58.976 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:16:59.027 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:16:59.032 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:20:01.594 [http-nio-8080-exec-6] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} paid 50
+16:21:26.090 [http-nio-8080-exec-1] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{76} paid 25
+16:21:31.786 [http-nio-8080-exec-5] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{76} changed tariff plan to {19}
+16:21:58.240 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:21:58.262 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54} paid 15.00 for the tariff {19}
+16:21:58.266 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54} status changed to ACTIVE
+16:21:58.278 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:21:58.281 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:21:58.285 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:22:02.637 [http-nio-8080-exec-9] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{76} paid 10
+16:22:53.890 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:22:53.934 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+16:22:53.946 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:22:53.949 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:22:53.956 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:23:06.889 [http-nio-8080-exec-1] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{76} paid 50
+16:23:10.640 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{76} changed tariff plan to {21}
+16:27:53.167 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:27:53.182 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+16:27:53.196 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:27:53.200 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:27:53.209 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:31:22.197 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:31:22.235 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+16:31:22.247 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:31:22.251 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:31:22.262 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:35:12.065 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:35:12.100 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+16:35:12.111 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:35:12.114 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:35:12.120 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:40:11.310 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+16:40:11.326 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+16:40:11.335 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {74}. The bill is paid.
+16:40:11.337 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+16:40:11.342 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+16:41:33.727 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.AdminService - Client{76} changed tariff plan to {19}
+16:41:44.478 [http-nio-8080-exec-2] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{76} paid 20.01

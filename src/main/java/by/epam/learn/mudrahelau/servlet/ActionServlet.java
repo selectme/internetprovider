@@ -46,39 +46,41 @@ public class ActionServlet extends HttpServlet {
 
         try {
             String action = req.getParameter("action");
-            if (action == null || action.equals("")) {
-                resp.sendRedirect("/");
-            } else if (action.equals("do_logout")) {
-                doLogout(req, resp);
-            } else if (action.equals("show_administration_panel")) {
-                showAdministrationPanel(req, resp);
-            } else if (action.equals("show_users")) {
-                showUsersList(req, resp);
-            } else if (action.equals("show_tariffs")) {
-                showTariffsList(req, resp);
-            } else if (action.equals("show_add_tariff_page")) {
-                showAddTariffPage(req, resp);
-            } else if (action.equals("show_add_client_page")) {
-                showAddUserPage(req, resp);
-            } else if (action.equals("show_add_client_page_error")) {
-                showAddUserPageWithError(req, resp);
-            } else if (action.equals("show_edit_user_page_by_admin")) {
-                showEditUSerPageByAdmin(req, resp);
-            } else if (action.equals("show_edit_client_by_client_page")) {
-                showEditClientPageByClient(req, resp);
-            } else if (action.equals("show_edit_tariffplan_page")) {
-                showEditTariffPlanPage(req, resp);
-            } else if (action.equals("show_login_page")) {
-                showLoginPage(req, resp);
-            } else if (action.equals("show_client_account_page")) {
-                showClientAccountPage(req, resp);
-            } else if (action.equals("show_payment_page")) {
-                showPaymentPage(req, resp);
-            } else if (action.equals("show_change_tariff_page")) {
-                showChangeTariffPage(req, resp);
-            } else if (action.equals("show_clients_payments_page")) {
-                showClientPaymentsPage(req, resp);
-            }
+            ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
+            command.execute(req,resp);
+//            if (action == null || action.equals("")) {
+//                resp.sendRedirect("/");
+//            } else if (action.equals("do_logout")) {
+//                doLogout(req, resp);
+//            } else if (action.equals("show_administration_panel")) {
+//                showAdministrationPanel(req, resp);
+//            } else if (action.equals("show_users")) {
+//                showUsersList(req, resp);
+//            } else if (action.equals("show_tariffs")) {
+//                showTariffsList(req, resp);
+//            } else if (action.equals("show_add_tariff_page")) {
+//                showAddTariffPage(req, resp);
+//            } else if (action.equals("show_add_client_page")) {
+//                showAddUserPage(req, resp);
+//            } else if (action.equals("show_add_client_page_error")) {
+//                showAddUserPageWithError(req, resp);
+//            } else if (action.equals("show_edit_user_page_by_admin")) {
+//                showEditUSerPageByAdmin(req, resp);
+//            } else if (action.equals("show_edit_client_by_client_page")) {
+//                showEditClientPageByClient(req, resp);
+//            } else if (action.equals("show_edit_tariffplan_page")) {
+//                showEditTariffPlanPage(req, resp);
+//            } else if (action.equals("show_login_page")) {
+//                showLoginPage(req, resp);
+//            } else if (action.equals("show_client_account_page")) {
+//                showClientAccountPage(req, resp);
+//            } else if (action.equals("show_payment_page")) {
+//                showPaymentPage(req, resp);
+//            } else if (action.equals("show_change_tariff_page")) {
+//                showChangeTariffPage(req, resp);
+//            } else if (action.equals("show_clients_payments_page")) {
+//                showClientPaymentsPage(req, resp);
+//            }
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
@@ -149,9 +151,9 @@ public class ActionServlet extends HttpServlet {
 //        }
 //    }
 
-    private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        forwardToPage(req, resp, "login.jsp");
-    }
+//    private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        forwardToPage(req, resp, "login.jsp");
+//    }
 //
 //    private void doLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String login = req.getParameter("login");
@@ -168,13 +170,13 @@ public class ActionServlet extends HttpServlet {
 //        }
 //    }
 
-    private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        forwardToPage(req, resp, "index.jsp");
-    }
+//    private void doLogout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        HttpSession session = req.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//        forwardToPage(req, resp, "index.jsp");
+//    }
 
 
 //    private void addUSer(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -200,36 +202,36 @@ public class ActionServlet extends HttpServlet {
 //        }
 //    }
 
-    private void showEditUSerPageByAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (checkUserIsAdmin(user)) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            Client client = adminService.getClientById(id);
-            List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-            req.setAttribute("client", client);
-            req.setAttribute("tariffPlans", tariffPlans);
-            forwardToPage(req, resp, "edit_user_by_admin_page.jsp");
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
+//    private void showEditUSerPageByAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (checkUserIsAdmin(user)) {
+//            long id = Long.parseLong(req.getParameter("user_id"));
+//            Client client = adminService.getClientById(id);
+//            List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+//            req.setAttribute("client", client);
+//            req.setAttribute("tariffPlans", tariffPlans);
+//            forwardToPage(req, resp, "edit_user_by_admin_page.jsp");
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//
+//    }
 
-    }
-
-    private void showEditClientPageByClient(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            if (checkUserId(id, user)) {
-                Client client = adminService.getClientById(id);
-                req.setAttribute("client", client);
-                forwardToPage(req, resp, "edit_client_by_client.jsp");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void showEditClientPageByClient(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long id = Long.parseLong(req.getParameter("user_id"));
+//            if (checkUserId(id, user)) {
+//                Client client = adminService.getClientById(id);
+//                req.setAttribute("client", client);
+//                forwardToPage(req, resp, "edit_client_by_client.jsp");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
     private boolean checkUserId(long id, User user) {
         if (user != null) {
@@ -321,41 +323,41 @@ public class ActionServlet extends HttpServlet {
 //    }
 
 
-    private void showClientPaymentsPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-
-        if (user != null) {
-            List<Payment> payments = clientService.retrievePayments(user.getId());
-            req.setAttribute("payments", payments);
-            forwardToPage(req, resp, "payments_page.jsp");
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
-
-    private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (user.getRole() == Role.ADMIN) {
-                List<Client> clients = adminService.retrieveClients();
-                req.setAttribute("clients", clients);
-                forwardToPage(req, resp, "users_list.jsp");
-            } else {
-//                forwardToPage(req, resp, "index.jsp");
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            }
-        } else {
+//    private void showClientPaymentsPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//
+//        if (user != null) {
+//            List<Payment> payments = clientService.retrievePayments(user.getId());
+//            req.setAttribute("payments", payments);
+//            forwardToPage(req, resp, "payments_page.jsp");
+//        } else {
 //            forwardToPage(req, resp, "index.jsp");
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-    }
+//        }
+//    }
 
-    private void showTariffsList(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-        req.setAttribute("tariffPlans", tariffPlans);
-        forwardToPage(req, resp, "tariff_plans_list.jsp");
-    }
+//    private void showUsersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (user.getRole() == Role.ADMIN) {
+//                List<Client> clients = adminService.retrieveClients();
+//                req.setAttribute("clients", clients);
+//                forwardToPage(req, resp, "users_list.jsp");
+//            } else {
+////                forwardToPage(req, resp, "index.jsp");
+//                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//            }
+//        } else {
+////            forwardToPage(req, resp, "index.jsp");
+//            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+//        }
+//    }
+
+//    private void showTariffsList(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+//        req.setAttribute("tariffPlans", tariffPlans);
+//        forwardToPage(req, resp, "tariff_plans_list.jsp");
+//    }
 
     private void showAddTariffPage(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
@@ -367,28 +369,28 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private void showEditTariffPlanPage(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (checkUserIsAdmin(user)) {
-            int id = Integer.parseInt(req.getParameter("tariff_id"));
-            TariffPlan tariffPlan = adminService.getTariffPlanById(id);
-            req.setAttribute("tariffPlan", tariffPlan);
-            forwardToPage(req, resp, "edit_tariffplan_page.jsp");
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void showEditTariffPlanPage(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (checkUserIsAdmin(user)) {
+//            int id = Integer.parseInt(req.getParameter("tariff_id"));
+//            TariffPlan tariffPlan = adminService.getTariffPlanById(id);
+//            req.setAttribute("tariffPlan", tariffPlan);
+//            forwardToPage(req, resp, "edit_tariffplan_page.jsp");
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
-    private void showAddUserPage(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        String destinationPage = "index.jsp";
-        if (checkUserIsAdmin(user)) {
-            destinationPage = "add_user.jsp";
-        }
-        forwardToPage(req, resp, destinationPage);
-    }
+//    private void showAddUserPage(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        String destinationPage = "index.jsp";
+//        if (checkUserIsAdmin(user)) {
+//            destinationPage = "add_user.jsp";
+//        }
+//        forwardToPage(req, resp, destinationPage);
+//    }
 
     private void showAddUserPageWithError(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
@@ -430,58 +432,58 @@ public class ActionServlet extends HttpServlet {
 //        }
 //    }
 
-    private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            if (checkUserId(id, user)) {
-                Client client = adminService.getClientById(id);
-                req.setAttribute("client", client);
-                forwardToPage(req, resp, "client_account_page.jsp");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void showClientAccountPage(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long id = Long.parseLong(req.getParameter("user_id"));
+//            if (checkUserId(id, user)) {
+//                Client client = adminService.getClientById(id);
+//                req.setAttribute("client", client);
+//                forwardToPage(req, resp, "client_account_page.jsp");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
-    private void showAdministrationPanel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            if (checkUserIsAdmin(user)) {
-                forwardToPage(req, resp, "administration_panel.jsp");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void showAdministrationPanel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            if (checkUserIsAdmin(user)) {
+//                forwardToPage(req, resp, "administration_panel.jsp");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
     private void forwardToPage(HttpServletRequest req, HttpServletResponse resp, String s) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher(s);
         dispatcher.forward(req, resp);
     }
 
-    private void showPaymentPage(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            if (checkUserId(id, user)) {
-                Client client = adminService.getClientById(id);
-                req.setAttribute("client", client);
-                forwardToPage(req, resp, "make_payment_page.jsp");
-
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    private void showPaymentPage(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long id = Long.parseLong(req.getParameter("user_id"));
+//            if (checkUserId(id, user)) {
+//                Client client = adminService.getClientById(id);
+//                req.setAttribute("client", client);
+//                forwardToPage(req, resp, "make_payment_page.jsp");
+//
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
 //    private void makeCreditPayment(HttpServletRequest req, HttpServletResponse resp) throws
 //            ServletException, IOException {
@@ -498,27 +500,27 @@ public class ActionServlet extends HttpServlet {
 //        }
 //    }
 
-    public void showChangeTariffPage(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
-
-        User user = (User) req.getSession().getAttribute("user");
-        if (user != null) {
-            long id = Long.parseLong(req.getParameter("user_id"));
-            if (checkUserId(id, user)) {
-                Client client = adminService.getClientById(id);
-                TariffPlan tariff = adminService.getTariffPlanByClientId(id);
-                List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-                req.setAttribute("client", client);
-                req.setAttribute("tariff", tariff);
-                req.setAttribute("tariffPlans", tariffPlans);
-                forwardToPage(req, resp, "change_tariff_page.jsp");
-            } else {
-                forwardToPage(req, resp, "index.jsp");
-            }
-        } else {
-            forwardToPage(req, resp, "index.jsp");
-        }
-    }
+//    public void showChangeTariffPage(HttpServletRequest req, HttpServletResponse resp) throws
+//            ServletException, IOException {
+//
+//        User user = (User) req.getSession().getAttribute("user");
+//        if (user != null) {
+//            long id = Long.parseLong(req.getParameter("user_id"));
+//            if (checkUserId(id, user)) {
+//                Client client = adminService.getClientById(id);
+//                TariffPlan tariff = adminService.getTariffPlanByClientId(id);
+//                List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+//                req.setAttribute("client", client);
+//                req.setAttribute("tariff", tariff);
+//                req.setAttribute("tariffPlans", tariffPlans);
+//                forwardToPage(req, resp, "change_tariff_page.jsp");
+//            } else {
+//                forwardToPage(req, resp, "index.jsp");
+//            }
+//        } else {
+//            forwardToPage(req, resp, "index.jsp");
+//        }
+//    }
 
 //    public void changeTariffPlan(HttpServletRequest req, HttpServletResponse resp) throws
 //            ServletException, IOException {

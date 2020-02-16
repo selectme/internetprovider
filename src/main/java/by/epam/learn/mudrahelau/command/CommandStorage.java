@@ -34,7 +34,11 @@ public class CommandStorage {
 
     public ServletCommand getCommandByName(String name) {
         // TODO: throw exception if command not found
-        return commandsByNames.get(name);
+        ServletCommand servletCommand = commandsByNames.get(name);
+        if (servletCommand == null) {
+            servletCommand = new NotExistsServletCommand();
+        }
+        return servletCommand;
     }
 
     private void loadCommands() {
@@ -48,6 +52,20 @@ public class CommandStorage {
         addCommandByName(new EditUserByAdminServletCommand(adminService));
         addCommandByName(new MakeCreditPaymentServletCommand(clientService));
         addCommandByName(new DeleteUserServletCommand(adminService));
+        addCommandByName(new LogoutServletCommand());
+        addCommandByName(new ShowAddUserPageServletCommand());
+        addCommandByName(new ShowAdminPanelServletCommand());
+        addCommandByName(new ShowChangeTariffServletCommand(adminService));
+        addCommandByName(new ShowClientAccountServletCommand(adminService));
+        addCommandByName(new ShowClientPaymentsPageServletCommand(clientService));
+        addCommandByName(new ShowEditClientByClientPageServletCommand(adminService));
+        addCommandByName(new ShowEditTariffPageServletCommand(adminService));
+        addCommandByName(new ShowEditUserPageServletCommand(adminService));
+        addCommandByName(new ShowLoginPageServletCommand());
+        addCommandByName(new ShowPaymentPageServletCommand(adminService));
+        addCommandByName(new ShowTariffsServletCommand(adminService));
+        addCommandByName(new ShowUsersListServletCommand(adminService));
+        addCommandByName(new ShowAddTariffPageServletCommand());
     }
 
     private void addCommandByName(ServletCommand command) {

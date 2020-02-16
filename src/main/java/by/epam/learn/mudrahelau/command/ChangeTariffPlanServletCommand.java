@@ -29,8 +29,7 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
-        String destinationPage = null;
+
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             long clientId = Long.parseLong(request.getParameter("user_id"));
@@ -42,16 +41,9 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
                 adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
                 response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
             } else {
-                request.setAttribute("message", "You don't have enough money");
-                destinationPage = "change_tariff_page.jsp";
-//                showChangeTariffPage(req, resp);
+                response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
             }
-        } else {
-            request.setAttribute("message", "You don't have enough money");
-            destinationPage = "change_tariff_page.jsp";
-//            showChangeTariffPage(req, resp);
         }
-        requestDispatcher.forward(request, response);
     }
 
     @Override
