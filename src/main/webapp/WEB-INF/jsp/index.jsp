@@ -4,26 +4,25 @@
 
 
 <fmt:bundle basename="messages"/>
-
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/main.css">
     <title>Hello</title>
 
 </head>
 
 <body class="container">
 
-<%--<div class="col-5">--%>
-    <%--<li><a href="?sessionLocale=en">EN</a></li>--%>
-    <%--<li><a href="?sessionLocale=ru">RU</a></li>--%>
-<%--</div>--%>
+<div class="col-5">
+    <li><a href="?sessionLocale=en">EN</a></li>
+    <li><a href="?sessionLocale=ru">RU</a></li>
+</div>
 
-<%--<div class="col border-bottom"><fmt:message key="welcome"/> ${user.name} ${user.surname} !</div>--%>
+<div class="col border-bottom"><fmt:message key="welcome"/> ${user.name} ${user.surname} !</div>
 
 <div class="container">
     <nav class="navbar navbar-light">
@@ -95,8 +94,8 @@
 </div>
 
 
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../../js/jquery-3.4.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
 
 </body>
 </html>

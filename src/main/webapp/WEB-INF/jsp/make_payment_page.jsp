@@ -2,8 +2,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Viktar
-  Date: 29.01.2020
-  Time: 14:22
+  Date: 26.01.2020
+  Time: 18:24
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,11 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+
     <title>Title</title>
 </head>
 <body class="container">
+
 <div class="container">
     <nav class="navbar navbar-light">
         <form class="form-inline">
@@ -72,58 +73,38 @@
     </nav>
 </div>
 
-<%--<div class="container w-50">--%>
-<%--<h2 align="">Editing tariff "${tariffPlan.title}"</h2>--%>
-<%--</div>--%>
+<div class="card text-center">
+    <div class="card-header">
+        Payment...
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Current balance: ${client.moneyOnAccount}</h5>
+        <p class="card-text">To replenish the account enter the amount:</p>
 
-<br>
-<div class="container w-50">
-    <form action="do" method="post">
-        <input type="hidden" name="action" value="edit_client_by_client"/>
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <input type="hidden" name="user_id" value="${client.id}" class="form-control form-control-sm" id="colFormLabelSm"
-                       placeholder="col-form-label-sm"
-                       readonly="readonly">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Login</label>
-            <div class="col-sm-10">
-                <input name="Login" value="${client.login}" class="form-control form-control-lg" id="titleLabel" readonly="readonly"/>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Name</label>
-            <div class="col-sm-10">
-                <input type="text" name="name" value="${client.name}" class="form-control form-control-lg"
-                       id="speedLabel"/>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
-            <div class="col-sm-10">
-                <input type="text" name="surname" value="${client.surname}"
-                       class="form-control form-control-lg"/>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <button class="btn btn-default"><input type="submit" class="btn btn-success" value="Done"></button>
+        <form action="do" method="post">
+            <input type="hidden" name="action" value="make_payment"/>
+            <input type="hidden" name="user_id" value="${client.id}"/>
+            <div class="form-group row justify-content-center">
+                <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Amount</label>
+                <div class="col-sm-2">
+                    <input type="number" name="amount" min="0" step="0.01" class="form-control form-control-lg"
+                           id="passwordLabel"/>
                 </div>
             </div>
-        </div>
-    </form>
+            <div class="container">
+                    <div class="col text-center">
+                        <button class="btn btn-default"><input type="submit" class="btn btn-success" value="Done"></button>
+                    </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
 </div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../../js/jquery-3.4.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
 </body>
-
 </html>

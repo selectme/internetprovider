@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Admin
-  Date: 21.01.2020
-  Time: 13:03
+  User: Viktar
+  Date: 29.01.2020
+  Time: 14:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,9 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-
-    <title>Add tariff plan</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <title>Title</title>
 </head>
 <body class="container">
 <div class="container">
@@ -72,32 +72,41 @@
     </nav>
 </div>
 
+<%--<div class="container w-50">--%>
+<%--<h2 align="">Editing tariff "${tariffPlan.title}"</h2>--%>
+<%--</div>--%>
 
 <br>
 <div class="container w-50">
     <form action="do" method="post">
-        <input type="hidden" name="action" value="add_tariff">
-
-
+        <input type="hidden" name="action" value="edit_client_by_client"/>
         <div class="form-group row">
-            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Title</label>
             <div class="col-sm-10">
-                <input name="title" class="form-control form-control-lg" id="titleLabel"/>
+                <input type="hidden" name="user_id" value="${client.id}" class="form-control form-control-sm" id="colFormLabelSm"
+                       placeholder="col-form-label-sm"
+                       readonly="readonly">
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Speed</label>
+            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Login</label>
             <div class="col-sm-10">
-                <input type="number" name="speed" class="form-control form-control-lg"
+                <input name="Login" value="${client.login}" class="form-control form-control-lg" id="titleLabel" readonly="readonly"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-lg">Name</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" value="${client.name}" class="form-control form-control-lg"
                        id="speedLabel"/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Price</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
             <div class="col-sm-10">
-                <input type="number" name="price" step="0.01"
+                <input type="text" name="surname" value="${client.surname}"
                        class="form-control form-control-lg"/>
             </div>
         </div>
@@ -111,10 +120,10 @@
     </form>
 </div>
 
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="../../js/jquery-3.4.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
 </body>
+
 </html>

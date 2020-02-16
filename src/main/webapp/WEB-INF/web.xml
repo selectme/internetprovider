@@ -56,6 +56,22 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+    <!-- Generated mappings -->
+    <servlet><servlet-name>add_tariff_plan_jsp</servlet-name><jsp-file>/WEB-INF/jsp/add_tariff_plan.jsp</jsp-file></servlet><servlet-mapping><servlet-name>add_tariff_plan_jsp</servlet-name><url-pattern>/add_tariff_plan.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>add_user_jsp</servlet-name><jsp-file>/WEB-INF/jsp/add_user.jsp</jsp-file></servlet><servlet-mapping><servlet-name>add_user_jsp</servlet-name><url-pattern>/add_user.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>administration_panel_jsp</servlet-name><jsp-file>/WEB-INF/jsp/administration_panel.jsp</jsp-file></servlet><servlet-mapping><servlet-name>administration_panel_jsp</servlet-name><url-pattern>/administration_panel.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>change_tariff_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/change_tariff_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>change_tariff_page_jsp</servlet-name><url-pattern>/change_tariff_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>client_account_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/client_account_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>client_account_page_jsp</servlet-name><url-pattern>/client_account_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>edit_client_by_client_jsp</servlet-name><jsp-file>/WEB-INF/jsp/edit_client_by_client.jsp</jsp-file></servlet><servlet-mapping><servlet-name>edit_client_by_client_jsp</servlet-name><url-pattern>/edit_client_by_client.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>edit_tariffplan_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/edit_tariffplan_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>edit_tariffplan_page_jsp</servlet-name><url-pattern>/edit_tariffplan_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>edit_user_by_admin_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/edit_user_by_admin_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>edit_user_by_admin_page_jsp</servlet-name><url-pattern>/edit_user_by_admin_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>index_jsp</servlet-name><jsp-file>/WEB-INF/jsp/index.jsp</jsp-file></servlet><servlet-mapping><servlet-name>index_jsp</servlet-name><url-pattern>/index.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>login_jsp</servlet-name><jsp-file>/WEB-INF/jsp/login.jsp</jsp-file></servlet><servlet-mapping><servlet-name>login_jsp</servlet-name><url-pattern>/login.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>make_payment_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/make_payment_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>make_payment_page_jsp</servlet-name><url-pattern>/make_payment_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>payments_page_jsp</servlet-name><jsp-file>/WEB-INF/jsp/payments_page.jsp</jsp-file></servlet><servlet-mapping><servlet-name>payments_page_jsp</servlet-name><url-pattern>/payments_page.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>tariff_plans_list_jsp</servlet-name><jsp-file>/WEB-INF/jsp/tariff_plans_list.jsp</jsp-file></servlet><servlet-mapping><servlet-name>tariff_plans_list_jsp</servlet-name><url-pattern>/tariff_plans_list.jsp</url-pattern></servlet-mapping>
+    <servlet><servlet-name>users_list_jsp</servlet-name><jsp-file>/WEB-INF/jsp/users_list.jsp</jsp-file></servlet><servlet-mapping><servlet-name>users_list_jsp</servlet-name><url-pattern>/users_list.jsp</url-pattern></servlet-mapping>
+
 
 
 </web-app>
