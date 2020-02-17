@@ -1,9 +1,9 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" session="true" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" language="java" session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:bundle basename="messages"/>
+<fmt:setBundle basename="messages"/>
 
 <html lang="${sessionScope.lang}">
 <head>
@@ -18,7 +18,9 @@
 <body class="container">
 <c:import url="/WEB-INF/jsp/footer.jsp"/>
 <c:import url="/WEB-INF/jsp/header.jsp"/>
-
+<h2>
+    <fmt:message key="label.chooseSessionLocale" />
+</h2>
 
 <div class="col-5">
     <li><a href="?sessionLocale=en">EN</a></li>

@@ -8,8 +8,10 @@
 <div class="container">
     <nav class="navbar navbar-light">
 
+
+
         <form class="form-inline">
-            <form class="form-inline">
+            <form class="form-inline btn btn-light shadow" action="/">
                 <input class="btn btn-light shadow" type="submit" value="Home"/>
             </form>
 

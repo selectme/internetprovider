@@ -11,7 +11,7 @@ import java.io.IOException;
 public class NotExistsServletCommand implements ServletCommand{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        response.sendRedirect("/");
     }
 
     @Override
