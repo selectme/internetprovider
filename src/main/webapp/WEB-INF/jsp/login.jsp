@@ -1,17 +1,17 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" href="../../css/main.css">
     <title>Login</title>
 </head>
 <body>
+<c:import url="/WEB-INF/jsp/footer.jsp"/>
+<c:import url="/WEB-INF/jsp/header.jsp"/>
 
 <h1 align="center" class="font-weight-light">Login</h1>
 
@@ -41,9 +41,6 @@
 
 </div>
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="../../js/jquery-3.4.1.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 </body>

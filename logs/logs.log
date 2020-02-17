@@ -1,0 +1,94 @@
+13:23:43.702 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:23:43.771 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:23:43.789 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:23:43.795 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:23:43.798 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:24:08.880 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.AdminService - User{78} deleted
+13:24:17.746 [http-nio-8080-exec-6] INFO  by.epam.learn.mudrahelau.service.AdminService - User{77} deleted
+13:28:42.907 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:28:42.920 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:28:42.935 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:28:42.942 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:28:42.944 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:33:42.909 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:33:42.920 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:33:42.936 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:33:42.943 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:33:42.945 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:38:42.907 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:38:42.920 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:38:42.935 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:38:42.942 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:38:42.944 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:43:42.908 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:43:42.921 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:43:42.938 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:43:42.943 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:43:42.944 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:48:42.909 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:48:42.922 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:48:42.939 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:48:42.943 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:48:42.945 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:53:42.910 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:53:42.922 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:53:42.938 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:53:42.944 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:53:42.946 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+13:56:15.013 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+13:56:15.052 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+13:56:15.078 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+13:56:15.085 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+13:56:15.088 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:01:14.253 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:01:14.267 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:01:14.285 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:01:14.292 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:01:14.294 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:06:14.245 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:06:14.258 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:06:14.274 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:06:14.282 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:06:14.285 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:11:14.245 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:11:14.261 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:11:14.284 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:11:14.290 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:11:14.292 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:16:14.242 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:16:14.250 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:16:14.260 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:16:14.269 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:16:14.271 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:21:14.243 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:21:14.251 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:21:14.262 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:21:14.265 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:21:14.268 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:26:14.245 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:26:14.258 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:26:14.269 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:26:14.273 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:26:14.275 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:27:41.553 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:31:14.244 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:31:14.250 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:31:14.257 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:31:14.260 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:31:14.262 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:35:46.543 [http-nio-8080-exec-1] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} edited
+14:36:01.706 [http-nio-8080-exec-6] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:36:14.247 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {50}. The bill is paid.
+14:36:14.259 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {54}. The bill is paid.
+14:36:14.274 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {75}. The bill is paid.
+14:36:14.281 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {76}. The bill is paid.
+14:36:14.284 [Timer-0] INFO  by.epam.learn.mudrahelau.sheduler.PaymentChecker - Client {79}. The bill is paid.
+14:36:15.842 [http-nio-8080-exec-3] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:36:20.412 [http-nio-8080-exec-4] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:36:41.211 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:36:43.121 [http-nio-8080-exec-8] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:36:45.359 [http-nio-8080-exec-10] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:37:01.136 [http-nio-8080-exec-1] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:37:09.317 [http-nio-8080-exec-3] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:37:31.229 [http-nio-8080-exec-6] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
+14:37:40.559 [http-nio-8080-exec-7] INFO  by.epam.learn.mudrahelau.service.ClientService - Client{54} requested the payments history
