@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:bundle basename="messages"/>
-<html>
 
+<html lang="${sessionScope.lang}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,7 @@
     <li><a href="?sessionLocale=ru">RU</a></li>
 </div>
 
-<div class="col border-bottom"><fmt:message key="welcome"/> ${user.name} ${user.surname} !</div>
+<div class="col border-bottom"><fmt:message key="label.welcome"/><c:out value="${user.name}"/> <c:out value="${user.surname}"/> !</div>
 
 <div class="container">
     <nav class="navbar navbar-light">
@@ -76,7 +76,7 @@
 <div class="jumbotron">
     <c:choose>
         <c:when test="${user != null}">
-            <h1 class="display-4 ">Hello, ${user.name} ${user.surname}!</h1>
+            <h1 class="display-4 ">Hello, <c:out value="${user.name}"/> <c:out value="${user.surname}"/>!</h1>
         </c:when>
         <c:otherwise>
             <h1 class="display-4">Hello!</h1>

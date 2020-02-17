@@ -105,8 +105,8 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Login: ${client.login}</li>
-                    <li class="list-group-item">Name: ${client.name} ${client.surname}</li>
-                    <li class="list-group-item">Tarff: ${client.getTariffPlan().getTitle()}</li>
+                    <li class="list-group-item">Name: <c:out value="${user.name}"/> <c:out value="${user.surname}"/></li>
+                    <li class="list-group-item">Tarff: <c:out value="${client.getTariffPlan().getTitle()}"/></li>
                     <li class="list-group-item">Balance: ${client.moneyOnAccount}</li>
                     <li class="list-group-item">Status: ${client.status}</li>
                 </ul>

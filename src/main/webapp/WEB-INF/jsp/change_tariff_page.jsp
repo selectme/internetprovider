@@ -85,7 +85,7 @@
             <div class="card">
                     <%--<img src="..." class="card-img-top" alt="...">--%>
                 <div class="card-body">
-                    <h5 class="card-title" align="center">${tariffPlan.title}</h5>
+                    <h5 class="card-title" align="center"><c:out value="${tariffPlan.title}"/></h5>
                     <p class="card-text" align="center">
                         Speed: ${tariffPlan.speed}
                     </p>

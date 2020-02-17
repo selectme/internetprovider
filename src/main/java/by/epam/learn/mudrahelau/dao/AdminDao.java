@@ -23,16 +23,7 @@ public class AdminDao {
     private static final String UPDATE_TARIFF_PLAN_SQL = "UPDATE tariff_plan SET title = ?, speed = ?, price = ? where id = ?";
     private final static String CREATE_CLIENT_SQL = "INSERT INTO " +
             "user (login, password, name, surname, role, status) VALUES (?,?,?,?,?,?) ";
-    //    private final static String INSERT_USER_AND_TARIFF_ID_SQL = "INSERT INTO " +
-//            "user_tariffplan (user_id) " +
-//            "SELECT u.id " +
-//            "FROM user as u " +
-//            "WHERE u.id=?";
-//    private final static String INSERT_USER_AND_TARIFF_ID_SQL = "INSERT INTO " +
-//            "user_tariffplan (user_id, tariff_id) " +
-//            "SELECT u.id, t.id " +
-//            "FROM user as u, tariff_plan as t " +
-//            "WHERE u.id=? AND t.id=?";
+
     private final static String INSERT_USER_AND_TARIFF_ID_SQL = "UPDATE user_tariffplan SET tariff_id=? " +
             "WHERE user_id = ?";
     private final static String CREATE_TARIFF_PLAN_SQL = "INSERT into tariff_plan(title, speed, price) values (?,?,?)";

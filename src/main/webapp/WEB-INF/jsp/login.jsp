@@ -20,7 +20,7 @@
         <div class="form-group">
             <input type="hidden" name="action" value="do_login">
             <label for="inputLogin">Login</label>
-            <input type="login" name="login" class="form-control" id="inputLogin" aria-describedby="loginHelp"
+            <input name="login" class="form-control no-spinner" id="inputLogin" aria-describedby="loginHelp"
                    pattern="([0-9]{4}|admin)" required>
             <small id="loginHelp" class="form-text text-muted">Login is 4 digit sequence</small>
         </div>

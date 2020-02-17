@@ -91,9 +91,9 @@
             <tr>
                 <td>${client.id}</td>
                 <td>${client.login}</td>
-                <td>${client.name}</td>
-                <td>${client.surname}</td>
-                <td>${client.getTariffPlan().getTitle()}</td>
+                <td><c:out value="${client.name}"/></td>
+                <td><c:out value="${client.surname}"/></td>
+                <td><c:out value="${client.getTariffPlan().getTitle()}"/></td>
                 <c:choose>
                     <c:when test="${client.status=='BLOCKED'}">
                         <td class="bg-danger">${client.status}</td>
@@ -109,14 +109,14 @@
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>
                         <input type="hidden" name="user_id" value="${client.id}"/>
-                        <input class="btn btn-light btn shadow-lg" type="submit" value="Edit"/>
+                        <input class="btn btn-light" type="submit" value="Edit"/>
                     </form>
                 </td>
                 <td>
                     <form action="do" method="post">
                         <input type="hidden" name="action" value="delete_user"/>
                         <input type="hidden" name="user_id" value="${client.id}"/>
-                        <input class="btn btn-light btn shadow-lg" type="submit" value="Delete"/>
+                        <input class="btn btn-light btn" type="submit" value="Delete"/>
                     </form>
                 </td>
             </tr>
@@ -126,7 +126,7 @@
 
     <form action="do" method="get">
         <input type="hidden" name="action" value="show_add_client_page">
-        <input class="btn btn-light shadow" type="submit" value="Add client">
+        <input class="btn btn-light" type="submit" value="Add client">
     </form>
 </div>
 

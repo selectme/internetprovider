@@ -8,7 +8,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html><head>
+<html>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../../css/bootstrap.css">
@@ -78,8 +79,11 @@
         <div class="form-group row">
             <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg">Login</label>
             <div class="col-sm-10">
-                <input name="login" class="form-control form-control-lg" id="inputLogin" pattern="([0-9]{4}|admin)"
-                       required/>
+                <label>
+                    <input name="login" class="form-control form-control-lg" id="inputLogin"
+                           pattern="([0-9]{4}|admin)"
+                           required/>
+                </label>
                 <small id="loginHelp" class="form-text text-muted">Login is 4 digit sequence</small>
             </div>
         </div>
@@ -87,32 +91,40 @@
         <div class="form-group row">
             <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Password</label>
             <div class="col-sm-10">
-                <input type="password" name="password" class="form-control form-control-lg"
-                       id="passwordLabel"/>
+                <label>
+                    <input type="password" name="password" class="form-control form-control-lg"
+                           id="passwordLabel"/>
+                </label>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Name</label>
             <div class="col-sm-10">
-                <input name="name" class="form-control form-control-lg"/>
+                <label>
+                    <input name="name" class="form-control form-control-lg" required/>
+                </label>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
             <div class="col-sm-10">
-                <input name="surname" class="form-control form-control-lg"/>
+                <label>
+                    <input name="surname" class="form-control form-control-lg" required/>
+                </label>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-lg">Role</label>
             <div class="col-sm-10">
-                <select class="form-control" name="role">
-                    <option value="ADMIN">Admin</option>
-                    <option value="CLIENT">Client</option>
-                </select>
+                <label>
+                    <select class="form-control" name="role">
+                        <option value="CLIENT">Client</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </label>
             </div>
         </div>
 

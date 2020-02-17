@@ -119,8 +119,8 @@
             <div class="col-sm-10">
                 <select class="form-control form-control-lg" name="tariff_id">--%>
                     <c:forEach items="${tariffPlans}" var="tariffPlan">
-                        <option value="${tariffPlan.id}">${tariffPlan.title}</option>
-                        <option selected hidden value="${client.tariffPlan.id}">${client.tariffPlan.title}</option>
+                        <option value="${tariffPlan.id}"><c:out value="${tariffPlan.title}"/></option>
+                        <option selected hidden value="${client.tariffPlan.id}"><c:out value="${client.tariffPlan.title}"/></option>
                     </c:forEach>
                 </select>
             </div>

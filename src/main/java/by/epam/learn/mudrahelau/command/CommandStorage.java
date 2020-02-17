@@ -1,6 +1,5 @@
 package by.epam.learn.mudrahelau.command;
 
-import by.epam.learn.mudrahelau.model.Admin;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
@@ -8,10 +7,9 @@ import by.epam.learn.mudrahelau.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 
-// singleton
 public class CommandStorage {
 
-    private Map<String, ServletCommand> commandsByNames = new HashMap<>(); // TODO: (MAYBE, OPTIONAL) not direct new HashMap
+    private Map<String, ServletCommand> commandsByNames = new HashMap<>();
 
     private static CommandStorage commandStorage;
     private AdminService adminService;
@@ -66,6 +64,7 @@ public class CommandStorage {
         addCommandByName(new ShowTariffsServletCommand(adminService));
         addCommandByName(new ShowUsersListServletCommand(adminService));
         addCommandByName(new ShowAddTariffPageServletCommand());
+        
     }
 
     private void addCommandByName(ServletCommand command) {

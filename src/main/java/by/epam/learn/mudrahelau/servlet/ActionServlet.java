@@ -46,8 +46,12 @@ public class ActionServlet extends HttpServlet {
 
         try {
             String action = req.getParameter("action");
-            ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
-            command.execute(req,resp);
+            if (action == null || action.equals("")) {
+                resp.sendRedirect("/");
+            } else {
+                ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
+                command.execute(req, resp);
+            }
 //            if (action == null || action.equals("")) {
 //                resp.sendRedirect("/");
 //            } else if (action.equals("do_logout")) {
@@ -92,9 +96,12 @@ public class ActionServlet extends HttpServlet {
 
         try {
             String action = req.getParameter("action");
-            System.out.println(action);
-            ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
-            command.execute(req, resp);
+            if (action == null || action.equals("")) {
+                resp.sendRedirect("/");
+            } else {
+                ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
+                command.execute(req, resp);
+            }
 //            if (action.equals("do_login")) {
 //                doLogin(req, resp);
 //            } else if (action.equals("add_tariff")) {

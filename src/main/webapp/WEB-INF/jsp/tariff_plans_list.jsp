@@ -72,7 +72,7 @@
         <div class="card bg-light justify-content-center" align="center">
             <div class="card-body">
                 <div class="badge badge-light text-wrap border-bottom shadow">
-                    <h4 class="card-title">${tariffPlan.title}</h4>
+                    <h4 class="card-title"><c:out value="${tariffPlan.title}"/></h4>
                 </div>
                 <br>
                 <div class="badge badge-light">
@@ -123,21 +123,21 @@
         <c:forEach items="${tariffPlans}" var="tariff">
             <tr>
                 <td>${tariff.id}</td>
-                <td>${tariff.title}</td>
+                <td><c:out value="${tariff.title}"/></td>
                 <td>${tariff.speed}</td>
                 <td>${tariff.price}</td>
                 <td>
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_edit_tariffplan_page"/>
                         <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                        <input class="btn btn-light btn shadow-lg" type="submit" value="Edit"/>
+                        <input class="btn btn-light btn" type="submit" value="Edit"/>
                     </form>
                 </td>
                 <td>
                     <form action="do" method="post">
                         <input type="hidden" name="action" value="delete_tariff_plan"/>
                         <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                        <input class="btn btn-light btn shadow-lg" type="submit" value="Delete"/>
+                        <input class="btn btn-light btn" type="submit" value="Delete"/>
                     </form>
                 </td>
             </tr>
@@ -147,7 +147,7 @@
 
     <form action="do" method="get">
         <input type="hidden" name="action" value="show_add_tariff_page">
-        <input class="btn btn-light shadow" type="submit" value="Add tariff">
+        <input class="btn btn-light" type="submit" value="Add tariff">
     </form>
 </div>
 </c:if>
