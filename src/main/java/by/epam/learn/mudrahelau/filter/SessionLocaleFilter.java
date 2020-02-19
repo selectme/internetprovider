@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class SessionLocaleFilter implements Filter {
+    public static final String SESSION_LOCALE = "sessionLocale";
+    public static final String ATTRIBUTE_LANG = "lang";
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
-        if (req.getParameter("sessionLocale") != null) {
-            req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
+        if (req.getParameter(SESSION_LOCALE) != null) {
+            req.getSession().setAttribute(ATTRIBUTE_LANG, req.getParameter(SESSION_LOCALE));
         }
         chain.doFilter(request, response);
     }

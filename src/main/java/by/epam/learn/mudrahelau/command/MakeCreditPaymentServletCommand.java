@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
  * @author Viktar on 16.02.2020
  */
 public class MakeCreditPaymentServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "make_payment";
     private ClientService clientService;
 
     public MakeCreditPaymentServletCommand(ClientService clientService) {
@@ -26,10 +28,10 @@ public class MakeCreditPaymentServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        User user = (User) request.getSession().getAttribute("user");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
-            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+            BigDecimal amount = new BigDecimal(request.getParameter(ParameterConstant.AMOUNT));
             LocalDateTime time = LocalDateTime.now();
             Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
             clientService.makePayment(payment);
@@ -41,6 +43,6 @@ public class MakeCreditPaymentServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "make_payment";
+        return COMMAND_NAME;
     }
 }

@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
@@ -14,7 +16,7 @@ import java.io.IOException;
  * @author Viktar on 16.02.2020
  */
 public class ShowClientAccountServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_client_account_page";
     private AdminService adminService;
 
     public ShowClientAccountServletCommand(AdminService adminService) {
@@ -23,15 +25,14 @@ public class ShowClientAccountServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = "index.jsp";
-        User user = (User) request.getSession().getAttribute("user");
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
-            long clientId = Long.parseLong(request.getParameter("user_id"));
+            long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             if (clientId == user.getId()) {
                 Client client = adminService.getClientById(clientId);
-                request.setAttribute("client", client);
-                destinationPage = "client_account_page.jsp";
-//                forwardToPage(req, resp, "client_account_page.jsp");
+                request.setAttribute(ParameterConstant.CLIENT, client);
+                destinationPage = PagesConstant.CLIENT_ACCOUNT_PAGE;
             }
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
             requestDispatcher.forward(request, response);
@@ -40,6 +41,6 @@ public class ShowClientAccountServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "show_client_account_page";
+        return COMMAND_NAME;
     }
 }

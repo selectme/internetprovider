@@ -1,8 +1,9 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
-import by.epam.learn.mudrahelau.service.UserService;
 import by.epam.learn.mudrahelau.validator.AdminValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+
 /**
  * @author Viktar on 16.02.2020
  */
 public class AddTariffServletCommand implements ServletCommand {
 
     private AdminService adminService;
+    private static final String COMMAND_NAME = "add_tariff";
 
 
     public AddTariffServletCommand(AdminService adminService) {
@@ -26,14 +29,14 @@ public class AddTariffServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        User user = (User) request.getSession().getAttribute("user");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
 
             if (AdminValidator.checkUserIsAdmin(user)) {
-                String title = request.getParameter("title");
-                int speed = Integer.parseInt(request.getParameter("speed"));
-                BigDecimal price = new BigDecimal(request.getParameter("price"));
+                String title = request.getParameter(ParameterConstant.TITLE);
+                int speed = Integer.parseInt(request.getParameter(ParameterConstant.SPEED));
+                BigDecimal price = new BigDecimal(request.getParameter(ParameterConstant.PRICE));
                 adminService.createTariffPlan(title, speed, price);
                 response.sendRedirect("/do?action=show_tariffs");
             } else {
@@ -46,6 +49,6 @@ public class AddTariffServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "add_tariff";
+        return COMMAND_NAME;
     }
 }

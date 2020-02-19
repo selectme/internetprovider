@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
 
@@ -17,6 +19,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class DeleteUserServletCommand implements ServletCommand {
 
     private AdminService adminService;
+    private static final String COMMAND_NAME = "delete_user";
 
     public DeleteUserServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -24,11 +27,11 @@ public class DeleteUserServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        User user = (User) request.getSession().getAttribute("user");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (checkUserIsAdmin(user)) {
-                long userId = Long.parseLong(request.getParameter("user_id"));
+                long userId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
                 adminService.deleteUserById(userId);
                 response.sendRedirect("/do?action=show_users");
             } else {
@@ -41,6 +44,6 @@ public class DeleteUserServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "delete_user";
+        return COMMAND_NAME;
     }
 }

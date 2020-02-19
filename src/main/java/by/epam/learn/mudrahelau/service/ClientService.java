@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.dao.ClientDao;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
@@ -13,23 +15,24 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientService {
+    private static final int COMPARE_TO_VALUE = 0;
     private static final Logger logger = LogManager.getLogger(ClientService.class);
     private ClientDao clientDao = new ClientDao();
 
 
     public void editClientByClient(Client client) {
         clientDao.editClientByClient(client);
-        logger.info("Client{" + client.getId() + "} edited");
+        logger.info(LoggerConstants.CLIENT_EDITED, client.getId());
     }
 
     public void makePayment(Payment payment) {
         clientDao.makePayment(payment);
-        if (payment.getAmount().compareTo(new BigDecimal(0)) > 0)
-            logger.info("Client{" + payment.getClientId() + "} paid " + payment.getAmount());
+        if (payment.getAmount().compareTo(ParameterConstant.ZERO_PAYMENT) > COMPARE_TO_VALUE)
+            logger.info(LoggerConstants.CLIENT_MADE_PAYMENT, payment.getClientId(), payment.getAmount());
     }
 
     public List<Payment> retrievePayments(long clientId) {
-        logger.info("Client{" + clientId + "} requested the payments history");
+        logger.info(LoggerConstants.CLIENT_REQUESTED_PAYMENTS_HISTORY, clientId);
         return clientDao.retrievePayments(clientId);
     }
 
@@ -39,6 +42,7 @@ public class ClientService {
 
     public void changeClientStatus(long clientId, ClientStatus status) {
         clientDao.changeClientStatus(clientId, status);
+        logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, clientId, status);
     }
 
     public void removeTariffPlanFromClient(long clientId) {

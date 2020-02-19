@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ShowUsersListServletCommand implements ServletCommand {
 
     private AdminService adminService;
+    private static final String COMMAND_NAME = "show_users";
 
     public ShowUsersListServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -25,26 +28,23 @@ public class ShowUsersListServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (user.getRole() == Role.ADMIN) {
                 List<Client> clients = adminService.retrieveClients();
-                request.setAttribute("clients", clients);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("users_list.jsp");
+                request.setAttribute(ParameterConstant.CLIENTS, clients);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.USERS_LIST_PAGE);
                 requestDispatcher.forward(request, response);
-//                forwardToPage(req, resp, "users_list.jsp");
             } else {
-//                forwardToPage(req, resp, "index.jsp");
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
-//            forwardToPage(req, resp, "index.jsp");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
     @Override
     public String getName() {
-        return "show_users";
+        return COMMAND_NAME;
     }
 }

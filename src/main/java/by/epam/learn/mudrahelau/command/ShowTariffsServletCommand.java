@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.service.AdminService;
 
@@ -14,7 +16,7 @@ import java.util.List;
  * @author Viktar on 16.02.2020
  */
 public class ShowTariffsServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_tariffs";
     private AdminService adminService;
 
     public ShowTariffsServletCommand(AdminService adminService) {
@@ -24,14 +26,13 @@ public class ShowTariffsServletCommand implements ServletCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-        request.setAttribute("tariffPlans", tariffPlans);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("tariff_plans_list.jsp");
+        request.setAttribute(ParameterConstant.TARIFF_PLANS, tariffPlans);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.TARIFF_PLANS_PAGE);
         requestDispatcher.forward(request, response);
-//        forwardToPage(req, resp, "tariff_plans_list.jsp");
     }
 
     @Override
     public String getName() {
-        return "show_tariffs";
+        return COMMAND_NAME;
     }
 }

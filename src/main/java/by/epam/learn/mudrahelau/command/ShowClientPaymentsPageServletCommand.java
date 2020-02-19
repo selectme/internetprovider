@@ -1,5 +1,8 @@
 package by.epam.learn.mudrahelau.command;
 
+
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.ClientService;
@@ -15,7 +18,7 @@ import java.util.List;
  * @author Viktar on 16.02.2020
  */
 public class ShowClientPaymentsPageServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_clients_payments_page";
     private ClientService clientService;
 
     public ShowClientPaymentsPageServletCommand(ClientService clientService) {
@@ -24,12 +27,12 @@ public class ShowClientPaymentsPageServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = "index.jsp";
-        User user = (User) request.getSession().getAttribute("user");
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             List<Payment> payments = clientService.retrievePayments(user.getId());
-            request.setAttribute("payments", payments);
-            destinationPage = "payments_page.jsp";
+            request.setAttribute(ParameterConstant.PAYMENTS, payments);
+            destinationPage = PagesConstant.PAYMENTS_PAGE;
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         requestDispatcher.forward(request, response);
@@ -37,6 +40,6 @@ public class ShowClientPaymentsPageServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "show_clients_payments_page";
+        return COMMAND_NAME;
     }
 }

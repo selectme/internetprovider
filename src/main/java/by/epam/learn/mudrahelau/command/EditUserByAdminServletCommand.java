@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
@@ -22,6 +24,8 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  */
 public class EditUserByAdminServletCommand implements ServletCommand {
 
+    private static final String COMMAND_NAME = "edit_user_by_admin";
+
     private AdminService adminService;
 
     public EditUserByAdminServletCommand(AdminService adminService) {
@@ -30,21 +34,21 @@ public class EditUserByAdminServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        User user = (User) request.getSession().getAttribute("user");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (checkUserIsAdmin(user)) {
-                long clientId = Long.parseLong(request.getParameter("user_id"));
-                String login = request.getParameter("login");
-                String name = request.getParameter("name");
-                String surname = request.getParameter("surname");
+                long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
+                String login = request.getParameter(ParameterConstant.LOGIN);
+                String name = request.getParameter(ParameterConstant.NAME);
+                String surname = request.getParameter(ParameterConstant.SURNAME);
                 int tariffPlanId;
                 try {
-                    tariffPlanId = Integer.parseInt(request.getParameter("tariff_id"));
+                    tariffPlanId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
                 } catch (NumberFormatException e) {
-                    tariffPlanId = 0;
+                    tariffPlanId = ParameterConstant.FAKE_TARIFF_ID;
                 }
-                ClientStatus status = ClientStatus.valueOf(request.getParameter("status").toUpperCase());
+                ClientStatus status = ClientStatus.valueOf(request.getParameter(ParameterConstant.STATUS).toUpperCase());
                 Client client = new Client();
                 client.setId(clientId);
                 client.setLogin(login);
@@ -55,8 +59,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 if (status == ClientStatus.INACTIVE) {
                     adminService.makeInactiveClient(clientId);
                 } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
-                    if (tariffPlanId != 0) {
-                        Payment payment = new Payment(clientId, new BigDecimal(0), PaymentType.DEBIT, LocalDateTime.now());
+                    if (tariffPlanId != ParameterConstant.FAKE_TARIFF_ID) {
+                        Payment payment = new Payment(clientId, ParameterConstant.ZERO_PAYMENT, PaymentType.DEBIT, LocalDateTime.now());
                         adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
                     }
                 }
@@ -71,6 +75,6 @@ public class EditUserByAdminServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "edit_user_by_admin";
+        return COMMAND_NAME;
     }
 }

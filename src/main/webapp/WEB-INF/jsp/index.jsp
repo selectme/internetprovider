@@ -16,7 +16,7 @@
 </head>
 
 <body class="container">
-<c:import url="/WEB-INF/jsp/footer.jsp"/>
+
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 <h2>
     <fmt:message key="label.chooseSessionLocale" />
@@ -55,4 +55,5 @@
 <script src="../../js/bootstrap.min.js"></script>
 
 </body>
+<c:import url="/WEB-INF/jsp/footer.jsp"/>
 </html>

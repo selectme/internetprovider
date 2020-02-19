@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
@@ -16,7 +18,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  * @author Viktar on 16.02.2020
  */
 public class ShowEditTariffPageServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_edit_tariffplan_page";
     private AdminService adminService;
 
     public ShowEditTariffPageServletCommand(AdminService adminService) {
@@ -25,14 +27,13 @@ public class ShowEditTariffPageServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = "index.jsp";
-        User user = (User) request.getSession().getAttribute("user");
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (checkUserIsAdmin(user)) {
-            int id = Integer.parseInt(request.getParameter("tariff_id"));
+            int id = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
             TariffPlan tariffPlan = adminService.getTariffPlanById(id);
-            request.setAttribute("tariffPlan", tariffPlan);
-            destinationPage = "edit_tariffplan_page.jsp";
-//            forwardToPage(req, resp, "edit_tariffplan_page.jsp");
+            request.setAttribute(ParameterConstant.TARIFF, tariffPlan);
+            destinationPage = PagesConstant.EDIT_TARIFF_PAGE;
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         requestDispatcher.forward(request, response);
@@ -40,6 +41,6 @@ public class ShowEditTariffPageServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "show_edit_tariffplan_page";
+        return COMMAND_NAME;
     }
 }

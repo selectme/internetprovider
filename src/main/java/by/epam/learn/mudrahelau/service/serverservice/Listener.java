@@ -1,6 +1,9 @@
 package by.epam.learn.mudrahelau.service.serverservice;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.sheduler.ScheduleExecutor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -10,9 +13,10 @@ import javax.servlet.ServletContextListener;
  */
 //todo название класса?
 public class Listener implements ServletContextListener {
+    private static final Logger logger = LogManager.getLogger(Listener.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("server is working");
+        logger.info(LoggerConstants.SERVER_STARTED);
         ScheduleExecutor scheduleExecutor = new ScheduleExecutor();
         scheduleExecutor.execute();
     }

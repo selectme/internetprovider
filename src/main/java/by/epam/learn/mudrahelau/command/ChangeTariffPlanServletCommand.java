@@ -1,12 +1,12 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +21,7 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
 
     private AdminService adminService;
     private ClientService clientService;
+    private static final String COMMAND_NAME = "change_tariff_plan";
 
     public ChangeTariffPlanServletCommand(AdminService adminService, ClientService clientService) {
         this.adminService = adminService;
@@ -30,10 +31,10 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
-            long clientId = Long.parseLong(request.getParameter("user_id"));
-            int tariffId = Integer.parseInt(request.getParameter("tariff_id"));
+            long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
+            int tariffId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
             BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
             BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
             if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
@@ -48,6 +49,6 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "change_tariff_plan";
+        return COMMAND_NAME;
     }
 }

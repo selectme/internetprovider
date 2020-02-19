@@ -1,5 +1,6 @@
 package by.epam.learn.mudrahelau.sheduler;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.payment.PaymentType;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TimerTask;
 
+import static by.epam.learn.mudrahelau.constant.LoggerConstants.CLIENT_DOES_NOT_HAVE_ARREARS;
+
 /**
  * @author Viktar on 29.01.2020
  */
@@ -22,6 +25,7 @@ public class PaymentChecker extends TimerTask {
     private AdminService adminService = new AdminService();
     private ClientService clientService = new ClientService();
     private static final int DAYS_AFTER_THE_LAST_DEBIT_PAYMENT = 1;
+    private static final int COMPARE_TO_VALUE = 0;
 
     @Override
     public void run() {
@@ -35,7 +39,7 @@ public class PaymentChecker extends TimerTask {
                 BigDecimal clientBalance = clientService.retrieveClientMoneyAmountByClientId(client.getId());
                 BigDecimal tariffPlanPrice = adminService.getTariffPlanById(clientIdValues.getValue()).getPrice();
 
-                if (clientBalance.compareTo(tariffPlanPrice) >= 0) {
+                if (clientBalance.compareTo(tariffPlanPrice) >= COMPARE_TO_VALUE) {
 
                     Payment payment = new Payment();
                     payment.setClientId(client.getId());
@@ -43,19 +47,18 @@ public class PaymentChecker extends TimerTask {
                     payment.setPaymentType(PaymentType.DEBIT);
                     payment.setDate(today);
                     clientService.makePayment(payment);
-                    logger.info("Client {" + client.getId() + "} paid " + tariffPlanPrice
-                            + " for the tariff {" + clientIdValues.getValue() + "}");
+                    logger.info(LoggerConstants.CLIENT_PAID, client.getId(), payment.getAmount(), clientIdValues.getValue());
                     if (client.getStatus() != ClientStatus.ACTIVE) {
                         clientService.changeClientStatus(client.getId(), ClientStatus.ACTIVE);
-                        logger.info("Client {" + client.getId() + "} status changed to " + ClientStatus.ACTIVE);
+                        logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, client.getId(), ClientStatus.ACTIVE);
                     }
                 } else if (client.getStatus() != ClientStatus.BLOCKED) {
                     clientService.changeClientStatus(client.getId(), ClientStatus.BLOCKED);
-                    logger.info("Client {" + client.getId() + "} does not have enough money on balance." +
-                            " Status changed to " + ClientStatus.BLOCKED);
+                    logger.info(LoggerConstants.CLIENT_DOES_NOT_HAVE_MONEY, client.getId());
+                    logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, client.getId(), ClientStatus.ACTIVE);
                 }
             } else {
-                logger.info("Client {" + client.getId() + "}. The bill is paid.");
+                logger.info(CLIENT_DOES_NOT_HAVE_ARREARS, client.getId());
             }
         }
     }

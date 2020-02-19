@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.ClientService;
@@ -16,6 +18,7 @@ import java.io.IOException;
 public class EditClientByClientServletCommand implements ServletCommand {
 
     private ClientService clientService;
+    private static final String COMMAND_NAME = "edit_client_by_client";
 
     public EditClientByClientServletCommand(ClientService clientService) {
         this.clientService = clientService;
@@ -23,14 +26,14 @@ public class EditClientByClientServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        User user = (User) request.getSession().getAttribute("user");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
-            long clientId = Long.parseLong(request.getParameter("user_id"));
+            long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             if (clientId == user.getId()) {
                 Client client = new Client();
-                String name = request.getParameter("name");
-                String surname = request.getParameter("surname");
+                String name = request.getParameter(ParameterConstant.NAME);
+                String surname = request.getParameter(ParameterConstant.SURNAME);
                 client.setId(clientId);
                 client.setName(name);
                 client.setSurname(surname);
@@ -46,6 +49,6 @@ public class EditClientByClientServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "edit_client_by_client";
+        return COMMAND_NAME;
     }
 }

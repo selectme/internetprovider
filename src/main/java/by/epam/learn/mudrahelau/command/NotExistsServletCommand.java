@@ -9,6 +9,7 @@ import java.io.IOException;
  * @author Viktar on 16.02.2020
  */
 public class NotExistsServletCommand implements ServletCommand{
+    private static final String COMMAND_NAME = "not_exists";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.sendRedirect("/");
@@ -16,6 +17,6 @@ public class NotExistsServletCommand implements ServletCommand{
 
     @Override
     public String getName() {
-        return "not_exists";
+        return COMMAND_NAME;
     }
 }

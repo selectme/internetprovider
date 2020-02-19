@@ -23,6 +23,7 @@ public class User {
         this.role = role;
     }
 
+
     public User(long id, String login, String password, String name, String surname) {
         this.id = id;
         this.login = login;

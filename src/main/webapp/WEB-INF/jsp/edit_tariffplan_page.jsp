@@ -20,7 +20,7 @@
         <div class="form-group row">
             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">ID</label>
             <div class="col-sm-10">
-                <input name="id" value="${tariffPlan.id}" class="form-control form-control-sm" id="colFormLabelSm"
+                <input name="id" value="${tariff.id}" class="form-control form-control-sm" id="colFormLabelSm"
                        placeholder="col-form-label-sm"
                        readonly="readonly">
             </div>
@@ -29,14 +29,14 @@
         <div class="form-group row">
             <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Title</label>
             <div class="col-sm-10">
-                <input name="title" value="${tariffPlan.title}" class="form-control form-control-lg" id="titleLabel"/>
+                <input name="title" value="${tariff.title}" class="form-control form-control-lg" id="titleLabel"/>
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-lg">Speed</label>
             <div class="col-sm-10">
-                <input type="number" name="speed" value="${tariffPlan.speed}" class="form-control form-control-lg"
+                <input type="number" name="speed" value="${tariff.speed}" class="form-control form-control-lg"
                        id="speedLabel"/>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-lg">Price</label>
             <div class="col-sm-10">
-                <input type="number" name="price" value="${tariffPlan.price}" step="0.01"
+                <input type="number" name="price" value="${tariff.price}" step="0.01"
                        class="form-control form-control-lg"/>
             </div>
         </div>

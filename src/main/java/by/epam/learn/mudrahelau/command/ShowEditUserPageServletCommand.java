@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
@@ -18,7 +20,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  * @author Viktar on 16.02.2020
  */
 public class ShowEditUserPageServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_edit_user_page_by_admin";
     private AdminService adminService;
 
     public ShowEditUserPageServletCommand(AdminService adminService) {
@@ -27,16 +29,15 @@ public class ShowEditUserPageServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = "index.jsp";
-        User user = (User) request.getSession().getAttribute("user");
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (checkUserIsAdmin(user)) {
-            long id = Long.parseLong(request.getParameter("user_id"));
+            long id = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             Client client = adminService.getClientById(id);
             List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-            request.setAttribute("client", client);
-            request.setAttribute("tariffPlans", tariffPlans);
-            destinationPage = "edit_user_by_admin_page.jsp";
-//            forwardToPage(req, resp, "edit_user_by_admin_page.jsp");
+            request.setAttribute(ParameterConstant.CLIENT, client);
+            request.setAttribute(ParameterConstant.TARIFF_PLANS, tariffPlans);
+            destinationPage = PagesConstant.EDIT_BY_ADMIN_PAGE;
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         requestDispatcher.forward(request, response);
@@ -44,6 +45,6 @@ public class ShowEditUserPageServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "show_edit_user_page_by_admin";
+        return COMMAND_NAME;
     }
 }

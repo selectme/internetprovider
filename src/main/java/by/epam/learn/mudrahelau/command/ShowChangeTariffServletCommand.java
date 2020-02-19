@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
@@ -16,7 +18,7 @@ import java.util.List;
  * @author Viktar on 16.02.2020
  */
 public class ShowChangeTariffServletCommand implements ServletCommand {
-
+    private static final String COMMAND_NAME = "show_change_tariff_page";
     private AdminService adminService;
 
     public ShowChangeTariffServletCommand(AdminService adminService) {
@@ -25,26 +27,26 @@ public class ShowChangeTariffServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = "index.jsp";
-        User user = (User) request.getSession().getAttribute("user");
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
-            long clientId = Long.parseLong(request.getParameter("user_id"));
+            long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             if (clientId == user.getId()) {
                 Client client = adminService.getClientById(clientId);
                 TariffPlan tariff = adminService.getTariffPlanByClientId(clientId);
                 List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
-                request.setAttribute("client", client);
-                request.setAttribute("tariff", tariff);
-                request.setAttribute("tariffPlans", tariffPlans);
-                destinationPage = "change_tariff_page.jsp";
-//                forwardToPage(req, resp, "change_tariff_page.jsp");
-            } RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
+                request.setAttribute(ParameterConstant.CLIENT, client);
+                request.setAttribute(ParameterConstant.TARIFF, tariff);
+                request.setAttribute(ParameterConstant.TARIFF_PLANS, tariffPlans);
+                destinationPage = PagesConstant.CHANGE_TARIFF_PAGE;
+            }
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
             requestDispatcher.forward(request, response);
         }
     }
 
     @Override
     public String getName() {
-        return "show_change_tariff_page";
+        return COMMAND_NAME;
     }
 }

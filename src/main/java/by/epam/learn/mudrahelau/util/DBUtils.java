@@ -16,6 +16,8 @@ public class DBUtils {
     private final static String URL = "jdbc:mysql://localhost:3306/providerdb?serverTimezone=Europe/Minsk&allowPublicKeyRetrieval=true&useSSL=false";
     private final static String LOGIN = "root";
     private final static String PASSWORD = "root";
+    private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private final static int NUMBER_OF_CONNECTIONS = 10;
 
     private DBUtils() {
     }
@@ -29,7 +31,7 @@ public class DBUtils {
 
     {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+            Class.forName(DRIVER).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -37,7 +39,7 @@ public class DBUtils {
     }
 
     private void createConnectionPool() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < NUMBER_OF_CONNECTIONS; i++) {
             try {
                 connectionPool.add(DriverManager.getConnection(URL, LOGIN, PASSWORD));
             } catch (SQLException e) {

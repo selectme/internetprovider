@@ -1,5 +1,6 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.dao.AdminDao;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
@@ -18,17 +19,17 @@ public class AdminService {
 
     public void createUser(String login, String password, String name, String surname, Role role) {
         adminDao.createUser(login, password, name, surname, role);
-        logger.info("User{" + name + " " + surname + "." + role + "} created");
+        logger.info(LoggerConstants.USER_CREATED, name, surname, role);
     }
 
     public void deleteUserById(long userId) {
         adminDao.deleteUserById(userId);
-        logger.info("User{" + userId + "} deleted");
+        logger.info(LoggerConstants.USER_DELETED, userId);
     }
 
     public void deleteTariffPlanById(int tariffPlanId) {
         adminDao.deleteTariffPlanById(tariffPlanId);
-        logger.info("Tariff plan{" + tariffPlanId + "} deleted");
+        logger.info(LoggerConstants.USER_DELETED, tariffPlanId);
     }
 
     public Client getClientById(long id) {
@@ -37,7 +38,7 @@ public class AdminService {
 
     public void editClientByAdmin(Client client) {
         adminDao.editClientByAdmin(client);
-        logger.info("Client{" + client.getId() + "} edited");
+        logger.info(LoggerConstants.CLIENT_EDITED, client.getId());
     }
 
     public List<Client> retrieveClients() {
@@ -46,12 +47,12 @@ public class AdminService {
 
     public void createTariffPlan(String title, int speed, BigDecimal price) {
         adminDao.createTariffPlan(title, speed, price);
-        logger.info("Tariff plan {title: " + title + ", speed: " + speed + ", price: " + price + "} created");
+        logger.info(LoggerConstants.TARIFF_CREATED, title, speed, price);
     }
 
     public void editTariffPlan(TariffPlan tariffPlan) {
         adminDao.editTariffPlan(tariffPlan);
-        logger.info("Tariff plan{" + tariffPlan.getId() + "} edited");
+        logger.info(LoggerConstants.TARIFF_EDITED, tariffPlan);
     }
 
     public void makeInactiveClient(long clientId) {
@@ -72,7 +73,7 @@ public class AdminService {
 
     public void makePaymentAndChangeTariff(long clientId, int tariffId, Payment payment) {
         adminDao.makePaymentAndChangeTariffPlan(clientId, tariffId, payment);
-        logger.info("Client{" + clientId + "} changed tariff plan to {" + tariffId + "}");
+        logger.info(LoggerConstants.CLIENT_CHANGED_TARIFF, clientId, tariffId);
     }
 
 }

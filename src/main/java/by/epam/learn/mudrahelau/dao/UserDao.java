@@ -1,5 +1,6 @@
 package by.epam.learn.mudrahelau.dao;
 
+import by.epam.learn.mudrahelau.constant.DbConstants;
 import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
@@ -12,21 +13,23 @@ import java.sql.SQLException;
 
 public class UserDao {
 
+    private static final String GET_USER_SQL = "SELECT * from user WHERE login = ? and password = ?";
+
     public User getUser(String login, String password) {
         Connection connection = DBUtils.getInstance().getConnection();
         User user = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from user WHERE login = ? and password = ? ");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_SQL)
         ) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, PasswordHash.hashPassword(password));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long userId = resultSet.getLong(1);
-                String userLogin = resultSet.getString(2);
-                String userPassword = resultSet.getString(3);
-                String userName = resultSet.getString(4);
-                String userSurname = resultSet.getString(5);
-                Role role = Role.valueOf(resultSet.getString(6));
+                long userId = resultSet.getLong(DbConstants.ID);
+                String userLogin = resultSet.getString(DbConstants.LOGIN);
+                String userPassword = resultSet.getString(DbConstants.ID);
+                String userName = resultSet.getString(DbConstants.NAME);
+                String userSurname = resultSet.getString(DbConstants.SURNAME);
+                Role role = Role.valueOf(resultSet.getString(DbConstants.ROLE));
                 user = new User(userId, userLogin, userPassword, userName, userSurname, role);
             }
         } catch (SQLException e) {

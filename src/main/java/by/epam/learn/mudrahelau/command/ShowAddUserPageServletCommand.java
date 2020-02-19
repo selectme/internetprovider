@@ -1,5 +1,7 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
+import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -14,12 +16,13 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  * @author Viktar on 16.02.2020
  */
 public class ShowAddUserPageServletCommand implements ServletCommand {
+    private static final String COMMAND_NAME = "show_add_client_page";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        User user = (User) request.getSession().getAttribute("user");
-        String destinationPage = "index.jsp";
+        User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
+        String destinationPage = PagesConstant.MAIN_PAGE;
         if (checkUserIsAdmin(user)) {
-            destinationPage = "add_user.jsp";
+            destinationPage = PagesConstant.ADD_USER_PAGE;
         }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         requestDispatcher.forward(request, response);
@@ -27,6 +30,6 @@ public class ShowAddUserPageServletCommand implements ServletCommand {
 
     @Override
     public String getName() {
-        return "show_add_client_page";
+        return COMMAND_NAME;
     }
 }

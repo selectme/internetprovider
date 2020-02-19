@@ -1,5 +1,6 @@
 package by.epam.learn.mudrahelau.dao;
 
+import by.epam.learn.mudrahelau.constant.DbConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.payment.PaymentType;
@@ -19,11 +20,20 @@ public class ClientDao {
 
     private static final String UPDATE_CLIENT_DATA_SQL = "UPDATE user SET login=?, password=?, name=?, surname=? where id=?";
     private static final String UPDATE_CLIENT_TARIFF_PLAN_SQL = "UPDATE user_tariffplan SET tariff_id=? where user_id=?";
+    private static final String UPDATE_CLIENT_SQL = "UPDATE user SET name=?, surname=? WHERE id=?";
+    private static final String MAKE_PAYMENT_SQL = "INSERT into payments(client_id, amount, type, date) values (?,?,?,?)";
+    private static final String GET_PAYMENTS_BY_CLIENT_ID_SQL = "SELECT * FROM payments WHERE client_id = ?";
+    private static final String GET_CLIENT_CURRENT_MONEY_BALANCE_SQL = "SELECT SUM(amount) as amount FROM payments WHERE client_id = ?";
+    private static final String CHANGE_CLIENT_STATUS_SQL = "UPDATE user SET status=? WHERE id=?";
+    private static final String SET_FAKE_TARIFF_TO_CLIENT_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE user_id=?";
+    private static final String GET_LAST_DEBIT_DATE_SQL = "SELECT date FROM payments WHERE date=(SELECT MAX(date) " +
+            "FROM payments WHERE client_id=? AND type='DEBIT')";
+    private static final String GET_ACTIVE_CLIENTS_SQL = "SELECT * FROM user_tariffplan WHERE tariff_id > 0";
 
 
     public void editClientByClient(Client client) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement updateClient = connection.prepareStatement("UPDATE user SET name=?, surname=? WHERE id=?")
+        try (PreparedStatement updateClient = connection.prepareStatement(UPDATE_CLIENT_SQL)
         ) {
             updateClient.setString(1, client.getName());
             updateClient.setString(2, client.getSurname());
@@ -39,8 +49,7 @@ public class ClientDao {
 
     public void makePayment(Payment payment) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT into payments(client_id, amount, type, date) " +
-                "values (?,?,?,?)")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(MAKE_PAYMENT_SQL)) {
             preparedStatement.setLong(1, payment.getClientId());
             preparedStatement.setBigDecimal(2, payment.getAmount());
             LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Europe/Minsk"));
@@ -60,17 +69,16 @@ public class ClientDao {
     public List<Payment> retrievePayments(Long clientId) {
         List<Payment> payments = new ArrayList<>();
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM payments" +
-                " WHERE client_id = ?")
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PAYMENTS_BY_CLIENT_ID_SQL)
         ) {
             preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                BigDecimal amount = resultSet.getBigDecimal(3);
-                PaymentType type = PaymentType.valueOf(resultSet.getString(4).toUpperCase());
-                Timestamp timestamp = resultSet.getTimestamp(5);
+                BigDecimal amount = resultSet.getBigDecimal(DbConstants.AMOUNT);
+                PaymentType type = PaymentType.valueOf(resultSet.getString(DbConstants.TYPE).toUpperCase());
+                Timestamp timestamp = resultSet.getTimestamp(DbConstants.DATE);
                 LocalDateTime date = timestamp.toLocalDateTime();
-                Payment payment = new Payment(amount,type, date);
+                Payment payment = new Payment(amount, type, date);
                 payments.add(payment);
             }
         } catch (SQLException e) {
@@ -86,12 +94,11 @@ public class ClientDao {
     public BigDecimal retrieveClientMoneyAmountByClientId(long clientId) {
         BigDecimal amount = new BigDecimal(0);
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT SUM(amount) FROM payments " +
-                "WHERE client_id = ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CLIENT_CURRENT_MONEY_BALANCE_SQL)) {
             preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                amount = resultSet.getBigDecimal(1);
+                amount = resultSet.getBigDecimal(DbConstants.AMOUNT);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,8 +110,7 @@ public class ClientDao {
 
     public void changeClientStatus(long clientId, ClientStatus status) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET status=? " +
-                "WHERE id=?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(CHANGE_CLIENT_STATUS_SQL)) {
             preparedStatement.setString(1, status.name());
             preparedStatement.setLong(2, clientId);
             preparedStatement.executeUpdate();
@@ -120,8 +126,7 @@ public class ClientDao {
 
     public void removeTariffPlanFromClient(long clientId) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user_tariffplan SET tariff_id=0 " +
-                "WHERE user_id=?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SET_FAKE_TARIFF_TO_CLIENT_SQL)) {
             preparedStatement.setLong(1, clientId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -134,13 +139,12 @@ public class ClientDao {
     public LocalDateTime retrieveLastDebitDate(long clientId) {
         LocalDateTime localDateTime = null;
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT date FROM payments " +
-                "WHERE date=(SELECT MAX(date) FROM payments WHERE client_id=? AND type='DEBIT')")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LAST_DEBIT_DATE_SQL)) {
             preparedStatement.setLong(1, clientId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 try {
-                    localDateTime = resultSet.getTimestamp(1).toLocalDateTime();
+                    localDateTime = resultSet.getTimestamp(DbConstants.DATE).toLocalDateTime();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -156,12 +160,11 @@ public class ClientDao {
     public Map<Long, Integer> retrieveActiveClientsId() {
         Map<Long, Integer> clientIdAndTariffId = new HashMap<>();
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_tariffplan " +
-                "WHERE tariff_id > 0")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ACTIVE_CLIENTS_SQL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Long clientId = resultSet.getLong(1);
-                Integer tariffId = resultSet.getInt(2);
+                Long clientId = resultSet.getLong(DbConstants.USER_ID);
+                Integer tariffId = resultSet.getInt(DbConstants.TARIFF_ID);
                 clientIdAndTariffId.put(clientId, tariffId);
             }
         } catch (SQLException e) {

@@ -29,8 +29,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ActionServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(ActionServlet.class);
 
+    private static final String ACTION = "action";
+    private static final Logger logger = LogManager.getLogger(ActionServlet.class);
 
     @Override
     public void init() {
@@ -40,7 +41,7 @@ public class ActionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String action = req.getParameter("action");
+            String action = req.getParameter(ACTION);
             ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
             command.execute(req, resp);
         } catch (ServletException | IOException e) {
@@ -52,7 +53,7 @@ public class ActionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String action = req.getParameter("action");
+            String action = req.getParameter(ACTION);
             ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
             command.execute(req, resp);
         } catch (ServletException | IOException e) {
