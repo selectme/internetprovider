@@ -14,7 +14,6 @@
     <title>Hello</title>
 </head>
 
-
 <body class="container">
 <div class="container">
 
@@ -26,76 +25,52 @@
                 <a class="nav-link font-weight-bold" href="/">IP</a>
             </li>
 
+
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
+                <fmt:message key="label.home_button" var="home"/>
+                <a class="nav-link" href="/">${home}</a>
             </li>
 
             <c:if test="${user != null}">
                 <c:if test="${user.role == 'CLIENT'}">
                     <li class="nav-item active">
-                        <a class="nav-link" href="do?action=show_client_account_page&user_id=${user.id}">My
-                            account</a>
+                        <fmt:message key="label.my_account" var="acc"/>
+                        <a class="nav-link" href="do?action=show_client_account_page&user_id=${user.id}">${acc}</a>
                     </li>
                 </c:if>
                 <c:if test="${user.role == 'ADMIN'}">
                     <li class="nav-item active">
-                        <a class="nav-link" href="do?action=show_administration_panel">Administration panel</a>
+                        <a class="nav-link" href="do?action=show_administration_panel"><fmt:message key="label.admin_panel"/> </a>
                     </li>
                 </c:if>
             </c:if>
-
-
         </ul>
-
-        <%--<div class="dropdown">--%>
-        <%--<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
-        <%--Dropdown button--%>
-        <%--</button>--%>
-        <%--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--%>
-        <%--<a class="dropdown-item" href="?sessionLocale=ru">Русский</a>--%>
-        <%--<a class="dropdown-item" href="?sessionLocale=by">Беларуски</a>--%>
-        <%--<a class="dropdown-item" href="?sessionLocale=en">English</a>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-        </div>
 
         <div>
 
+            <div class="dropdown justify-content-between" >
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Language
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?sessionLocale=ru">Русский</a>
+                    <a class="dropdown-item" href="?sessionLocale=by">Беларуски</a>
+                    <a class="dropdown-item" href="?sessionLocale=en">English</a>
+                </div>
                 <c:choose>
-                <c:when test="${sessionScope.lang=='ru'}">
-                    <a href="?sessionLocale=ru">RU</a>
-                </c:when>
-                <c:when test="${sessionScope.lang=='by'}">
-                    <a href="?sessionLocale=by">BY</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="?sessionLocale=en">EN</a>
-                </c:otherwise>
-            </c:choose>
-            <c:choose>
-                <c:when test="${user == null}">
-                    <a href="do?action=show_login_page">
-                        <button type="button" class="btn btn-primary">Login</button>
-                    </a>
-                </c:when>
-                <c:otherwise>
-                    <a href="do?action=do_logout">
-                        <button type="button" class="btn btn-primary">Logout</button>
-                    </a>
-                </c:otherwise>
-            </c:choose>
+                    <c:when test="${user == null}">
+                        <a href="do?action=show_login_page">
+                            <button type="button" class="btn btn-primary"><fmt:message key="label.login"/> </button>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="do?action=do_logout">
+                            <button type="button" class="btn btn-primary"><fmt:message key="label.logout"/> </button>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
         </div>
     </nav>
 </div>
