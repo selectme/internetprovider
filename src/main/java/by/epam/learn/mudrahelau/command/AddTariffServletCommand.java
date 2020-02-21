@@ -2,9 +2,11 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.validator.AdminValidator;
+import by.epam.learn.mudrahelau.validator.TariffValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,8 @@ public class AddTariffServletCommand implements ServletCommand {
 
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_tariff";
+    private static final String ERROR_MESSAGE = "Values can't be negative";
+
 
 
     public AddTariffServletCommand(AdminService adminService) {
@@ -29,7 +33,8 @@ public class AddTariffServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
 
@@ -37,8 +42,15 @@ public class AddTariffServletCommand implements ServletCommand {
                 String title = request.getParameter(ParameterConstant.TITLE);
                 int speed = Integer.parseInt(request.getParameter(ParameterConstant.SPEED));
                 BigDecimal price = new BigDecimal(request.getParameter(ParameterConstant.PRICE));
-                adminService.createTariffPlan(title, speed, price);
-                response.sendRedirect("/do?action=show_tariffs");
+                TariffPlan tariffPlan = new TariffPlan(title, speed, price);
+                if (TariffValidator.validateTariff(tariffPlan)) {
+                    adminService.createTariffPlan(tariffPlan);
+                    response.sendRedirect("/do?action=show_tariffs");
+                } else {
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
+                    destinationPage = PagesConstant.ADD_TARIFF_PAGE;
+                    request.getRequestDispatcher(destinationPage).forward(request, response);
+                }
             } else {
                 requestDispatcher.forward(request, response);
             }

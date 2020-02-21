@@ -5,6 +5,7 @@ import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
+import by.epam.learn.mudrahelau.validator.TariffValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditTariffPlanServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "edit_tariff_plan";
+    private static final String ERROR_MESSAGE = "Values can't be negative";
 
     public EditTariffPlanServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -28,7 +30,8 @@ public class EditTariffPlanServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (checkUserIsAdmin(user)) {
@@ -37,8 +40,12 @@ public class EditTariffPlanServletCommand implements ServletCommand {
                 tariffPlan.setTitle(request.getParameter(ParameterConstant.TITLE));
                 tariffPlan.setSpeed(Integer.parseInt(request.getParameter(ParameterConstant.SPEED)));
                 tariffPlan.setPrice(new BigDecimal(request.getParameter(ParameterConstant.PRICE)));
-                adminService.editTariffPlan(tariffPlan);
-                response.sendRedirect("/do?action=show_tariffs");
+                if (TariffValidator.validateTariff(tariffPlan)) {
+                    adminService.editTariffPlan(tariffPlan);
+                    response.sendRedirect("/do?action=show_tariffs");
+                } else {
+                    response.sendRedirect("do?action=show_edit_tariffplan_page&tariff_id=" + tariffPlan.getId());
+                }
             } else {
                 requestDispatcher.forward(request, response);
             }

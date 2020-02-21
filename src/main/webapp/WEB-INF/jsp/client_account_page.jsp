@@ -16,7 +16,6 @@
 <c:import url="/WEB-INF/jsp/footer.jsp"/>
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
-
 <br>
 <div class="container">
     <div class="row justify-content-center">

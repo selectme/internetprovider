@@ -5,6 +5,7 @@ import by.epam.learn.mudrahelau.dao.AdminDao;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +18,14 @@ public class AdminService {
 
     private AdminDao adminDao = new AdminDao();
 
-    public void createUser(String login, String password, String name, String surname, Role role) {
-        adminDao.createUser(login, password, name, surname, role);
-        logger.info(LoggerConstants.USER_CREATED, name, surname, role);
-    }
+//    public void createUser(String login, String password, String name, String surname, Role role) {
+//        adminDao.createUser(login, password, name, surname, role);
+//        logger.info(LoggerConstants.USER_CREATED, name, surname, role);
+//    }
+public void createUser(User user) {
+    adminDao.createUser(user);
+    logger.info(LoggerConstants.USER_CREATED, user.getName(), user.getSurname(), user.getRole());
+}
 
     public void deleteUserById(long userId) {
         adminDao.deleteUserById(userId);
@@ -45,10 +50,14 @@ public class AdminService {
         return adminDao.retrieveClients();
     }
 
-    public void createTariffPlan(String title, int speed, BigDecimal price) {
-        adminDao.createTariffPlan(title, speed, price);
-        logger.info(LoggerConstants.TARIFF_CREATED, title, speed, price);
+    public void createTariffPlan(TariffPlan tariffPlan) {
+        adminDao.createTariffPlan(tariffPlan);
+        logger.info(LoggerConstants.TARIFF_CREATED, tariffPlan.getTitle(), tariffPlan.getSpeed(), tariffPlan.getPrice());
     }
+//    public void createTariffPlan(String title, int speed, BigDecimal price) {
+//        adminDao.createTariffPlan(title, speed, price);
+//        logger.info(LoggerConstants.TARIFF_CREATED, title, speed, price);
+//    }
 
     public void editTariffPlan(TariffPlan tariffPlan) {
         adminDao.editTariffPlan(tariffPlan);

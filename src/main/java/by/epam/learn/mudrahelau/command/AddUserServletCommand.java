@@ -1,12 +1,15 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.validator.AdminValidator;
 import by.epam.learn.mudrahelau.validator.LoginValidator;
+import by.epam.learn.mudrahelau.validator.UserValidator;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,7 @@ import java.io.IOException;
 public class AddUserServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_user";
+    private static final String ERROR_MESSAGE = "Please, fill all the fields";
 
     public AddUserServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -29,15 +33,24 @@ public class AddUserServletCommand implements ServletCommand {
         if (user != null) {
             if (AdminValidator.checkUserIsAdmin(user)) {
                 String login = request.getParameter(ParameterConstant.LOGIN);
+                System.out.println(login);
                 String password = request.getParameter(ParameterConstant.PASSWORD);
+                System.out.println(password );
                 String name = request.getParameter(ParameterConstant.NAME);
+                System.out.println(name);
                 String surname = request.getParameter(ParameterConstant.SURNAME);
+                System.out.println(surname);
                 Role role = Role.valueOf(request.getParameter(ParameterConstant.ROLE));
-                if (LoginValidator.checkLoginIsUnique(login)) {
-                    adminService.createUser(login, password, name, surname, role);
+                System.out.println(role);
+                User newUser = new User(login, password, name, surname, role);
+                if (UserValidator.validateUser(newUser)) {
+                    System.out.println("here");
+                    adminService.createUser(newUser);
                     response.sendRedirect("/do?action=show_users");
                 } else {
-                    response.sendRedirect("/do?action=show_add_client_page_error");
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.ADD_USER_PAGE);
+                    requestDispatcher.forward(request,response);
                 }
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);

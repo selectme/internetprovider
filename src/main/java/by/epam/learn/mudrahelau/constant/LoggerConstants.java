@@ -1,7 +1,5 @@
 package by.epam.learn.mudrahelau.constant;
 
-import java.text.MessageFormat;
-
 /**
  * @author Viktar on 19.02.2020
  */
@@ -20,5 +18,7 @@ public class LoggerConstants {
     public static final String CLIENT_PAID = "Client {{}} paid {} for the tariff {}}";
     public static final String CLIENT_DOES_NOT_HAVE_MONEY = "Client {{}} does not have enough money on the balance.";
     public static final String CLIENT_DOES_NOT_HAVE_ARREARS = "Client {} does not have any arrears";
+
+
 
 }

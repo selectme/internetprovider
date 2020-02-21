@@ -30,7 +30,7 @@
         <div class="form-group row">
             <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Login</label>
             <div class="col-sm-10">
-                <input name="Login" value="${client.login}" class="form-control form-control-lg" id="titleLabel"
+                <input name="Login" value="${client.getLogin()}" class="form-control form-control-lg" id="titleLabel"
                        readonly="readonly"/>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg">Name</label>
             <div class="col-sm-10">
                 <input type="text" name="name" value="${client.name}" class="form-control form-control-lg"
-                       id="speedLabel"/>
+                       id="speedLabel" required/>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
             <div class="col-sm-10">
                 <input type="text" name="surname" value="${client.surname}"
-                       class="form-control form-control-lg"/>
+                       class="form-control form-control-lg" required/>
             </div>
         </div>
 
@@ -85,6 +85,7 @@
             </div>
         </div>
     </form>
+    ${error}
 </div>
 
 <script src="../../js/jquery-3.4.1.min.js"></script>

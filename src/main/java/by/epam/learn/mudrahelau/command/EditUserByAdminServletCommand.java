@@ -25,7 +25,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditUserByAdminServletCommand implements ServletCommand {
 
     private static final String COMMAND_NAME = "edit_user_by_admin";
-
+    private static final String ERROR_MESSAGE = "Please, fill all the field";
     private AdminService adminService;
 
     public EditUserByAdminServletCommand(AdminService adminService) {
@@ -34,7 +34,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
+        String destinationPage = PagesConstant.MAIN_PAGE;
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
         User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (checkUserIsAdmin(user)) {
@@ -55,16 +56,20 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 client.setName(name);
                 client.setSurname(surname);
                 client.setStatus(status);
-                adminService.editClientByAdmin(client);
-                if (status == ClientStatus.INACTIVE) {
-                    adminService.makeInactiveClient(clientId);
-                } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
-                    if (tariffPlanId != ParameterConstant.FAKE_TARIFF_ID) {
-                        Payment payment = new Payment(clientId, ParameterConstant.ZERO_PAYMENT, PaymentType.DEBIT, LocalDateTime.now());
-                        adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
+                if (!client.getName().trim().equals("") && !client.getSurname().trim().equals("")) {
+                    adminService.editClientByAdmin(client);
+                    if (status == ClientStatus.INACTIVE) {
+                        adminService.makeInactiveClient(clientId);
+                    } else if (tariffPlanId != adminService.getTariffPlanByClientId(clientId).getId()) {
+                        if (tariffPlanId != ParameterConstant.FAKE_TARIFF_ID) {
+                            Payment payment = new Payment(clientId, ParameterConstant.ZERO_PAYMENT, PaymentType.DEBIT, LocalDateTime.now());
+                            adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
+                        }
                     }
+                    response.sendRedirect("/do?action=show_users");
+                } else {
+                    response.sendRedirect("do?action=show_edit_user_page_by_admin&user_id=" + client.getId());
                 }
-                response.sendRedirect("/do?action=show_users");
             } else {
                 requestDispatcher.forward(request, response);
             }

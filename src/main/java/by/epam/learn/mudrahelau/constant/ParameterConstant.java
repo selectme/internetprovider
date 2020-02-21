@@ -31,6 +31,8 @@ public class ParameterConstant {
 
     public static final String AMOUNT = "amount";
 
+    public static final String ERROR_ATTRIBUTE = "error";
+
     public static final int FAKE_TARIFF_ID = 0;
     public static final BigDecimal ZERO_PAYMENT = new BigDecimal(0);
 }

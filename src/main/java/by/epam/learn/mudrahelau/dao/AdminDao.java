@@ -6,6 +6,7 @@ import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
@@ -137,24 +138,23 @@ public class AdminDao {
         return tariffPlan;
     }
 
-    //todo too difficult?
-    public void createUser(String login, String password, String name, String surname, Role role) {
+    public void createUser(User user) {
         Connection connection = DBUtils.getInstance().getConnection();
         PreparedStatement assignToTariffPlanTableStatement = null;
         try (PreparedStatement createUserStatement = connection.prepareStatement(CREATE_CLIENT_SQL)
         ) {
             connection.setAutoCommit(false);
-            createUserStatement.setString(1, login);
-            createUserStatement.setString(2, PasswordHash.hashPassword(password));
-            createUserStatement.setString(3, name);
-            createUserStatement.setString(4, surname);
-            createUserStatement.setString(5, role.name());
-            if (role == Role.ADMIN) {
+            createUserStatement.setString(1, user.getLogin());
+            createUserStatement.setString(2, PasswordHash.hashPassword(user.getPassword()));
+            createUserStatement.setString(3, user.getName());
+            createUserStatement.setString(4, user.getSurname());
+            createUserStatement.setString(5, user.getRole().name());
+            if (user.getRole() == Role.ADMIN) {
                 {
                     createUserStatement.setString(6, ClientStatus.ACTIVE.name());
                     createUserStatement.execute();
                 }
-            } else if (role == Role.CLIENT) {
+            } else if (user.getRole() == Role.CLIENT) {
                 assignToTariffPlanTableStatement = connection.prepareStatement(CREATE_USER_SQL);
                 createUserStatement.setString(6, ClientStatus.INACTIVE.name());
                 assignToTariffPlanTableStatement.setLong(1, ParameterConstant.FAKE_TARIFF_ID);
@@ -177,35 +177,6 @@ public class AdminDao {
 
             DBUtils.getInstance().releaseConnection(connection);
         }
-//        Connection connection = DBUtils.getInstance().getConnection();
-//        try (
-//                PreparedStatement createUserStatement = connection.prepareStatement(CREATE_CLIENT_SQL);
-//                PreparedStatement assignToTariffPlanTableStatement = connection.prepareStatement("INSERT INTO" +
-//                        " user_tariffplan(user_id, tariff_id) VALUES (LAST_INSERT_ID(), ?)")) {
-//            connection.setAutoCommit(false);
-//            createUserStatement.setString(1, login);
-//            createUserStatement.setString(2, PasswordHash.hashPassword(password));
-//            createUserStatement.setString(3, name);
-//            createUserStatement.setString(4, surname);
-//            createUserStatement.setString(5, role.name());
-//            if (role == Role.CLIENT) {
-//                createUserStatement.setString(6, ClientStatus.INACTIVE.name());
-//                assignToTariffPlanTableStatement.setLong(1, 0);
-//            }
-//            createUserStatement.execute();
-//            assignToTariffPlanTableStatement.execute();
-//            connection.commit();
-//        } catch (
-//                SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                connection.setAutoCommit(true);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            DBUtils.getInstance().releaseConnection(connection);
-//        }
     }
 
     public void deleteUserById(long userId) {
@@ -307,12 +278,12 @@ public class AdminDao {
     }
 
 
-    public void createTariffPlan(String title, int speed, BigDecimal price) {
+    public void createTariffPlan(TariffPlan tariffPlan) {
         Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
-            preparedStatement.setString(1, title);
-            preparedStatement.setInt(2, speed);
-            preparedStatement.setBigDecimal(3, price);
+            preparedStatement.setString(1, tariffPlan.getTitle());
+            preparedStatement.setInt(2, tariffPlan.getSpeed());
+            preparedStatement.setBigDecimal(3, tariffPlan.getPrice());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -322,6 +293,22 @@ public class AdminDao {
             }
         }
     }
+
+//    public void createTariffPlan(String title, int speed, BigDecimal price) {
+//        Connection connection = DBUtils.getInstance().getConnection();
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
+//            preparedStatement.setString(1, title);
+//            preparedStatement.setInt(2, speed);
+//            preparedStatement.setBigDecimal(3, price);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (connection != null) {
+//                DBUtils.getInstance().releaseConnection(connection);
+//            }
+//        }
+//    }
 
     public List<TariffPlan> retrieveTariffPlans() {
         List<TariffPlan> tariffPlans = new ArrayList<>();

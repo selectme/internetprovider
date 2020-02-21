@@ -29,7 +29,7 @@
         <div class="form-group row">
             <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Title</label>
             <div class="col-sm-10">
-                <input name="title" class="form-control form-control-lg" id="titleLabel"/>
+                <input name="title" class="form-control form-control-lg" id="titleLabel" required/>
             </div>
         </div>
 
@@ -37,15 +37,15 @@
             <label class="col-sm-2 col-form-label col-form-label-lg">Speed</label>
             <div class="col-sm-10">
                 <input type="number" name="speed" class="form-control form-control-lg"
-                       id="speedLabel"/>
+                       id="speedLabel" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Price</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg" >Price</label>
             <div class="col-sm-10">
                 <input type="number" name="price" step="0.01"
-                       class="form-control form-control-lg"/>
+                       class="form-control form-control-lg" required/>
             </div>
         </div>
         <div class="container">
@@ -56,6 +56,7 @@
             </div>
         </div>
     </form>
+    ${error}
 </div>
 
 

@@ -1,6 +1,8 @@
 package by.epam.learn.mudrahelau;
 
 
+import by.epam.learn.mudrahelau.model.Client;
+
 import java.io.Serializable;
 import java.util.*;
 
