@@ -25,7 +25,6 @@
                 <a class="nav-link font-weight-bold" href="/">IP</a>
             </li>
 
-
             <li class="nav-item active">
                 <fmt:message key="label.home_button" var="home"/>
                 <a class="nav-link" href="/">${home}</a>
@@ -40,16 +39,17 @@
                 </c:if>
                 <c:if test="${user.role == 'ADMIN'}">
                     <li class="nav-item active">
-                        <a class="nav-link" href="do?action=show_administration_panel"><fmt:message key="label.admin_panel"/> </a>
+                        <a class="nav-link" href="do?action=show_administration_panel"><fmt:message
+                                key="label.admin_panel"/></a>
                     </li>
                 </c:if>
             </c:if>
         </ul>
 
         <div>
-
-            <div class="dropdown justify-content-between" >
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown justify-content-between">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Language
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -60,12 +60,12 @@
                 <c:choose>
                     <c:when test="${user == null}">
                         <a href="do?action=show_login_page">
-                            <button type="button" class="btn btn-primary"><fmt:message key="label.login"/> </button>
+                            <button type="button" class="btn btn-primary"><fmt:message key="label.login"/></button>
                         </a>
                     </c:when>
                     <c:otherwise>
                         <a href="do?action=do_logout">
-                            <button type="button" class="btn btn-primary"><fmt:message key="label.logout"/> </button>
+                            <button type="button" class="btn btn-primary"><fmt:message key="label.logout"/></button>
                         </a>
                     </c:otherwise>
                 </c:choose>

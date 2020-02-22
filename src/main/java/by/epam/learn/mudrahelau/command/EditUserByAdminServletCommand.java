@@ -56,7 +56,7 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 client.setName(name);
                 client.setSurname(surname);
                 client.setStatus(status);
-                if (!client.getName().trim().equals("") && !client.getSurname().trim().equals("")) {
+                if (!client.getName().trim().equals("") || !client.getSurname().trim().equals("")) {
                     adminService.editClientByAdmin(client);
                     if (status == ClientStatus.INACTIVE) {
                         adminService.makeInactiveClient(clientId);

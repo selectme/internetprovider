@@ -1,16 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../../css/bootstrap.css">
-    <link rel="stylesheet" href="../../css/main.css">
-    <title>Editing...</title>
-</head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<body class="container">
-<c:import url="/WEB-INF/jsp/footer.jsp"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
 <br>
@@ -36,7 +30,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg">Name</label>
             <div class="col-sm-10">
                 <input type="text" name="name" value="${client.name}" class="form-control form-control-lg"
-                       id="speedLabel"/>
+                       id="speedLabel" required/>
             </div>
         </div>
 
@@ -44,7 +38,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
             <div class="col-sm-10">
                 <input type="text" name="surname" value="${client.surname}"
-                       class="form-control form-control-lg"/>
+                       class="form-control form-control-lg" required/>
             </div>
         </div>
         <div class="container">
@@ -52,13 +46,10 @@
                 <div class="col text-center">
                     <button class="btn btn-default"><input type="submit" class="btn btn-success" value="Done"></button>
                 </div>
+                ${error}
             </div>
         </div>
     </form>
 </div>
 
-<script src="../../js/jquery-3.4.1.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
-</body>
-
-</html>
+<c:import url="/WEB-INF/jsp/footer.jsp"/>
