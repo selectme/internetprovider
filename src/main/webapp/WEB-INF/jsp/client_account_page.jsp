@@ -42,11 +42,21 @@
                     <h5 class="card-title"><fmt:message key="label.my_page"/></h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Login: ${client.login}</li>
-                    <li class="list-group-item">Name: <c:out value="${client.name}"/> <c:out value="${client.surname}"/></li>
-                    <li class="list-group-item">Tariff: <c:out value="${client.getTariffPlan().getTitle()}"/></li>
-                    <li class="list-group-item">Balance: ${client.moneyOnAccount}</li>
-                    <li class="list-group-item">Status: ${client.status}</li>
+                    <li class="list-group-item"><fmt:message key="label.login"/>: ${client.login}</li>
+                    <li class="list-group-item"><fmt:message key="label.user_name"/>: <c:out value="${client.name}"/> <c:out value="${client.surname}"/></li>
+                    <li class="list-group-item"><fmt:message key="label.tariff"/>: <c:out value="${client.getTariffPlan().getTitle()}"/></li>
+                    <li class="list-group-item"><fmt:message key="label.current_balance"/>: ${client.moneyOnAccount}</li>
+                    <c:choose>
+                        <c:when test="${client.status=='BLOCKED'}">
+                            <li class="list-group-item"><fmt:message key="label.status"/>: <fmt:message key="label.blocked"/></li>
+                        </c:when>
+                        <c:when test="${client.status=='INACTIVE'}">
+                            <li class="list-group-item"><fmt:message key="label.status"/>: <fmt:message key="label.inactive"/></li>>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item"><fmt:message key="label.status"/>: <fmt:message key="label.active"/></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>
