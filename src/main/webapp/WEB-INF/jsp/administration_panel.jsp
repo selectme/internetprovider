@@ -11,12 +11,12 @@
     <div class="col-sm-6">
         <div class="card bg-light">
             <div class="card-body">
-                <h5 class="card-title">Clients</h5>
-                <p class="card-text">Аdding, editing, removing clients</p>
+                <h5 class="card-title"><fmt:message key="label.clients"/></h5>
+                <p class="card-text"><fmt:message key="label.description.clients"/></p>
                 <a>
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_users">
-                        <input class="btn btn-primary shadow-lg" type="submit" value="Edit">
+                        <input class="btn btn-primary shadow-lg" type="submit" value="<fmt:message key="label.edit"/>">
                     </form>
                 </a>
             </div>
@@ -25,12 +25,12 @@
     <div class="col-sm-6">
         <div class="card bg-light">
             <div class="card-body">
-                <h5 class="card-title">Tariff plans</h5>
-                <p class="card-text">Аdding, editing, removing tariff plans</p>
+                <h5 class="card-title"><fmt:message key="label.tariffPlans"/></h5>
+                <p class="card-text"><fmt:message key="label.description.tariffs"/></p>
                 <a>
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_tariffs">
-                        <input class="btn btn-primary shadow-lg" type="submit" value="Edit">
+                        <input class="btn btn-primary shadow-lg" type="submit" value="<fmt:message key="label.edit"/>">
                     </form>
                 </a>
             </div>

@@ -26,8 +26,7 @@
             </li>
 
             <li class="nav-item active">
-                <fmt:message key="label.home_button" var="home"/>
-                <a class="nav-link" href="/">${home}</a>
+                <a class="nav-link" href="/"><fmt:message key="label.home_button"/></a>
             </li>
 
             <c:if test="${user != null}">
@@ -50,7 +49,7 @@
             <div class="dropdown justify-content-between">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Language
+                    <fmt:message key="label.language"/>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="?sessionLocale=ru">Русский</a>
@@ -60,7 +59,7 @@
                 <c:choose>
                     <c:when test="${user == null}">
                         <a href="do?action=show_login_page">
-                            <button type="button" class="btn btn-primary"><fmt:message key="label.login"/></button>
+                            <button type="button" class="btn btn-primary"><fmt:message key="label.log.in"/></button>
                         </a>
                     </c:when>
                     <c:otherwise>

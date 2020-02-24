@@ -15,31 +15,31 @@
                 <form action="do" method="get">
                     <input type="hidden" name="action" value="show_edit_client_by_client_page"/>
                     <input type="hidden" name="user_id" value="${client.id}"/>
-                    <input type="submit" class="btn btn-light btn-lg text-right" value="Edit data"/>
+                    <input type="submit" class="btn btn-light btn-lg text-right" value="<fmt:message key="label.edit"/>"/>
                 </form>
                 <br>
                 <form action="do" method="get">
                     <input type="hidden" name="action" value="show_change_tariff_page"/>
                     <input type="hidden" name="user_id" value="${client.id}"/>
-                    <input type="submit" class="btn btn-light btn-lg" value="Change tariff"/>
+                    <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.change_tariff"/>"/>
                 </form>
                 <br>
                 <form action="do" method="get">
                     <input type="hidden" name="action" value="show_payment_page"/>
                     <input type="hidden" name="user_id" value="${client.id}"/>
-                    <input type="submit" class="btn btn-light btn-lg" value="Make payment"/>
+                    <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.make_payment"/>"/>
                 </form>
                 <br>
                 <form action="do" method="get">
                     <input type="hidden" name="action" value="show_clients_payments_page"/>
-                    <input type="submit" class="btn btn-light btn-lg" value="Payment history"/>
+                    <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.payments_history"/>"/>
                 </form>
             </div>
         </div>
         <div class="col-md-auto">
             <div class="card col-auto" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">My personal page</h5>
+                    <h5 class="card-title"><fmt:message key="label.my_page"/></h5>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Login: ${client.login}</li>

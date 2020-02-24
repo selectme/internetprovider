@@ -1,47 +1,42 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-    <link rel="stylesheet" href="../../css/bootstrap.css">
-    <link rel="stylesheet" href="../../css/main.css">
-    <title>Login</title>
-</head>
-<body>
-<c:import url="/WEB-INF/jsp/footer.jsp"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
-<h1 align="center" class="font-weight-light">Login</h1>
+<h1 align="center" class="font-weight-light"><fmt:message key="label.log.in"/></h1>
 
 <div class="container w-25">
     <form action="do" method="post">
         <div class="form-group">
             <input type="hidden" name="action" value="do_login">
-            <label for="inputLogin">Login</label>
+            <label for="inputLogin"><fmt:message key="label.login"/></label>
             <input name="login" class="form-control no-spinner" id="inputLogin" aria-describedby="loginHelp"
                    pattern="([0-9]{4}|admin)" required>
-            <small id="loginHelp" class="form-text text-muted">Login is 4 digit sequence</small>
+            <small id="loginHelp" class="form-text text-muted"><fmt:message key="label.login.helper"/></small>
         </div>
         <div class="form-group">
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword"><fmt:message key="label.password"/></label>
             <input type="password" name="password" class="form-control" id="inputPassword">
         </div>
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"><fmt:message key="label.submit"/></button>
                 </div>
             </div>
         </div>
         <br>
-        <p class="font-italic">${error}</p>
+        <c:if test="${not empty error}">
+            <fmt:message key='${error}'/>
+        </c:if>
+        <p class="font-italic">
+        </p>
     </form>
 
 </div>
 
-<script src="../../js/jquery-3.4.1.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
-</body>
-</html>
+<c:import url="/WEB-INF/jsp/footer.jsp"/>

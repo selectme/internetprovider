@@ -15,14 +15,14 @@
 
 
         <div class="form-group row">
-            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Title</label>
+            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.title"/></label>
             <div class="col-sm-10">
                 <input name="title" class="form-control form-control-lg" id="titleLabel" required/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Speed</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.speed"/></label>
             <div class="col-sm-10">
                 <input type="number" name="speed" class="form-control form-control-lg"
                        id="speedLabel" required/>
@@ -30,7 +30,8 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg" >Price</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg" >
+                <fmt:message key="label.price"/></label>
             <div class="col-sm-10">
                 <input type="number" name="price" step="0.01"
                        class="form-control form-control-lg" required/>
@@ -39,12 +40,14 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <button class="btn btn-default"><input type="submit" class="btn btn-success" value="Done"></button>
+                    <button class="btn btn-default"><input type="submit" class="btn btn-success" value="<fmt:message key="label.done"/>"></button>
                 </div>
             </div>
         </div>
     </form>
-    ${error}
+    <c:if test="${not empty error}">
+        <fmt:message key='${error}'/>
+    </c:if>
 </div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp"/>

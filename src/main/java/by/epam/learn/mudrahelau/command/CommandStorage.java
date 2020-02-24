@@ -31,7 +31,6 @@ public class CommandStorage {
     }
 
     public ServletCommand getCommandByName(String name) {
-        // TODO: throw exception if command not found
         ServletCommand servletCommand = commandsByNames.get(name);
         if (servletCommand == null) {
             servletCommand = new NotExistsServletCommand();

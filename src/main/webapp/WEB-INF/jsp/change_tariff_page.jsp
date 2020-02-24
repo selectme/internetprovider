@@ -11,12 +11,12 @@
     <div class="row justify-content-lg-center">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">Current balance:</h5>
-                <h4 class="card-subtitle mb-2 text-muted">${client.moneyOnAccount} rub </h4>
+                <h5 class="card-title"><fmt:message key="label.current_balance"/>:</h5>
+                <h4 class="card-subtitle mb-2 text-muted">${client.moneyOnAccount}</h4>
                 <form class="button" action="do" method="get">
                     <input type="hidden" name="action" value="show_payment_page"/>
                     <input type="hidden" name="user_id" value="${client.id}"/>
-                    <input class="btn-success" type="submit" value="Make payment"/>
+                    <input class="btn-success" type="submit" value="<fmt:message key="label.make_payment"/>"/>
                 </form>
             </div>
         </div>
@@ -31,10 +31,10 @@
                 <div class="card-body">
                     <h5 class="card-title" align="center"><c:out value="${tariffPlan.title}"/></h5>
                     <p class="card-text" align="center">
-                        Speed: ${tariffPlan.speed}
+                        <fmt:message key="label.speed"/>: ${tariffPlan.speed}
                     </p>
                     <p class="card-text" align="center">
-                        Price: ${tariffPlan.price}
+                        <fmt:message key="label.price"/>: ${tariffPlan.price}
                     </p>
                     <c:choose>
                         <c:when test="${client.getTariffPlan().getTitle()==tariffPlan.title}">
@@ -42,7 +42,7 @@
                                 <input type="hidden" name="action" value="change_tariff_plan"/>
                                 <input name="tariff_id" value="${tariffPlan.id}" hidden/>
                                 <input name="user_id" value="${client.id}" hidden/>
-                                <input class="btn-success" type="submit" value="My tariff" disabled/>
+                                <input class="btn-success" type="submit" value="<fmt:message key="label.my.tariff"/>" disabled/>
                             </form>
                         </c:when>
                         <c:when test="${client.moneyOnAccount == null || client.moneyOnAccount  < tariffPlan.price}">
@@ -50,7 +50,7 @@
                                 <input type="hidden" name="action" value="change_tariff_plan"/>
                                 <input name="tariff_id" value="${tariffPlan.id}" hidden/>
                                 <input name="user_id" value="${client.id}" hidden/>
-                                <input class="btn-secondary" type="submit" value="Not enough money" disabled/>
+                                <input class="btn-secondary" type="submit" value="<fmt:message key="label.no_money"/>" disabled/>
                             </form>
                         </c:when>
                         <c:otherwise>
@@ -58,7 +58,7 @@
                                 <input type="hidden" name="action" value="change_tariff_plan"/>
                                 <input name="tariff_id" value="${tariffPlan.id}" hidden/>
                                 <input name="user_id" value="${client.id}" hidden/>
-                                <input class="btn-primary" type="submit" value="Connect"/>
+                                <input class="btn-primary" type="submit" value="<fmt:message key="label.connect"/>"/>
                             </form>
                         </c:otherwise>
                     </c:choose>

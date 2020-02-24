@@ -31,7 +31,7 @@ public class LoginServletCommand implements ServletCommand {
             response.sendRedirect("/");
         } else {
             String error = "Invalid login/password"; // TODO: thing about localization
-            request.setAttribute("error", error);
+            request.setAttribute("error", "label.error");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.LOGIN_PAGE);
             requestDispatcher.forward(request,response);
         }

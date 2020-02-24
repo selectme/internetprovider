@@ -47,7 +47,7 @@ public class AddTariffServletCommand implements ServletCommand {
                     adminService.createTariffPlan(tariffPlan);
                     response.sendRedirect("/do?action=show_tariffs");
                 } else {
-                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, "label.incorrect.error");
                     destinationPage = PagesConstant.ADD_TARIFF_PAGE;
                     request.getRequestDispatcher(destinationPage).forward(request, response);
                 }

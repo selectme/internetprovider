@@ -37,24 +37,19 @@ public class EditClientByClientServletCommand implements ServletCommand {
                 client.setId(clientId);
                 client.setName(name);
                 client.setSurname(surname);
-                System.out.println(client.getName());
-                System.out.println(client.getSurname());
                 if ((!client.getName().trim().equals("")) && (!client.getSurname().trim().equals(""))) {
                     clientService.editClientByClient(client);
                     response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
                 } else {
-                    //todo why doesnt work forward?
-                    System.out.println("here");
-                    request.setAttribute("error", "wrong");
-                    request.getRequestDispatcher(PagesConstant.EDIT_BY_CLIENT_PAGE);
-                    requestDispatcher.forward(request, response);
+                    request.setAttribute("client", client);
+                    request.setAttribute("error", "label.empty.error");
+                    request.getRequestDispatcher(PagesConstant.EDIT_BY_CLIENT_PAGE).forward(request,response);
+//                    response.sendRedirect("do?action=show_edit_client_by_client_page&user_id=" + user.getId());
                 }
             } else {
-                System.out.println("here 1");
                 requestDispatcher.forward(request, response);
             }
         } else {
-            System.out.println("here 2");
             requestDispatcher.forward(request, response);
         }
     }

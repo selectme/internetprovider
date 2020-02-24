@@ -14,19 +14,19 @@
         <input type="hidden" name="action" value="add_user">
 
         <div class="form-group row">
-            <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg">Login</label>
+            <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.log.in"/></label>
             <div class="col-sm-10">
                 <label>
                     <input name="login" class="form-control form-control-lg" id="inputLogin"
                            pattern="([0-9]{4}|admin)"
                            required/>
                 </label>
-                <small id="loginHelp" class="form-text text-muted">Login is 4 digit sequence</small>
+                <small id="loginHelp" class="form-text text-muted"><fmt:message key="label.login.helper"/></small>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Password</label>
+            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.password"/></label>
             <div class="col-sm-10">
                 <label>
                     <input type="password" name="password" class="form-control form-control-lg"
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Name</label>
+            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.user_name"/></label>
             <div class="col-sm-10">
                 <label>
                     <input name="name" class="form-control form-control-lg" required/>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg">Surname</label>
+            <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.user_surname"/></label>
             <div class="col-sm-10">
                 <label>
                     <input name="surname" class="form-control form-control-lg" required/>
@@ -54,12 +54,12 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg">Role</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.role"/></label>
             <div class="col-sm-10">
                 <label>
                     <select class="form-control" name="role">
-                        <option value="CLIENT">Client</option>
-                        <option value="ADMIN">Admin</option>
+                        <option value="CLIENT"><fmt:message key="label.client"/></option>
+                        <option value="ADMIN"><fmt:message key="label.admin"/></option>
                     </select>
                 </label>
             </div>
@@ -68,10 +68,12 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <button class="btn btn-default"><input type="submit" class="btn btn-success" value="Done"></button>
-                    <p class="font-weight-normal">${error}</p>
+                    <button class="btn btn-default"><input type="submit" class="btn btn-success" value="<fmt:message key="label.done"/>"></button>
                 </div>
             </div>
+            <c:if test="${not empty error}">
+                <fmt:message key='${error}'/>
+            </c:if>
         </div>
     </form>
 </div>

@@ -18,12 +18,12 @@
                     <br>
                     <div class="badge badge-light">
                         <p class="card-text">
-                        <h5>Speed: ${tariffPlan.speed} mb/s</h5></p>
+                        <h5><fmt:message key="label.speed"/>: ${tariffPlan.speed} mb/s</h5></p>
                     </div>
                     <br>
                     <div class="badge badge-light">
                         <p class="card-text">
-                        <h5>Price: ${tariffPlan.price} rub</h5></p>
+                        <h5><fmt:message key="label.price"/>: ${tariffPlan.price}</h5></p>
                     </div>
                     <br>
 
@@ -31,14 +31,14 @@
                         <c:when test="${user == null}">
                             <form action="do" method="get">
                                 <input type="hidden" name="action" value="show_login_page"/>
-                                <input type="submit" class="btn-primary" value="Choose"/>
+                                <input type="submit" class="btn-primary" value="<fmt:message key="label.choose"/>"/>
                             </form>
                         </c:when>
                         <c:when test="${user.role == 'CLIENT'}">
                             <form action="do" method="get">
                                 <input type="hidden" name="action" value="show_change_tariff_page"/>
                                 <input type="hidden" name="user_id" value="${user.id}"/>
-                                <input type="submit" class="btn-primary" value="Choose"/>
+                                <input type="submit" class="btn-primary" value="<fmt:message key="label.choose"/>"/>
                             </form>
                         </c:when>
                     </c:choose>
@@ -55,9 +55,9 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Speed</th>
-                <th scope="col">Price</th>
+                <th scope="col"><fmt:message key="label.title"/></th>
+                <th scope="col"><fmt:message key="label.speed"/></th>
+                <th scope="col"><fmt:message key="label.price"/></th>
             </tr>
             </thead>
             <tbody>
@@ -71,14 +71,14 @@
                         <form action="do" method="get">
                             <input type="hidden" name="action" value="show_edit_tariffplan_page"/>
                             <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                            <input class="btn btn-light btn" type="submit" value="Edit"/>
+                            <input class="btn btn-light btn" type="submit" value="<fmt:message key="label.edit"/>"/>
                         </form>
                     </td>
                     <td>
                         <form action="do" method="post">
                             <input type="hidden" name="action" value="delete_tariff_plan"/>
                             <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                            <input class="btn btn-light btn" type="submit" value="Delete"/>
+                            <input class="btn btn-light btn" type="submit" value="<fmt:message key="label.delete"/>"/>
                         </form>
                     </td>
                 </tr>
@@ -88,7 +88,7 @@
 
         <form action="do" method="get">
             <input type="hidden" name="action" value="show_add_tariff_page">
-            <input class="btn btn-light" type="submit" value="Add tariff">
+            <input class="btn btn-light" type="submit" value="<fmt:message key="label.add"/>">
         </form>
     </div>
 </c:if>

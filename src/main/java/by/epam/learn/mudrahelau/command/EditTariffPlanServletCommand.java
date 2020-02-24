@@ -44,7 +44,10 @@ public class EditTariffPlanServletCommand implements ServletCommand {
                     adminService.editTariffPlan(tariffPlan);
                     response.sendRedirect("/do?action=show_tariffs");
                 } else {
-                    response.sendRedirect("do?action=show_edit_tariffplan_page&tariff_id=" + tariffPlan.getId());
+                    request.setAttribute("tariff", tariffPlan);
+                    request.setAttribute("error", "label.incorrect.error");
+                    request.getRequestDispatcher(PagesConstant.EDIT_TARIFF_PAGE).forward(request,response);
+//                    response.sendRedirect("do?action=show_edit_tariffplan_page&tariff_id=" + tariffPlan.getId());
                 }
             } else {
                 requestDispatcher.forward(request, response);

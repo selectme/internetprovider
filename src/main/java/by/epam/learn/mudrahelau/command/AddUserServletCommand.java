@@ -21,7 +21,7 @@ import java.io.IOException;
 public class AddUserServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_user";
-    private static final String ERROR_MESSAGE = "Please, fill all the fields";
+    private static final String ERROR_MESSAGE = "label.incorrect.error";
 
     public AddUserServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -33,18 +33,12 @@ public class AddUserServletCommand implements ServletCommand {
         if (user != null) {
             if (AdminValidator.checkUserIsAdmin(user)) {
                 String login = request.getParameter(ParameterConstant.LOGIN);
-                System.out.println(login);
                 String password = request.getParameter(ParameterConstant.PASSWORD);
-                System.out.println(password );
                 String name = request.getParameter(ParameterConstant.NAME);
-                System.out.println(name);
                 String surname = request.getParameter(ParameterConstant.SURNAME);
-                System.out.println(surname);
                 Role role = Role.valueOf(request.getParameter(ParameterConstant.ROLE));
-                System.out.println(role);
                 User newUser = new User(login, password, name, surname, role);
                 if (UserValidator.validateUser(newUser)) {
-                    System.out.println("here");
                     adminService.createUser(newUser);
                     response.sendRedirect("/do?action=show_users");
                 } else {
