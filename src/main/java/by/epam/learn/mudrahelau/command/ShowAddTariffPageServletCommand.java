@@ -17,6 +17,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  */
 public class ShowAddTariffPageServletCommand implements ServletCommand {
     private static final String COMMAND_NAME = "show_add_tariff_page";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String destinationPage = PagesConstant.MAIN_PAGE;

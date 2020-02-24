@@ -2,11 +2,11 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.validator.AdminValidator;
-import by.epam.learn.mudrahelau.validator.LoginValidator;
 import by.epam.learn.mudrahelau.validator.UserValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -40,17 +40,17 @@ public class AddUserServletCommand implements ServletCommand {
                 User newUser = new User(login, password, name, surname, role);
                 if (UserValidator.validateUser(newUser)) {
                     adminService.createUser(newUser);
-                    response.sendRedirect("/do?action=show_users");
+                    response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {
                     request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.ADD_USER_PAGE);
-                    requestDispatcher.forward(request,response);
+                    requestDispatcher.forward(request, response);
                 }
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
-            response.sendRedirect("/do?action=show_login_page");
+            response.sendRedirect(RedirectConstants.SHOW_LOGIN_PAGE_REDIRECT);
         }
     }
 

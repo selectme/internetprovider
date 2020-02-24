@@ -16,7 +16,9 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  * @author Viktar on 16.02.2020
  */
 public class ShowAddUserPageServletCommand implements ServletCommand {
+
     private static final String COMMAND_NAME = "show_add_client_page";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = (User) request.getSession().getAttribute(ParameterConstant.USER);

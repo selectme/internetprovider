@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
@@ -23,8 +24,7 @@ public class AddTariffServletCommand implements ServletCommand {
 
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_tariff";
-    private static final String ERROR_MESSAGE = "Values can't be negative";
-
+    private static final String ERROR_MESSAGE = "label.incorrect.error";
 
 
     public AddTariffServletCommand(AdminService adminService) {
@@ -45,9 +45,9 @@ public class AddTariffServletCommand implements ServletCommand {
                 TariffPlan tariffPlan = new TariffPlan(title, speed, price);
                 if (TariffValidator.validateTariff(tariffPlan)) {
                     adminService.createTariffPlan(tariffPlan);
-                    response.sendRedirect("/do?action=show_tariffs");
+                    response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
                 } else {
-                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, "label.incorrect.error");
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
                     destinationPage = PagesConstant.ADD_TARIFF_PAGE;
                     request.getRequestDispatcher(destinationPage).forward(request, response);
                 }

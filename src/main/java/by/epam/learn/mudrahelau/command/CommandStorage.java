@@ -42,7 +42,7 @@ public class CommandStorage {
         addCommandByName(new LoginServletCommand(userService));
         addCommandByName(new AddTariffServletCommand(adminService));
         addCommandByName(new AddUserServletCommand(adminService));
-        addCommandByName(new ChangeTariffPlanServletCommand(adminService, clientService));
+        addCommandByName(new ChangeTariffPlanServletCommand(adminService));
         addCommandByName(new DeleteTariffPlanServletCommand(adminService));
         addCommandByName(new EditClientByClientServletCommand(clientService));
         addCommandByName(new EditTariffPlanServletCommand(adminService));

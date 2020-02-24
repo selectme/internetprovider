@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
 
@@ -32,7 +33,7 @@ public class DeleteTariffPlanServletCommand implements ServletCommand {
             if (checkUserIsAdmin(user)) {
                 int tariff_id = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
                 adminService.deleteTariffPlanById(tariff_id);
-                response.sendRedirect("/do?action=show_tariffs");
+                response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }

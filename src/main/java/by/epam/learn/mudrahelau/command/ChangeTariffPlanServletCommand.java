@@ -1,11 +1,11 @@
 package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
-import by.epam.learn.mudrahelau.service.ClientService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +20,10 @@ import java.time.LocalDateTime;
 public class ChangeTariffPlanServletCommand implements ServletCommand {
 
     private AdminService adminService;
-    private ClientService clientService;
     private static final String COMMAND_NAME = "change_tariff_plan";
 
-    public ChangeTariffPlanServletCommand(AdminService adminService, ClientService clientService) {
+    public ChangeTariffPlanServletCommand(AdminService adminService) {
         this.adminService = adminService;
-        this.clientService = clientService;
     }
 
     @Override
@@ -35,15 +33,10 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
         if (user != null) {
             long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             int tariffId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
-            BigDecimal clientMoney = clientService.retrieveClientMoneyAmountByClientId(clientId);
             BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
-            if (clientMoney != null && clientMoney.compareTo(tariffPlanPrice) >= 0) {
                 Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
                 adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
-                response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
-            } else {
-                response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
-            }
+                response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
         }
     }
 

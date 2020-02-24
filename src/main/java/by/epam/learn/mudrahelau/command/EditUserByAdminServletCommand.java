@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
@@ -14,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
@@ -25,7 +25,6 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditUserByAdminServletCommand implements ServletCommand {
 
     private static final String COMMAND_NAME = "edit_user_by_admin";
-    private static final String ERROR_MESSAGE = "Please, fill all the field";
     private AdminService adminService;
 
     public EditUserByAdminServletCommand(AdminService adminService) {
@@ -56,7 +55,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 client.setName(name);
                 client.setSurname(surname);
                 client.setStatus(status);
-                if (!client.getName().trim().equals("") || !client.getSurname().trim().equals("")) {
+                if (!client.getName().trim().equals(ParameterConstant.EMPTY_STRING)
+                        || !client.getSurname().trim().equals(ParameterConstant.EMPTY_STRING)) {
                     adminService.editClientByAdmin(client);
                     if (status == ClientStatus.INACTIVE) {
                         adminService.makeInactiveClient(clientId);
@@ -66,9 +66,9 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                             adminService.makePaymentAndChangeTariff(clientId, tariffPlanId, payment);
                         }
                     }
-                    response.sendRedirect("/do?action=show_users");
+                    response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {
-                    response.sendRedirect("do?action=show_edit_user_page_by_admin&user_id=" + client.getId());
+                    response.sendRedirect(RedirectConstants.SHOW_EDIT_USER_PAGE_BY_ADMIN_REDIRECT + client.getId());
                 }
             } else {
                 requestDispatcher.forward(request, response);

@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.ClientService;
@@ -19,6 +20,8 @@ public class EditClientByClientServletCommand implements ServletCommand {
 
     private ClientService clientService;
     private static final String COMMAND_NAME = "edit_client_by_client";
+    private static final String MESSAGE = "label.empty.error";
+
 
     public EditClientByClientServletCommand(ClientService clientService) {
         this.clientService = clientService;
@@ -37,14 +40,13 @@ public class EditClientByClientServletCommand implements ServletCommand {
                 client.setId(clientId);
                 client.setName(name);
                 client.setSurname(surname);
-                if ((!client.getName().trim().equals("")) && (!client.getSurname().trim().equals(""))) {
+                if ((!client.getName().trim().equals(ParameterConstant.EMPTY_STRING)) && (!client.getSurname().trim().equals(ParameterConstant.EMPTY_STRING))) {
                     clientService.editClientByClient(client);
-                    response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
+                    response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
                 } else {
-                    request.setAttribute("client", client);
-                    request.setAttribute("error", "label.empty.error");
-                    request.getRequestDispatcher(PagesConstant.EDIT_BY_CLIENT_PAGE).forward(request,response);
-//                    response.sendRedirect("do?action=show_edit_client_by_client_page&user_id=" + user.getId());
+                    request.setAttribute(ParameterConstant.CLIENT, client);
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, MESSAGE);
+                    request.getRequestDispatcher(PagesConstant.EDIT_BY_CLIENT_PAGE).forward(request, response);
                 }
             } else {
                 requestDispatcher.forward(request, response);

@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
@@ -35,7 +36,7 @@ public class MakeCreditPaymentServletCommand implements ServletCommand {
             LocalDateTime time = LocalDateTime.now();
             Payment payment = new Payment(user.getId(), amount, PaymentType.CREDIT, time);
             clientService.makePayment(payment);
-            response.sendRedirect("do?action=show_client_account_page&user_id=" + user.getId());
+            response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
         } else {
             requestDispatcher.forward(request, response);
         }

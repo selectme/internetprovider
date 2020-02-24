@@ -16,6 +16,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
  * @author Viktar on 16.02.2020
  */
 public class ShowAdminPanelServletCommand implements ServletCommand {
+
     private static final String COMMAND_NAME = "show_administration_panel";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

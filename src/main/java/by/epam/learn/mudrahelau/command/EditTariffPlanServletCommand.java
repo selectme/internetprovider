@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
@@ -22,7 +23,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditTariffPlanServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "edit_tariff_plan";
-    private static final String ERROR_MESSAGE = "Values can't be negative";
+    private static final String ERROR_MESSAGE = "label.incorrect.error";
 
     public EditTariffPlanServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -42,12 +43,11 @@ public class EditTariffPlanServletCommand implements ServletCommand {
                 tariffPlan.setPrice(new BigDecimal(request.getParameter(ParameterConstant.PRICE)));
                 if (TariffValidator.validateTariff(tariffPlan)) {
                     adminService.editTariffPlan(tariffPlan);
-                    response.sendRedirect("/do?action=show_tariffs");
+                    response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
                 } else {
-                    request.setAttribute("tariff", tariffPlan);
-                    request.setAttribute("error", "label.incorrect.error");
+                    request.setAttribute(ParameterConstant.TARIFF, tariffPlan);
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
                     request.getRequestDispatcher(PagesConstant.EDIT_TARIFF_PAGE).forward(request,response);
-//                    response.sendRedirect("do?action=show_edit_tariffplan_page&tariff_id=" + tariffPlan.getId());
                 }
             } else {
                 requestDispatcher.forward(request, response);

@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.command;
 
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
+import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
 
@@ -33,7 +34,7 @@ public class DeleteUserServletCommand implements ServletCommand {
             if (checkUserIsAdmin(user)) {
                 long userId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
                 adminService.deleteUserById(userId);
-                response.sendRedirect("/do?action=show_users");
+                response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
             } else {
                 requestDispatcher.forward(request,response);
             }
