@@ -27,21 +27,18 @@ public class UserValidator {
     private static boolean validateName(User user) {
 
         if (user.getName() != null) {
-            System.out.println(user.getName());
             return !user.getName().trim().equals(EMPTY_STRING);
         } else return false;
     }
 
     private static boolean validateSurname(User user) {
         if (user.getSurname() != null) {
-            System.out.println(user.getSurname());
             return !user.getSurname().trim().equals(EMPTY_STRING);
         } else return false;
     }
 
     private static boolean validatePassword(User user) {
         if (user.getPassword() != null) {
-            System.out.println(user.getPassword());
             return !user.getPassword().trim().equals(EMPTY_STRING);
         } else return false;
     }
