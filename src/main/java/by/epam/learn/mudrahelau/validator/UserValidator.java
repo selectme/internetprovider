@@ -1,7 +1,10 @@
 package by.epam.learn.mudrahelau.validator;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +17,8 @@ import java.sql.SQLException;
 public class UserValidator {
     private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
     private static final String EMPTY_STRING = "";
+
+    private static final Logger logger = LogManager.getLogger(UserValidator.class);
 
     public static boolean validateUser(User user) {
         return validateLogin(user) && validatePassword(user) && validateName(user) && validateSurname(user) && validateRole(user);
@@ -52,7 +57,7 @@ public class UserValidator {
                     result = false;
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
             } finally {
                 DBUtils.getInstance().releaseConnection(connection);
             }

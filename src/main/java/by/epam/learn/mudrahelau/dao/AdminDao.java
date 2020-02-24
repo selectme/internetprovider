@@ -1,6 +1,7 @@
 package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.constant.DbConstants;
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.Client;
@@ -10,6 +11,8 @@ import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -37,6 +40,7 @@ public class AdminDao {
     private final static String UPDATE_USER_TARIFF = "UPDATE user_tariffplan SET tariff_id=? WHERE user_id = ?";
     private final static String UPDATE_USER_SQL = "UPDATE user SET  name=?, surname=?, status=? where id=?";
 
+    private static final Logger logger = LogManager.getLogger(AdminDao.class);
 
     public List<Client> retrieveClients() {
         List<Client> clients = new ArrayList<>();
@@ -57,8 +61,8 @@ public class AdminDao {
                     clients.add(client);
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);
@@ -89,7 +93,7 @@ public class AdminDao {
             client.setTariffPlan(getTariffPlanByClientId(id));
             client.setMoneyOnAccount(new ClientDao().retrieveClientMoneyAmountByClientId(id));
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -110,7 +114,7 @@ public class AdminDao {
                 tariffPlan = new TariffPlan(id, title, speed, price);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -131,7 +135,7 @@ public class AdminDao {
                 tariffPlan = new TariffPlan(id, title, speed, price);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -172,7 +176,7 @@ public class AdminDao {
                     assignToTariffPlanTableStatement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
 
             DBUtils.getInstance().releaseConnection(connection);
@@ -185,7 +189,7 @@ public class AdminDao {
             preparedStatement.setLong(1, userId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -197,7 +201,7 @@ public class AdminDao {
             preparedStatement.setLong(1, tariffPlanId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -213,7 +217,7 @@ public class AdminDao {
             updateClient.setLong(4, client.getId());
             updateClient.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -230,13 +234,13 @@ public class AdminDao {
             changeClientStatusStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 try {
                     connection.setAutoCommit(true);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
                 }
                 DBUtils.getInstance().releaseConnection(connection);
             }
@@ -266,12 +270,12 @@ public class AdminDao {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -286,7 +290,7 @@ public class AdminDao {
             preparedStatement.setBigDecimal(3, tariffPlan.getPrice());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);
@@ -327,7 +331,7 @@ public class AdminDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);
@@ -346,7 +350,7 @@ public class AdminDao {
             preparedStatement.setInt(4, tariffPlan.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);

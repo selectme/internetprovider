@@ -14,16 +14,6 @@ public class User {
     public User() {
     }
 
-    public User(long id, String login, String password, String name, String surname, Role role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
-    }
-
-
     public User(long id, String login, String password, String name, String surname) {
         this.id = id;
         this.login = login;
@@ -31,15 +21,6 @@ public class User {
         this.name = name;
         this.surname = surname;
     }
-
-    public User(String login, String password, String name, String surname, Role role) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
-    }
-
 
     public Long getId() {
         return id;

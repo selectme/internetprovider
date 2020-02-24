@@ -1,11 +1,14 @@
 package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.constant.DbConstants;
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -30,6 +33,7 @@ public class ClientDao {
             "FROM payments WHERE client_id=? AND type='DEBIT')";
     private static final String GET_ACTIVE_CLIENTS_SQL = "SELECT * FROM user_tariffplan WHERE tariff_id > 0";
 
+    private static final Logger logger = LogManager.getLogger(ClientDao.class);
 
     public void editClientByClient(Client client) {
         Connection connection = DBUtils.getInstance().getConnection();
@@ -40,7 +44,7 @@ public class ClientDao {
             updateClient.setLong(3, client.getId());
             updateClient.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -57,7 +61,7 @@ public class ClientDao {
             preparedStatement.setTimestamp(4, Timestamp.valueOf(localDateTime));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);
@@ -78,11 +82,14 @@ public class ClientDao {
                 PaymentType type = PaymentType.valueOf(resultSet.getString(DbConstants.TYPE).toUpperCase());
                 Timestamp timestamp = resultSet.getTimestamp(DbConstants.DATE);
                 LocalDateTime date = timestamp.toLocalDateTime();
-                Payment payment = new Payment(amount, type, date);
+                Payment payment = new Payment();
+                payment.setAmount(amount);
+                payment.setPaymentType(type);
+                payment.setDate(date);
                 payments.add(payment);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             if (connection != null) {
                 DBUtils.getInstance().releaseConnection(connection);
@@ -101,7 +108,7 @@ public class ClientDao {
                 amount = resultSet.getBigDecimal(DbConstants.AMOUNT);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -118,7 +125,7 @@ public class ClientDao {
                 removeTariffPlanFromClient(clientId);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -130,7 +137,7 @@ public class ClientDao {
             preparedStatement.setLong(1, clientId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -150,7 +157,7 @@ public class ClientDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }
@@ -168,7 +175,7 @@ public class ClientDao {
                 clientIdAndTariffId.put(clientId, tariffId);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
             DBUtils.getInstance().releaseConnection(connection);
         }

@@ -1,10 +1,13 @@
 package by.epam.learn.mudrahelau.util;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -18,7 +21,7 @@ public class DBUtils {
     private final static String PASSWORD = "root";
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final static int NUMBER_OF_CONNECTIONS = 10;
-
+    private static final Logger logger = LogManager.getLogger(DBUtils.class);
     private DBUtils() {
     }
 
@@ -43,7 +46,7 @@ public class DBUtils {
             try {
                 connectionPool.add(DriverManager.getConnection(URL, LOGIN, PASSWORD));
             } catch (SQLException e) {
-                e.printStackTrace();
+            logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
         }
     }

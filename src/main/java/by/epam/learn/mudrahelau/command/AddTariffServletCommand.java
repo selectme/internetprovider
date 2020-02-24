@@ -42,7 +42,10 @@ public class AddTariffServletCommand implements ServletCommand {
                 String title = request.getParameter(ParameterConstant.TITLE);
                 int speed = Integer.parseInt(request.getParameter(ParameterConstant.SPEED));
                 BigDecimal price = new BigDecimal(request.getParameter(ParameterConstant.PRICE));
-                TariffPlan tariffPlan = new TariffPlan(title, speed, price);
+                TariffPlan tariffPlan = new TariffPlan();
+                tariffPlan.setTitle(title);
+                tariffPlan.setSpeed(speed);
+                tariffPlan.setPrice(price);
                 if (TariffValidator.validateTariff(tariffPlan)) {
                     adminService.createTariffPlan(tariffPlan);
                     response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);

@@ -37,7 +37,12 @@ public class AddUserServletCommand implements ServletCommand {
                 String name = request.getParameter(ParameterConstant.NAME);
                 String surname = request.getParameter(ParameterConstant.SURNAME);
                 Role role = Role.valueOf(request.getParameter(ParameterConstant.ROLE));
-                User newUser = new User(login, password, name, surname, role);
+                User newUser = new User();
+                newUser.setLogin(login);
+                newUser.setPassword(password);
+                newUser.setName(name);
+                newUser.setSurname(surname);
+                newUser.setRole(role);
                 if (UserValidator.validateUser(newUser)) {
                     adminService.createUser(newUser);
                     response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
