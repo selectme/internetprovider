@@ -4,9 +4,6 @@ import by.epam.learn.mudrahelau.model.TariffPlan;
 
 import java.math.BigDecimal;
 
-/**
- * @author Viktar on 19.02.2020
- */
 public class TariffValidator {
 
     public static boolean validateTariff(TariffPlan tariffPlan) {

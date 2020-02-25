@@ -11,9 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * @author Viktar on 19.02.2020
- */
 public class UserValidator {
     private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
     private static final String EMPTY_STRING = "";

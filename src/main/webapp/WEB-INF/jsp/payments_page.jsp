@@ -8,24 +8,24 @@
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
 
-<div class="container">
-    <table class="table table-sm table-hover">
-        <thead class="thead-dark">
+<table class="table table-sm table-hover">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col"><fmt:message key="label.amount"/></th>
+        <th scope="col"><fmt:message key="label.type_payment"/></th>
+        <th scope="col"><fmt:message key="label.date_payment"/></th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${payments}" var="payment">
         <tr>
-            <th scope="col"><fmt:message key="label.amount"/></th>
-            <th scope="col"><fmt:message key="label.type_payment"/></th>
-            <th scope="col"><fmt:message key="label.date_payment"/></th>
+            <td>${payment.amount}</td>
+            <td>${payment.paymentType}</td>
+            <td>${payment.date}</td>
         </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${payments}" var="payment">
-            <tr>
-                <td>${payment.amount}</td>
-                <td>${payment.paymentType}</td>
-                <td>${payment.date}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
+    </c:forEach>
+    </tbody>
+</table>
+
 <c:import url="/WEB-INF/jsp/footer.jsp"/>
+

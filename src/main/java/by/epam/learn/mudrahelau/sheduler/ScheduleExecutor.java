@@ -2,9 +2,7 @@ package by.epam.learn.mudrahelau.sheduler;
 
 import java.util.Timer;
 
-/**
- * @author Viktar on 29.01.2020
- */
+
 public class ScheduleExecutor {
 
     private final static long CHECK_PERIOD = 60_000*5;

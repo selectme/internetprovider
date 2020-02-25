@@ -22,6 +22,7 @@ public class DBUtils {
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private final static int NUMBER_OF_CONNECTIONS = 10;
     private static final Logger logger = LogManager.getLogger(DBUtils.class);
+
     private DBUtils() {
     }
 
@@ -46,7 +47,7 @@ public class DBUtils {
             try {
                 connectionPool.add(DriverManager.getConnection(URL, LOGIN, PASSWORD));
             } catch (SQLException e) {
-            logger.error(LoggerConstants.SQL_EXCEPTION, e);
+                logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
         }
     }
@@ -69,5 +70,9 @@ public class DBUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public int getConnectionPoolSize() {
+        return connectionPool.size();
     }
 }

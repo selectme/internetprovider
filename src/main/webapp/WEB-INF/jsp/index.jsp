@@ -10,13 +10,14 @@
 <div class="jumbotron">
     <c:choose>
         <c:when test="${user != null}">
-            <h1 class="display-4 "><fmt:message key="label.hello"/>, <c:out value="${user.name}"/> <c:out value="${user.surname}"/>!</h1>
+            <h1 class="display-4 "><fmt:message key="label.hello"/>, <c:out value="${user.name}"/> <c:out
+                    value="${user.surname}"/>!</h1>
         </c:when>
         <c:otherwise>
             <h1 class="display-4"><fmt:message key="label.hello"/>!</h1>
         </c:otherwise>
     </c:choose>
-    <p class="lead"> <fmt:message key="label.intro"/></p>
+    <p class="lead"><fmt:message key="label.intro"/></p>
     <hr class="my-4">
     <p><fmt:message key="label.second_intro"/></p>
     <a>
@@ -29,3 +30,5 @@
 </div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp"/>
+
+

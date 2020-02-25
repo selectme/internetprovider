@@ -12,7 +12,7 @@
 
     <listener>
         <listener-class>
-            by.epam.learn.mudrahelau.service.serverservice.Listener
+            by.epam.learn.mudrahelau.service.serverservice.ServerListener
         </listener-class>
     </listener>
 

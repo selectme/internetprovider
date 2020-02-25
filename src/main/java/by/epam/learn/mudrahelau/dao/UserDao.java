@@ -2,10 +2,10 @@ package by.epam.learn.mudrahelau.dao;
 
 import by.epam.learn.mudrahelau.constant.DbConstants;
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
-import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import by.epam.learn.mudrahelau.util.PasswordUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,12 +25,12 @@ public class UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_SQL)
         ) {
             preparedStatement.setString(1, login);
-            preparedStatement.setString(2, PasswordHash.hashPassword(password));
+            preparedStatement.setString(2, PasswordUtil.hashPassword(password));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long userId = resultSet.getLong(DbConstants.ID);
                 String userLogin = resultSet.getString(DbConstants.LOGIN);
-                String userPassword = resultSet.getString(DbConstants.ID);
+                String userPassword = resultSet.getString(DbConstants.PASSWORD);
                 String userName = resultSet.getString(DbConstants.NAME);
                 String userSurname = resultSet.getString(DbConstants.SURNAME);
                 Role role = Role.valueOf(resultSet.getString(DbConstants.ROLE));

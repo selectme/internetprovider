@@ -3,7 +3,6 @@ package by.epam.learn.mudrahelau.dao;
 import by.epam.learn.mudrahelau.constant.DbConstants;
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
-import by.epam.learn.mudrahelau.hash.PasswordHash;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
@@ -11,6 +10,7 @@ import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import by.epam.learn.mudrahelau.util.PasswordUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -149,7 +149,7 @@ public class AdminDao {
         ) {
             connection.setAutoCommit(false);
             createUserStatement.setString(1, user.getLogin());
-            createUserStatement.setString(2, PasswordHash.hashPassword(user.getPassword()));
+            createUserStatement.setString(2, PasswordUtil.hashPassword(user.getPassword()));
             createUserStatement.setString(3, user.getName());
             createUserStatement.setString(4, user.getSurname());
             createUserStatement.setString(5, user.getRole().name());
@@ -178,7 +178,6 @@ public class AdminDao {
             } catch (SQLException e) {
             logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
-
             DBUtils.getInstance().releaseConnection(connection);
         }
     }
@@ -298,21 +297,6 @@ public class AdminDao {
         }
     }
 
-//    public void createTariffPlan(String title, int speed, BigDecimal price) {
-//        Connection connection = DBUtils.getInstance().getConnection();
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
-//            preparedStatement.setString(1, title);
-//            preparedStatement.setInt(2, speed);
-//            preparedStatement.setBigDecimal(3, price);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (connection != null) {
-//                DBUtils.getInstance().releaseConnection(connection);
-//            }
-//        }
-//    }
 
     public List<TariffPlan> retrieveTariffPlans() {
         List<TariffPlan> tariffPlans = new ArrayList<>();

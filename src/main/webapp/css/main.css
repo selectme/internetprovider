@@ -9,13 +9,17 @@
 }
 
 
-.btn-home-icon{
+.btn-home-icon {
     background: url("/icons/home.png");
     float: left;
 }
 
-.body{
-    background-color: #f9f7f7;
+.body-custom {
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 input[type=number].no-spinner::-webkit-inner-spin-button,

@@ -22,7 +22,7 @@
                 <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message
                         key="label.amount"/></label>
                 <div class="col-sm-2">
-                    <input type="number" name="amount" min="0" step="0.01" class="form-control form-control-lg"
+                    <input type="number" name="amount" min="0.01" step="0.01" class="form-control form-control-lg"
                            id="passwordLabel"/>
                 </div>
             </div>

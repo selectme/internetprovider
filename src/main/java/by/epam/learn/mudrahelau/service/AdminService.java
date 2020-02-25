@@ -16,10 +16,10 @@ public class AdminService {
 
     private AdminDao adminDao = new AdminDao();
 
-public void createUser(User user) {
-    adminDao.createUser(user);
-    logger.info(LoggerConstants.USER_CREATED, user.getName(), user.getSurname(), user.getRole());
-}
+    public void createUser(User user) {
+        adminDao.createUser(user);
+        logger.info(LoggerConstants.USER_CREATED, user.getName(), user.getSurname(), user.getRole());
+    }
 
     public void deleteUserById(long userId) {
         adminDao.deleteUserById(userId);

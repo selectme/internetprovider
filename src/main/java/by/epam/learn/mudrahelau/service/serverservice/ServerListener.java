@@ -12,8 +12,9 @@ import javax.servlet.ServletContextListener;
  * @author Viktar on 29.01.2020
  */
 //todo название класса?
-public class Listener implements ServletContextListener {
-    private static final Logger logger = LogManager.getLogger(Listener.class);
+public class ServerListener implements ServletContextListener {
+    private static final Logger logger = LogManager.getLogger(ServerListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         logger.info(LoggerConstants.SERVER_STARTED);
