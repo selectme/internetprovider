@@ -27,7 +27,6 @@ public class TariffValidator {
             }
         }
         return result;
-
     }
 
     private static boolean validateSpeed(TariffPlan tariffPlan) {
