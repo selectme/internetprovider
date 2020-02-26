@@ -24,7 +24,7 @@ public class AddTariffServletCommand implements ServletCommand {
 
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_tariff";
-    private static final String ERROR_MESSAGE = "label.incorrect.error";
+    private static final String ERROR_MESSAGE = "label.incorrect.tariff.data.error";
 
 
     public AddTariffServletCommand(AdminService adminService) {

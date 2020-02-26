@@ -23,7 +23,7 @@
                         key="label.amount"/></label>
                 <div class="col-sm-2">
                     <input type="number" name="amount" min="0.01" step="0.01" class="form-control form-control-lg"
-                           id="passwordLabel"/>
+                           id="passwordLabel" required/>
                 </div>
             </div>
             <div class="container">

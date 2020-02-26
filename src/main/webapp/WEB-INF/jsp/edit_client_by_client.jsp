@@ -19,13 +19,6 @@
             </div>
         </div>
 
-<%--        <div class="form-group row">--%>
-<%--            <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg">Login</label>--%>
-<%--            <div class="col-sm-10">--%>
-<%--                <input name="Login" value="${client.login}" class="form-control form-control-lg" id="titleLabel" readonly="readonly"/>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
         <div class="form-group row">
             <label class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.user_name"/></label>
             <div class="col-sm-10">
@@ -41,11 +34,11 @@
                        class="form-control form-control-lg" required/>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 <div class="col text-center">
                     <button class="btn btn-default"><input type="submit" class="btn btn-success" value="<fmt:message key="label.done"/>"></button>
-
                 </div>
             </div>
         </div>

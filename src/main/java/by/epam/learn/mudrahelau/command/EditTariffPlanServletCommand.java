@@ -23,7 +23,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditTariffPlanServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "edit_tariff_plan";
-    private static final String ERROR_MESSAGE = "label.incorrect.error";
+    private static final String ERROR_MESSAGE = "label.incorrect.tariff.data.error";
 
     public EditTariffPlanServletCommand(AdminService adminService) {
         this.adminService = adminService;

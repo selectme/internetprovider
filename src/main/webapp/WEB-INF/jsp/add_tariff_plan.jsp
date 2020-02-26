@@ -17,7 +17,7 @@
         <div class="form-group row">
             <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.title"/></label>
             <div class="col-sm-10">
-                <input name="title" class="form-control form-control-lg" id="titleLabel" required/>
+                <input name="title" class="form-control form-control-lg" id="titleLabel" pattern="^[A-Za-zА-Яа-я0-9\_\!\.\-\s]*$" required/>
             </div>
         </div>
 
@@ -25,7 +25,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.speed"/></label>
             <div class="col-sm-10">
                 <input type="number" name="speed" class="form-control form-control-lg"
-                       id="speedLabel" required/>
+                       id="speedLabel" min="1" step="1" required/>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
             <label class="col-sm-2 col-form-label col-form-label-lg" >
                 <fmt:message key="label.price"/></label>
             <div class="col-sm-10">
-                <input type="number" name="price" step="0.01"
+                <input type="number" name="price" min="0" step="0.01"
                        class="form-control form-control-lg" required/>
             </div>
         </div>

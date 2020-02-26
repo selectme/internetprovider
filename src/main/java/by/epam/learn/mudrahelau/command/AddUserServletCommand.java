@@ -21,7 +21,7 @@ import java.io.IOException;
 public class AddUserServletCommand implements ServletCommand {
     private AdminService adminService;
     private static final String COMMAND_NAME = "add_user";
-    private static final String ERROR_MESSAGE = "label.incorrect.error";
+    private static final String ERROR_MESSAGE = "label.incorrect.user.data.error";
 
     public AddUserServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -43,7 +43,7 @@ public class AddUserServletCommand implements ServletCommand {
                 newUser.setName(name);
                 newUser.setSurname(surname);
                 newUser.setRole(role);
-                if (UserValidator.validateUser(newUser)) {
+                if (UserValidator.validateCreatingUser(newUser)) {
                     adminService.createUser(newUser);
                     response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {

@@ -6,6 +6,7 @@ import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.ClientService;
+import by.epam.learn.mudrahelau.validator.UserValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +21,7 @@ public class EditClientByClientServletCommand implements ServletCommand {
 
     private ClientService clientService;
     private static final String COMMAND_NAME = "edit_client_by_client";
-    private static final String MESSAGE = "label.empty.error";
+    private static final String MESSAGE = "label.edit.by.client.error";
 
 
     public EditClientByClientServletCommand(ClientService clientService) {
@@ -40,7 +41,7 @@ public class EditClientByClientServletCommand implements ServletCommand {
                 client.setId(clientId);
                 client.setName(name);
                 client.setSurname(surname);
-                if ((!client.getName().trim().equals(ParameterConstant.EMPTY_STRING)) && (!client.getSurname().trim().equals(ParameterConstant.EMPTY_STRING))) {
+                if (UserValidator.validateEditingClient(client)) {
                     clientService.editClientByClient(client);
                     response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
                 } else {

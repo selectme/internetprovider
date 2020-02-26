@@ -17,8 +17,8 @@
             <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.log.in"/></label>
             <div class="col-sm-10">
                 <label>
-                    <input name="login" class="form-control form-control-lg" id="inputLogin"
-                           pattern="([0-9]{4}|admin)"
+                    <input name="login" type="number" class="form-control form-control-lg" id="inputLogin"
+                           pattern="([0-9]{4})"
                            required/>
                 </label>
                 <small id="loginHelp" class="form-text text-muted"><fmt:message key="label.login.helper"/></small>
@@ -39,7 +39,7 @@
             <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.user_name"/></label>
             <div class="col-sm-10">
                 <label>
-                    <input name="name" class="form-control form-control-lg" required/>
+                    <input name="name" class="form-control form-control-lg" pattern="^[A-Za-zА-Яа-я\s]+[\.\']?[A-Za-zА-Яа-я\s]*$" required/>
                 </label>
             </div>
         </div>
@@ -48,7 +48,8 @@
             <label for="passwordLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.user_surname"/></label>
             <div class="col-sm-10">
                 <label>
-                    <input name="surname" class="form-control form-control-lg" required/>
+                    <input name="surname" class="form-control form-control-lg" pattern="^[A-Za-zА-Яа-я\s]+[\.\']?[A-Za-zА-Яа-я\s]*$" required/>
+                    <%--<input name="surname" class="form-control form-control-lg" pattern="[A-Za-zА-Яа-я]{1,32}" required/>--%>
                 </label>
             </div>
         </div>

@@ -9,6 +9,7 @@ import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.status.ClientStatus;
+import by.epam.learn.mudrahelau.validator.UserValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +26,7 @@ import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin
 public class EditUserByAdminServletCommand implements ServletCommand {
 
     private static final String COMMAND_NAME = "edit_user_by_admin";
+    private static final String MESSAGE = "label.edit.by.client.error";
     private AdminService adminService;
 
     public EditUserByAdminServletCommand(AdminService adminService) {
@@ -33,8 +35,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String destinationPage = PagesConstant.MAIN_PAGE;
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PagesConstant.MAIN_PAGE);
         User user = (User) request.getSession().getAttribute(ParameterConstant.USER);
         if (user != null) {
             if (checkUserIsAdmin(user)) {
@@ -55,8 +57,7 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 client.setName(name);
                 client.setSurname(surname);
                 client.setStatus(status);
-                if (!client.getName().trim().equals(ParameterConstant.EMPTY_STRING)
-                        || !client.getSurname().trim().equals(ParameterConstant.EMPTY_STRING)) {
+                if (UserValidator.validateEditingClient(client)) {
                     adminService.editClientByAdmin(client);
                     if (status == ClientStatus.INACTIVE) {
                         adminService.makeInactiveClient(clientId);
@@ -68,7 +69,9 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                     }
                     response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {
-                    response.sendRedirect(RedirectConstants.SHOW_EDIT_USER_PAGE_BY_ADMIN_REDIRECT + client.getId());
+                    request.setAttribute(ParameterConstant.CLIENT, client);
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, MESSAGE);
+                    request.getRequestDispatcher(PagesConstant.EDIT_BY_ADMIN_PAGE).forward(request, response);
                 }
             } else {
                 requestDispatcher.forward(request, response);

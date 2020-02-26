@@ -55,7 +55,6 @@
                     <c:when test="${client.status=='INACTIVE'}">
                         <li class="list-group-item"><fmt:message key="label.status"/>: <fmt:message
                                 key="label.inactive"/></li>
-                        >
                     </c:when>
                     <c:otherwise>
                         <li class="list-group-item"><fmt:message key="label.status"/>: <fmt:message

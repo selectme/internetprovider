@@ -28,23 +28,18 @@
                 <td><c:out value="${client.name}"/></td>
                 <td><c:out value="${client.surname}"/></td>
                 <td><c:out value="${client.getTariffPlan().getTitle()}"/></td>
-                <td>
                 <c:choose>
                     <c:when test="${client.status=='BLOCKED'}">
                         <td class="bg-danger"><fmt:message key="label.blocked"/></td>
-<%--                        <td class="bg-danger">${client.status}</td>--%>
-
                     </c:when>
                     <c:when test="${client.status=='INACTIVE'}">
                         <td class="bg-warning"><fmt:message key="label.inactive"/></td>
-<%--                        <td class="bg-Warning">${client.status}</td>--%>
                     </c:when>
                     <c:otherwise>
                         <td class="bg-success"><fmt:message key="label.active"/></td
-<%--                        <td class="bg-success">${client.status}</td>--%>
                     </c:otherwise>
                 </c:choose>
-                </td>
+
                 <td>
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>

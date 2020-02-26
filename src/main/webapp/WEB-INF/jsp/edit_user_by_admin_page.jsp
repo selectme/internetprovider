@@ -24,7 +24,7 @@
         <div class="form-group row">
             <label for="titleLabel" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.login"/></label>
             <div class="col-sm-10">
-                <input name="Login" value="${client.getLogin()}" class="form-control form-control-lg" id="titleLabel"
+                <input name="login" value="${client.login}" class="form-control form-control-lg" id="titleLabel"
                        readonly="readonly"/>
             </div>
         </div>

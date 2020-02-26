@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserValidator {
     private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
@@ -17,21 +19,38 @@ public class UserValidator {
 
     private static final Logger logger = LogManager.getLogger(UserValidator.class);
 
-    public static boolean validateUser(User user) {
+    public static boolean validateCreatingUser(User user) {
         return validateLogin(user) && validatePassword(user) && validateName(user) && validateSurname(user) && validateRole(user);
     }
 
-    private static boolean validateName(User user) {
+    public static boolean validateEditingClient(User user){
+        return validateName(user) && validateSurname(user);
+    }
 
+    public static boolean validateName(User user) {
+        boolean result = false;
         if (user.getName() != null) {
-            return !user.getName().trim().equals(EMPTY_STRING);
-        } else return false;
+            if (!user.getName().trim().equals(EMPTY_STRING)) {
+                String regx = "^[A-Za-zА-Яа-я\\s]+[\\.\\']?[A-Za-zА-Яа-я\\s]*$";
+                Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(user.getName());
+                result = matcher.find();
+            }
+        }
+        return result;
     }
 
     private static boolean validateSurname(User user) {
+        boolean result = false;
         if (user.getSurname() != null) {
-            return !user.getSurname().trim().equals(EMPTY_STRING);
-        } else return false;
+            if (!user.getSurname().trim().equals(EMPTY_STRING)) {
+                String regx = "^[A-Za-zА-Яа-я\\s]+[\\.\\']?[A-Za-zА-Яа-я\\s]*$";
+                Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(user.getSurname());
+                result = matcher.find();
+            }
+        }
+        return result;
     }
 
     private static boolean validatePassword(User user) {
@@ -51,7 +70,7 @@ public class UserValidator {
                     result = false;
                 }
             } catch (SQLException e) {
-            logger.error(LoggerConstants.SQL_EXCEPTION, e);
+                logger.error(LoggerConstants.SQL_EXCEPTION, e);
             } finally {
                 DBUtils.getInstance().releaseConnection(connection);
             }
