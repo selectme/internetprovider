@@ -9,6 +9,18 @@
 
 
 <div class="container">
+
+    <%--<form action="do" method="get">--%>
+    <%--<input type="hidden" name="action" value="show_add_client_page">--%>
+    <%--<input class="btn btn-light" type="submit" value="<fmt:message key="label.add"/>">--%>
+    <%--</form>--%>
+
+    <div class="mt-4 mb-4">
+        <a href="do?action=show_add_client_page">
+            <button class="btn btn-primary"><fmt:message key="label.add"/></button>
+        </a>
+    </div>
+
     <table class="table table-sm table-hover">
         <thead class="table-dark">
         <tr>
@@ -59,10 +71,7 @@
         </tbody>
     </table>
 
-    <form action="do" method="get">
-        <input type="hidden" name="action" value="show_add_client_page">
-        <input class="btn btn-light" type="submit" value="<fmt:message key="label.add"/>">
-    </form>
+
 </div>
 
-<c:import url="/WEB-INF/jsp/footer.jsp"/>
+<%--<c:import url="/WEB-INF/jsp/footer.jsp"/>--%>

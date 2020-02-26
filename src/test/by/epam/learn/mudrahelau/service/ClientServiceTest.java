@@ -1,16 +1,16 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.dao.impl.AdminDaoDbImpl;
+import by.epam.learn.mudrahelau.dao.impl.UserDaoDbImpl;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
-import by.epam.learn.mudrahelau.util.PasswordUtil;
+import by.epam.learn.mudrahelau.service.impl.AdminServiceDbImpl;
+import by.epam.learn.mudrahelau.service.impl.UserServiceDbImpl;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
-
-import static org.testng.Assert.assertEquals;
 
 /**
  * @author Viktar on 24.02.2020
@@ -27,8 +27,8 @@ public class ClientServiceTest {
 
     @BeforeMethod
     public void setUp() {
-        adminService = new AdminService();
-        userService = new UserService();
+        adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
+        userService = new UserServiceDbImpl(new UserDaoDbImpl());
 
         tariffPlan = new TariffPlan();
         tariffPlan.setTitle("TestTariff");
@@ -44,19 +44,21 @@ public class ClientServiceTest {
 
     }
 
-    @Test
-    public void testCreateUser() {
-        User testUser = user;
-        adminService.createUser(testUser);
+//    @Test
+//    public void testCreateUser() {
+//        User testUser = user;
+//        adminService.createUser(testUser);
+//
+//        String login = testUser.getLogin();
+//        String password = testUser.getPassword();
+//        User userFromDb = userService.getUser(login, password);
+//
+//        assertEquals(testUser.getLogin(), userFromDb.getLogin());
+//        assertEquals(PasswordUtil.hashPassword(password), userFromDb.getPassword());
+//        assertEquals(testUser.getName(), userFromDb.getName());
+//        assertEquals(testUser.getRole(), userFromDb.getRole());
+//    }
 
-        String login = testUser.getLogin();
-        String password = testUser.getPassword();
-        User userFromDb = userService.getUser(login, password);
 
-        assertEquals(testUser.getLogin(), userFromDb.getLogin());
-        assertEquals(PasswordUtil.hashPassword(password), userFromDb.getPassword());
-        assertEquals(testUser.getName(), userFromDb.getName());
-        assertEquals(testUser.getRole(), userFromDb.getRole());
-    }
 
 }

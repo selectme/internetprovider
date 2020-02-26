@@ -3,6 +3,7 @@ package by.epam.learn.mudrahelau.validator;
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +24,10 @@ public class UserValidator {
         return validateLogin(user) && validatePassword(user) && validateName(user) && validateSurname(user) && validateRole(user);
     }
 
-    public static boolean validateEditingClient(User user){
+    public static boolean validateEditingClient(User user) {
         return validateName(user) && validateSurname(user);
     }
+
 
     public static boolean validateName(User user) {
         boolean result = false;
@@ -53,7 +55,8 @@ public class UserValidator {
         return result;
     }
 
-    private static boolean validatePassword(User user) {
+    @VisibleForTesting
+    static boolean validatePassword(User user) {
         if (user.getPassword() != null) {
             return !user.getPassword().trim().equals(EMPTY_STRING);
         } else return false;

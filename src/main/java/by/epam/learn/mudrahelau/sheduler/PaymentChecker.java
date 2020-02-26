@@ -1,11 +1,15 @@
 package by.epam.learn.mudrahelau.sheduler;
 
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
+import by.epam.learn.mudrahelau.dao.impl.AdminDaoDbImpl;
+import by.epam.learn.mudrahelau.dao.impl.ClientDaoDbImpl;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
+import by.epam.learn.mudrahelau.service.impl.AdminServiceDbImpl;
+import by.epam.learn.mudrahelau.service.impl.ClientServiceDbImpl;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +26,9 @@ import static by.epam.learn.mudrahelau.constant.LoggerConstants.CLIENT_DOES_NOT_
  */
 public class PaymentChecker extends TimerTask {
     private static final Logger logger = LogManager.getLogger(PaymentChecker.class);
-    private AdminService adminService = new AdminService();
-    private ClientService clientService = new ClientService();
+    private AdminService adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
+    private ClientService clientService = new ClientServiceDbImpl(new ClientDaoDbImpl());
+
     private static final int DAYS_AFTER_THE_LAST_DEBIT_PAYMENT = 1;
     private static final int COMPARE_TO_VALUE = 0;
 

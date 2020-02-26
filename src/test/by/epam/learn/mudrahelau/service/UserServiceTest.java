@@ -1,11 +1,14 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.dao.impl.UserDaoDbImpl;
 import by.epam.learn.mudrahelau.model.User;
-import by.epam.learn.mudrahelau.role.Role;
+import by.epam.learn.mudrahelau.service.impl.UserServiceDbImpl;
 import by.epam.learn.mudrahelau.util.PasswordUtil;
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.mockito.Matchers.any;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -15,29 +18,27 @@ public class UserServiceTest {
 
     private User testUser;
     private UserService userService;
+    UserDaoDbImpl userDaoDbImpl;
 
     @BeforeMethod
     public void setUp() {
-        userService = new UserService();
-
-        testUser = new User();
-        testUser.setId(74L);
-        testUser.setLogin("6666");
-        testUser.setPassword(PasswordUtil.hashPassword("6666"));
-        testUser.setName("bruce");
-        testUser.setSurname("lee");
-        testUser.setRole(Role.CLIENT);
+         userDaoDbImpl = Mockito.mock(UserDaoDbImpl.class);
     }
 
     @Test
     public void testGetUser() {
 
-        User expectedUser = testUser;
-        String login = "6666";
-        String password = "6666";
+        testUser = new User();
+        testUser.setLogin("1111");
+        testUser.setPassword(PasswordUtil.hashPassword("1111"));
 
-        User actualUser = userService.getUser(login, password);
+        Mockito.when(userDaoDbImpl.getUser(any(), any())).thenReturn(testUser);
+        userService = new UserServiceDbImpl(userDaoDbImpl);
 
-        assertEquals(actualUser, expectedUser);
+        User user = userService.getUser("1111", "1111");
+
+        assertEquals(user.getLogin(), testUser.getLogin());
+        assertEquals(user.getPassword(), testUser.getPassword());
+
     }
 }

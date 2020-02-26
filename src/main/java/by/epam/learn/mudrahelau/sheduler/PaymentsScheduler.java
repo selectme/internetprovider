@@ -1,7 +1,6 @@
-package by.epam.learn.mudrahelau.service.serverservice;
+package by.epam.learn.mudrahelau.sheduler;
 
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
-import by.epam.learn.mudrahelau.sheduler.ScheduleExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,8 +11,8 @@ import javax.servlet.ServletContextListener;
  * @author Viktar on 29.01.2020
  */
 //todo название класса?
-public class ServerListener implements ServletContextListener {
-    private static final Logger logger = LogManager.getLogger(ServerListener.class);
+public class PaymentsScheduler implements ServletContextListener {
+    private static final Logger logger = LogManager.getLogger(PaymentsScheduler.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

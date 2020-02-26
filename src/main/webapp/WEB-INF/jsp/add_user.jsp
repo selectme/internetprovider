@@ -14,7 +14,7 @@
         <input type="hidden" name="action" value="add_user">
 
         <div class="form-group row">
-            <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.log.in"/></label>
+            <label for="inputLogin" class="col-sm-2 col-form-label col-form-label-lg"><fmt:message key="label.login"/></label>
             <div class="col-sm-10">
                 <label>
                     <input name="login" type="number" class="form-control form-control-lg" id="inputLogin"

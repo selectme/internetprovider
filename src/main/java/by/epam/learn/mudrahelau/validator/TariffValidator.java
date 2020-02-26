@@ -1,6 +1,7 @@
 package by.epam.learn.mudrahelau.validator;
 
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
@@ -14,8 +15,8 @@ public class TariffValidator {
         return validateTitle(tariffPlan) && validateSpeed(tariffPlan) && validatePrice(tariffPlan);
     }
 
-    private static boolean validateTitle(TariffPlan tariffPlan) {
-//        return tariffPlan.getTitle() != null && !tariffPlan.getTitle().trim().equals("");
+    @VisibleForTesting
+    static boolean validateTitle(TariffPlan tariffPlan) {
 
         boolean result = false;
         if (tariffPlan.getTitle() != null) {
