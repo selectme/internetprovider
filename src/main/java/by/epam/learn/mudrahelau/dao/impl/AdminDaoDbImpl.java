@@ -34,8 +34,10 @@ public class AdminDaoDbImpl implements AdminDao {
     private final static String CREATE_TARIFF_PLAN_SQL = "INSERT into tariff_plan(title, speed, price) values (?,?,?)";
     private final static String CREATE_USER_SQL = "INSERT INTO user_tariffplan(user_id, tariff_id) VALUES (LAST_INSERT_ID(), ?)";
     private final static String DELETE_USER_BY_ID_SQL = "DELETE FROM user WHERE id=?";
+    //    private final static String DELETE_TARIFF_BY_ID_SQL = "DELETE FROM tariff_plan WHERE id=?";
     private final static String DELETE_TARIFF_BY_ID_SQL = "DELETE FROM tariff_plan WHERE id=?";
     private final static String SET_FAKE_TARIFF_TO_USER_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE user_id = ?";
+    private final static String SET_FAKE_TARIFF_ID_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE tariff_id = ?";
     private final static String MAKE_INACTIVE_CLIENT_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE user_id = ?";
     private final static String MAKE_PAYMENT_SQL = "INSERT into payments(client_id, amount, type, date) values (?,?,?,?)";
     private final static String MAKE_ACTIVE_CLIENT = "UPDATE user SET status='ACTIVE' WHERE id=?";
@@ -202,12 +204,22 @@ public class AdminDaoDbImpl implements AdminDao {
 
     public void deleteTariffPlanById(int tariffPlanId) {
         Connection connection = DBUtils.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TARIFF_BY_ID_SQL)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TARIFF_BY_ID_SQL);
+             PreparedStatement updateTariffsStatement = connection.prepareStatement(SET_FAKE_TARIFF_ID_SQL)) {
+            connection.setAutoCommit(false);
             preparedStatement.setLong(1, tariffPlanId);
+            updateTariffsStatement.setInt(1, tariffPlanId);
+            updateTariffsStatement.execute();
             preparedStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             logger.error(LoggerConstants.SQL_EXCEPTION, e);
         } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             DBUtils.getInstance().releaseConnection(connection);
         }
     }

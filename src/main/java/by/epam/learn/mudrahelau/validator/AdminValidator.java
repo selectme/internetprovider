@@ -10,7 +10,7 @@ public class AdminValidator {
 
     public static boolean checkUserIsAdmin(User user) {
         if (user != null) {
-            return user.getRole() == Role.ADMIN;
+            return user.getRole().equals(Role.ADMIN);
         } else {
             return false;
         }

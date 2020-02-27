@@ -41,7 +41,7 @@ public class EditTariffPlanServletCommand implements ServletCommand {
                 tariffPlan.setTitle(request.getParameter(ParameterConstant.TITLE));
                 tariffPlan.setSpeed(Integer.parseInt(request.getParameter(ParameterConstant.SPEED)));
                 tariffPlan.setPrice(new BigDecimal(request.getParameter(ParameterConstant.PRICE)));
-                if (TariffValidator.validateTariff(tariffPlan)) {
+                if (TariffValidator.validateEditingTariff(tariffPlan)) {
                     adminService.editTariffPlan(tariffPlan);
                     response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
                 } else {

@@ -4,11 +4,12 @@ import by.epam.learn.mudrahelau.dao.impl.UserDaoDbImpl;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.impl.UserServiceDbImpl;
 import by.epam.learn.mudrahelau.util.PasswordUtil;
-import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -18,11 +19,12 @@ public class UserServiceTest {
 
     private User testUser;
     private UserService userService;
-    UserDaoDbImpl userDaoDbImpl;
+    private UserDaoDbImpl userDaoDbImpl;
 
     @BeforeMethod
     public void setUp() {
-         userDaoDbImpl = Mockito.mock(UserDaoDbImpl.class);
+        userDaoDbImpl = mock(UserDaoDbImpl.class);
+        userService = new UserServiceDbImpl(userDaoDbImpl);
     }
 
     @Test
@@ -32,8 +34,8 @@ public class UserServiceTest {
         testUser.setLogin("1111");
         testUser.setPassword(PasswordUtil.hashPassword("1111"));
 
-        Mockito.when(userDaoDbImpl.getUser(any(), any())).thenReturn(testUser);
-        userService = new UserServiceDbImpl(userDaoDbImpl);
+
+        when(userService.getUser(any(), any())).thenReturn(testUser);
 
         User user = userService.getUser("1111", "1111");
 

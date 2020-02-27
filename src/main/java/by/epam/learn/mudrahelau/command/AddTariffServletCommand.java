@@ -46,7 +46,7 @@ public class AddTariffServletCommand implements ServletCommand {
                 tariffPlan.setTitle(title);
                 tariffPlan.setSpeed(speed);
                 tariffPlan.setPrice(price);
-                if (TariffValidator.validateTariff(tariffPlan)) {
+                if (TariffValidator.validateCreatingTariff(tariffPlan)) {
                     adminService.createTariffPlan(tariffPlan);
                     response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
                 } else {

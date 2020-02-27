@@ -47,9 +47,9 @@
                     <c:when test="${client.status=='INACTIVE'}">
                         <td class="bg-warning"><fmt:message key="label.inactive"/></td>
                     </c:when>
-                    <c:otherwise>
-                        <td class="bg-success"><fmt:message key="label.active"/></td
-                    </c:otherwise>
+                    <c:when test="${client.status=='ACTIVE'}">
+                        <td class="bg-success"><fmt:message key="label.active"/></td>
+                    </c:when>
                 </c:choose>
 
                 <td>

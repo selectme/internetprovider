@@ -1,47 +1,118 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.dao.AdminDao;
 import by.epam.learn.mudrahelau.dao.impl.AdminDaoDbImpl;
-import by.epam.learn.mudrahelau.model.User;
+import by.epam.learn.mudrahelau.model.Client;
+import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.service.impl.AdminServiceDbImpl;
-import by.epam.learn.mudrahelau.util.DBUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
 
-/**
- * @author Viktar on 26.02.2020
- */
+
 public class AdminServiceTest {
-    @Mock
+
     private AdminService adminService;
-    @Mock
-    private User user;
+    private AdminDao adminDao;
+    TariffPlan expectedTariff;
+    TariffPlan expectedTariff2;
 
-
-    @Before
+    @BeforeMethod
     public void setUp() throws Exception {
-        adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
-        user = new User();
-        user.setName("test");
-        user.setSurname("user");
+        adminDao = mock(AdminDaoDbImpl.class);
+        adminService = new AdminServiceDbImpl(adminDao);
+
+         expectedTariff = new TariffPlan();
+        expectedTariff.setId(1);
+        expectedTariff.setTitle("Test tariff");
+        expectedTariff.setSpeed(100);
+        expectedTariff.setPrice(new BigDecimal(50));
+
+         expectedTariff2 = new TariffPlan();
+        expectedTariff.setId(2);
+        expectedTariff.setTitle("Test tariff2");
+        expectedTariff.setSpeed(150);
+        expectedTariff.setPrice(new BigDecimal(75));
 
     }
 
     @Test
-    public void createUser() throws SQLException {
-        DBUtils dbUtils = mock(DBUtils.class);
-        Connection connection = mock(Connection.class);
-        PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        when(dbUtils.getConnection()).thenReturn(connection);
-        when(connection.prepareStatement(anyString(), anyInt())).thenReturn(preparedStatement);
-        when(preparedStatement.execute()).thenReturn(Boolean.TRUE);
+    public void testGetClientById() throws SQLException {
+
+        Client expectedClient = new Client();
+        expectedClient.setId(99L);
+        expectedClient.setName("Test");
+
+        when(adminService.getClientById(99L)).thenReturn(expectedClient);
+
+        Client actualClient = adminService.getClientById(99L);
+
+        assertEquals(actualClient.getId(), expectedClient.getId());
+        assertEquals(actualClient.getName(), expectedClient.getName());
+    }
 
 
+    @Test
+    public void testRetrieveClients() {
+        List<Client> expectedClientList = new ArrayList<>();
+        Client expectedClient1 = new Client();
+        expectedClient1.setId(99L);
+        expectedClient1.setName("Client1");
+
+        Client expectedClient2 = new Client();
+        expectedClient2.setId(99L);
+        expectedClient2.setName("Client2");
+        expectedClientList.add(expectedClient1);
+        expectedClientList.add(expectedClient2);
+
+        when(adminService.retrieveClients()).thenReturn(expectedClientList);
+
+        List<Client> actualClientList = adminService.retrieveClients();
+
+        assertEquals(actualClientList, expectedClientList);
+    }
+
+    @Test
+    public void testGetTariffPlanByClientId() {
+
+        Client client = new Client();
+        client.setId(99L);
+        client.setTariffPlan(expectedTariff);
+
+        when(adminService.getTariffPlanByClientId(client.getId())).thenReturn(expectedTariff);
+
+        TariffPlan actualTariff = adminService.getTariffPlanByClientId(99L);
+
+        assertEquals(actualTariff, expectedTariff);
+    }
+
+    @Test
+    public void testGetTariffPlanById() {
+
+        when(adminService.getTariffPlanById(expectedTariff.getId())).thenReturn(expectedTariff);
+
+        TariffPlan actualTariff = adminService.getTariffPlanById(2);
+        assertEquals(actualTariff, expectedTariff);
+    }
+
+    @Test
+    public void testRetrieveTariffPlans() {
+        List<TariffPlan> expectedTariffPlans = new ArrayList<>();
+        expectedTariffPlans.add(expectedTariff);
+        expectedTariffPlans.add(expectedTariff2);
+
+        when(adminService.retrieveTariffPlans()).thenReturn(expectedTariffPlans);
+
+        List<TariffPlan> actualTariffPlans = adminService.retrieveTariffPlans();
+
+        assertEquals(actualTariffPlans, expectedTariffPlans);
     }
 }

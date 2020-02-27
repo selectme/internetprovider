@@ -7,10 +7,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-/**
- * @author Viktar on 29.01.2020
- */
-//todo название класса?
+
 public class PaymentsScheduler implements ServletContextListener {
     private static final Logger logger = LogManager.getLogger(PaymentsScheduler.class);
 
