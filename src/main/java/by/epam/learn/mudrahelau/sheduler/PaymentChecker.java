@@ -21,30 +21,30 @@ import java.util.TimerTask;
 
 import static by.epam.learn.mudrahelau.constant.LoggerConstants.CLIENT_DOES_NOT_HAVE_ARREARS;
 
-/**
- * @author Viktar on 29.01.2020
- */
+
 public class PaymentChecker extends TimerTask {
     private static final Logger logger = LogManager.getLogger(PaymentChecker.class);
+
     private AdminService adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
     private ClientService clientService = new ClientServiceDbImpl(new ClientDaoDbImpl());
 
     private static final int DAYS_AFTER_THE_LAST_DEBIT_PAYMENT = 1;
-    private static final int COMPARE_TO_VALUE = 0;
+    private static final int ZERO_VALUE = 0;
 
     @Override
     public void run() {
+        System.out.println("checker");
         LocalDateTime today = LocalDateTime.now();
         Map<Long, Integer> clientsId = clientService.retrieveActiveClientsId();
 
         for (Map.Entry<Long, Integer> clientIdValues : clientsId.entrySet()) {
             Client client = adminService.getClientById(clientIdValues.getKey());
-            if (clientService.retrieveLastDebitDate(client.getId()).plusDays(DAYS_AFTER_THE_LAST_DEBIT_PAYMENT).compareTo(today) < 0) {
+            if (clientService.retrieveLastDebitDate(client.getId()).plusDays(DAYS_AFTER_THE_LAST_DEBIT_PAYMENT).compareTo(today) < ZERO_VALUE) {
 
                 BigDecimal clientBalance = clientService.retrieveClientMoneyAmountByClientId(client.getId());
                 BigDecimal tariffPlanPrice = adminService.getTariffPlanById(clientIdValues.getValue()).getPrice();
 
-                if (clientBalance.compareTo(tariffPlanPrice) >= COMPARE_TO_VALUE) {
+                if (clientBalance.compareTo(tariffPlanPrice) >= ZERO_VALUE) {
 
                     Payment payment = new Payment();
                     payment.setClientId(client.getId());
@@ -60,7 +60,7 @@ public class PaymentChecker extends TimerTask {
                 } else if (client.getStatus() != ClientStatus.BLOCKED) {
                     clientService.changeClientStatus(client.getId(), ClientStatus.BLOCKED);
                     logger.info(LoggerConstants.CLIENT_DOES_NOT_HAVE_MONEY, client.getId());
-                    logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, client.getId(), ClientStatus.ACTIVE);
+                    logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, client.getId(), ClientStatus.BLOCKED);
                 }
             } else {
                 logger.info(CLIENT_DOES_NOT_HAVE_ARREARS, client.getId());

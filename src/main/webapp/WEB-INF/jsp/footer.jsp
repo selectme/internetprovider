@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
 
 <footer class="navbar fixed-bottom justify-content-center">
     <%--<nav aria-label="breadcrumb" style="height: 50px">--%>
@@ -8,7 +10,7 @@
         <%--</ol>--%>
     <%--</nav>--%>
     <div>
-        Copyright © 2020 All rights reserved.
+        <fmt:message key="label.copyright"/>
     </div>
 </footer>
 

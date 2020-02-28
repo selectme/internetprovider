@@ -59,9 +59,9 @@ public class ClientServiceTest {
     @Test
     public void testRetrievePayments() {
         List<Payment> paymentsExpected = new ArrayList<>();
-        Payment payment1 = new Payment(clientExpected.getId(), new BigDecimal(10), PaymentType.DEBIT,
+        Payment payment1 = new Payment(clientExpected.getId(), new BigDecimal(10), PaymentType.CREDIT,
                 LocalDateTime.of(2020, Month.FEBRUARY, 25, 15, 10));
-        Payment payment2 = new Payment(clientExpected.getId(), new BigDecimal(20), PaymentType.DEBIT,
+        Payment payment2 = new Payment(clientExpected.getId(), new BigDecimal(20), PaymentType.CREDIT,
                 LocalDateTime.of(2020, Month.FEBRUARY, 25, 15, 20));
 
         paymentsExpected.add(payment1);

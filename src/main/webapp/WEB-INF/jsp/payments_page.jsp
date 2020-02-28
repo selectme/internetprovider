@@ -7,25 +7,28 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
-
-<table class="table table-sm table-hover">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col"><fmt:message key="label.amount"/></th>
-        <th scope="col"><fmt:message key="label.type_payment"/></th>
-        <th scope="col"><fmt:message key="label.date_payment"/></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${payments}" var="payment">
+<div class="container">
+    <table class="table table-sm table-hover">
+        <thead class="thead-dark">
         <tr>
-            <td>${payment.amount}</td>
-            <td>${payment.paymentType}</td>
-            <td>${payment.date}</td>
+            <th scope="col"><fmt:message key="label.amount"/></th>
+            <th scope="col"><fmt:message key="label.type_payment"/></th>
+            <th scope="col"><fmt:message key="label.date_payment"/></th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
-
-<c:import url="/WEB-INF/jsp/footer.jsp"/>
+        </thead>
+        <tbody>
+        <c:forEach items="${payments}" var="payment">
+            <tr>
+                <td>${payment.amount}</td>
+                <td>${payment.paymentType}</td>
+                <td>${payment.date}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<script src="../../js/jquery-3.4.1.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+</body>
+</html>
 

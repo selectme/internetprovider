@@ -9,9 +9,6 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 
-/**
- * @author Viktar on 26.02.2020
- */
 public class TariffValidatorTest {
 
 

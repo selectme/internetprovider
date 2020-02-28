@@ -5,6 +5,7 @@ import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.Client;
 import by.epam.learn.mudrahelau.model.Payment;
+import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
@@ -71,6 +73,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 } else {
                     request.setAttribute(ParameterConstant.CLIENT, client);
                     request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, MESSAGE);
+                    List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+                    request.setAttribute(ParameterConstant.TARIFF_PLANS, tariffPlans);
                     request.getRequestDispatcher(PagesConstant.EDIT_BY_ADMIN_PAGE).forward(request, response);
                 }
             } else {

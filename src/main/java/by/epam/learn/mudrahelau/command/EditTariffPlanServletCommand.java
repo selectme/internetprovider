@@ -47,7 +47,8 @@ public class EditTariffPlanServletCommand implements ServletCommand {
                 } else {
                     request.setAttribute(ParameterConstant.TARIFF, tariffPlan);
                     request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);
-                    request.getRequestDispatcher(PagesConstant.EDIT_TARIFF_PAGE).forward(request,response);
+
+                    request.getRequestDispatcher(PagesConstant.EDIT_TARIFF_PAGE).forward(request, response);
                 }
             } else {
                 requestDispatcher.forward(request, response);
