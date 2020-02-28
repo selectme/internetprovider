@@ -9,7 +9,7 @@ public class ScheduleExecutor {
     private final static long DELAY_IN_MILLIS = 1000;
 
     public void execute() {
-        System.out.println("execute");
+
         Timer timer = new Timer();
 
         timer.schedule(new PaymentChecker(), DELAY_IN_MILLIS,CHECK_PERIOD);

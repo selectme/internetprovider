@@ -71,6 +71,10 @@ public class TariffValidator {
         return tariffPlan.getSpeed() > TARIFF_SPEED_TO_COMPARE;
     }
 
+//    private static boolean validateId(TariffPlan tariffPlan) {
+//        return tariffPlan.getId() != null;
+//    }
+
     private static boolean validatePrice(TariffPlan tariffPlan) {
         return tariffPlan.getPrice().compareTo(TARIFF_PRICE_TO_COMPARE) >= COMPARATOR_VALUE;
     }

@@ -19,6 +19,9 @@ public class LoggerConstants {
     public static final String CLIENT_DOES_NOT_HAVE_MONEY = "Client {{}} does not have enough money on the balance.";
     public static final String CLIENT_DOES_NOT_HAVE_ARREARS = "Client {} does not have any arrears";
     public static final String SQL_EXCEPTION = "SQL exception";
+    public static final String NULL_POINTER_EXCEPTION = "Null pointer exception";
+    public static final String NUMBER_FORMAT_EXCEPTION = "Number format exception";
+    public static final String ACTION_SERVLET_EXCEPTION = "Servlet exception";
 
 
 

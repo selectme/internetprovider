@@ -33,7 +33,7 @@ public class PaymentChecker extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println("checker");
+
         LocalDateTime today = LocalDateTime.now();
         Map<Long, Integer> clientsId = clientService.retrieveActiveClientsId();
 

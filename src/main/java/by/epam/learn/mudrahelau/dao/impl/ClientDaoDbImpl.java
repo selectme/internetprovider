@@ -161,7 +161,7 @@ public class ClientDaoDbImpl implements ClientDao {
                 try {
                     localDateTime = resultSet.getTimestamp(DbConstants.DATE).toLocalDateTime();
                 } catch (NullPointerException e) {
-                    e.printStackTrace();
+                    logger.error(LoggerConstants.NULL_POINTER_EXCEPTION, e);
                 }
             }
         } catch (SQLException e) {

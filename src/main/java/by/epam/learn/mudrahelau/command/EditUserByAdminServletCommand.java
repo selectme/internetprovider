@@ -1,5 +1,6 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.constant.RedirectConstants;
@@ -11,6 +12,8 @@ import by.epam.learn.mudrahelau.payment.PaymentType;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 import by.epam.learn.mudrahelau.validator.UserValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +33,7 @@ public class EditUserByAdminServletCommand implements ServletCommand {
     private static final String COMMAND_NAME = "edit_user_by_admin";
     private static final String MESSAGE = "label.edit.by.client.error";
     private AdminService adminService;
+    private static final Logger logger = LogManager.getLogger(EditUserByAdminServletCommand.class);
 
     public EditUserByAdminServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -50,6 +54,7 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 try {
                     tariffPlanId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
                 } catch (NumberFormatException e) {
+                    logger.error(LoggerConstants.NUMBER_FORMAT_EXCEPTION, e);
                     tariffPlanId = ParameterConstant.FAKE_TARIFF_ID;
                 }
                 ClientStatus status = ClientStatus.valueOf(request.getParameter(ParameterConstant.STATUS).toUpperCase());

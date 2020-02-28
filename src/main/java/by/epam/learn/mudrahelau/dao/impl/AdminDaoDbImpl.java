@@ -109,7 +109,7 @@ public class AdminDaoDbImpl implements AdminDao {
     }
 
     public TariffPlan getTariffPlanByClientId(long clientId) {
-        TariffPlan tariffPlan = null;
+        TariffPlan tariffPlan = new TariffPlan();
         Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TARIFF_PLAN_BY_CLIENT_ID_SQL)) {
             preparedStatement.setLong(1, clientId);
@@ -119,7 +119,11 @@ public class AdminDaoDbImpl implements AdminDao {
                 String title = resultSet.getString(DbConstants.TITLE);
                 int speed = resultSet.getInt(DbConstants.SPEED);
                 BigDecimal price = resultSet.getBigDecimal(DbConstants.PRICE);
-                tariffPlan = new TariffPlan(id, title, speed, price);
+
+                tariffPlan.setId(id);
+                tariffPlan.setTitle(title);
+                tariffPlan.setSpeed(speed);
+                tariffPlan.setPrice(price);
             }
         } catch (SQLException e) {
             logger.error(LoggerConstants.SQL_EXCEPTION, e);
@@ -218,7 +222,7 @@ public class AdminDaoDbImpl implements AdminDao {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(LoggerConstants.SQL_EXCEPTION, e);
             }
             DBUtils.getInstance().releaseConnection(connection);
         }
