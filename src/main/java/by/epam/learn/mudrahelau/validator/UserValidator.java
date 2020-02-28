@@ -2,7 +2,9 @@ package by.epam.learn.mudrahelau.validator;
 
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.model.User;
+import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.util.DBUtils;
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,11 +28,12 @@ public class UserValidator {
         return validateLogin(user) && validatePassword(user) && validateName(user) && validateSurname(user) && validateRole(user);
     }
 
-    public static boolean validateEditingClient(User user){
+    public static boolean validateEditingClient(User user) {
         return validateName(user) && validateSurname(user);
     }
 
-    public static boolean validateName(User user) {
+    @VisibleForTesting
+    static boolean validateName(User user) {
         boolean result = false;
         if (user.getName() != null) {
             if (!user.getName().trim().equals(EMPTY_STRING)) {
@@ -40,7 +46,8 @@ public class UserValidator {
         return result;
     }
 
-    private static boolean validateSurname(User user) {
+    @VisibleForTesting
+    static boolean validateSurname(User user) {
         boolean result = false;
         if (user.getSurname() != null) {
             if (!user.getSurname().trim().equals(EMPTY_STRING)) {
@@ -53,7 +60,8 @@ public class UserValidator {
         return result;
     }
 
-    private static boolean validatePassword(User user) {
+    @VisibleForTesting
+    static boolean validatePassword(User user) {
         if (user.getPassword() != null) {
             return !user.getPassword().trim().equals(EMPTY_STRING);
         } else return false;
@@ -78,7 +86,15 @@ public class UserValidator {
         return result;
     }
 
-    private static boolean validateRole(User user) {
-        return user.getRole() != null;
+    @VisibleForTesting
+    static boolean validateRole(User user) {
+        boolean result = true;
+        if (user.getRole() != null) {
+            List<Role> roles = new ArrayList<>(Arrays.asList(Role.values()));
+            if (!roles.contains(user.getRole())) {
+                result = false;
+            }
+        }
+        return result;
     }
 }

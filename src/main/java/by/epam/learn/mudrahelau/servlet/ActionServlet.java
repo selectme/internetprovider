@@ -2,6 +2,7 @@ package by.epam.learn.mudrahelau.servlet;
 
 import by.epam.learn.mudrahelau.command.CommandStorage;
 import by.epam.learn.mudrahelau.command.ServletCommand;
+import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +29,7 @@ public class ActionServlet extends HttpServlet {
             ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
             command.execute(req, resp);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.ACTION_SERVLET_EXCEPTION, e);
         }
     }
 
@@ -40,7 +41,7 @@ public class ActionServlet extends HttpServlet {
             ServletCommand command = CommandStorage.getInstance().getCommandByName(action);
             command.execute(req, resp);
         } catch (ServletException | IOException e) {
-            e.printStackTrace();
+            logger.error(LoggerConstants.ACTION_SERVLET_EXCEPTION, e);
         }
     }
 }

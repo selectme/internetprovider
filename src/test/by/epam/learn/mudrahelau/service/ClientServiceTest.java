@@ -1,15 +1,22 @@
 package by.epam.learn.mudrahelau.service;
 
+import by.epam.learn.mudrahelau.dao.impl.ClientDaoDbImpl;
 import by.epam.learn.mudrahelau.model.Client;
+import by.epam.learn.mudrahelau.model.Payment;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
-import by.epam.learn.mudrahelau.role.Role;
-import by.epam.learn.mudrahelau.util.PasswordUtil;
+import by.epam.learn.mudrahelau.payment.PaymentType;
+import by.epam.learn.mudrahelau.service.impl.ClientServiceDbImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -19,44 +26,53 @@ public class ClientServiceTest {
 
     private static int TEST_TARIFF_ID = 27;
 
-    private Client client;
+
     private User user;
     private TariffPlan tariffPlan;
-    private AdminService adminService;
-    private UserService userService;
+    ClientService clientService;
+    ClientDaoDbImpl clientDaoDb;
+    Client clientExpected;
 
     @BeforeMethod
     public void setUp() {
-        adminService = new AdminService();
-        userService = new UserService();
 
-        tariffPlan = new TariffPlan();
-        tariffPlan.setTitle("TestTariff");
-        tariffPlan.setSpeed(100);
-        tariffPlan.setPrice(new BigDecimal(30.0));
+        clientDaoDb = mock(ClientDaoDbImpl.class);
+        clientService = new ClientServiceDbImpl(clientDaoDb);
 
-        user = new User();
-        user.setLogin("0000");
-        user.setPassword("0000");
-        user.setName("Test");
-        user.setSurname("User");
-        user.setRole(Role.CLIENT);
-
+        clientExpected = new Client();
+        clientExpected.setId(99L);
     }
 
     @Test
-    public void testCreateUser() {
-        User testUser = user;
-        adminService.createUser(testUser);
+    public void testRetrieveClientMoneyAmountByClientId() {
 
-        String login = testUser.getLogin();
-        String password = testUser.getPassword();
-        User userFromDb = userService.getUser(login, password);
+        BigDecimal amount = new BigDecimal(10);
+        clientExpected.setMoneyOnAccount(amount);
 
-        assertEquals(testUser.getLogin(), userFromDb.getLogin());
-        assertEquals(PasswordUtil.hashPassword(password), userFromDb.getPassword());
-        assertEquals(testUser.getName(), userFromDb.getName());
-        assertEquals(testUser.getRole(), userFromDb.getRole());
+        when(clientService.retrieveClientMoneyAmountByClientId(anyLong())).thenReturn(amount);
+
+        BigDecimal actualAmount = clientService.retrieveClientMoneyAmountByClientId(clientExpected.getId());
+
+        assertEquals(actualAmount, clientExpected.getMoneyOnAccount());
     }
 
+    @Test
+    public void testRetrievePayments() {
+        List<Payment> paymentsExpected = new ArrayList<>();
+        Payment payment1 = new Payment(clientExpected.getId(), new BigDecimal(10), PaymentType.CREDIT,
+                LocalDateTime.of(2020, Month.FEBRUARY, 25, 15, 10));
+        Payment payment2 = new Payment(clientExpected.getId(), new BigDecimal(20), PaymentType.CREDIT,
+                LocalDateTime.of(2020, Month.FEBRUARY, 25, 15, 20));
+
+        paymentsExpected.add(payment1);
+        paymentsExpected.add(payment2);
+
+        clientExpected.setPayments(paymentsExpected);
+
+        when(clientService.retrievePayments(anyLong())).thenReturn(paymentsExpected);
+
+        List<Payment> actualPayment = clientService.retrievePayments(99L);
+
+        assertEquals(actualPayment, clientExpected.getPayments());
+    }
 }

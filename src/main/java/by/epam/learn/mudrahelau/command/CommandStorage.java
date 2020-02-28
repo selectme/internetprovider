@@ -1,8 +1,14 @@
 package by.epam.learn.mudrahelau.command;
 
+import by.epam.learn.mudrahelau.dao.impl.AdminDaoDbImpl;
+import by.epam.learn.mudrahelau.dao.impl.ClientDaoDbImpl;
+import by.epam.learn.mudrahelau.dao.impl.UserDaoDbImpl;
 import by.epam.learn.mudrahelau.service.AdminService;
 import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.service.UserService;
+import by.epam.learn.mudrahelau.service.impl.AdminServiceDbImpl;
+import by.epam.learn.mudrahelau.service.impl.ClientServiceDbImpl;
+import by.epam.learn.mudrahelau.service.impl.UserServiceDbImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +23,9 @@ public class CommandStorage {
     private UserService userService;
 
     private CommandStorage() {
-        adminService = new AdminService();
-        clientService = new ClientService();
-        userService = new UserService();
+        adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
+        clientService = new ClientServiceDbImpl(new ClientDaoDbImpl());
+        userService = new UserServiceDbImpl(new UserDaoDbImpl());
         loadCommands();
     }
 

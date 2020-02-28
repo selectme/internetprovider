@@ -53,7 +53,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="?sessionLocale=ru">Русский</a>
-                    <a class="dropdown-item" href="?sessionLocale=by">Беларуски</a>
+                    <a class="dropdown-item" href="?sessionLocale=by">Беларускi</a>
                     <a class="dropdown-item" href="?sessionLocale=en">English</a>
                 </div>
                 <c:choose>

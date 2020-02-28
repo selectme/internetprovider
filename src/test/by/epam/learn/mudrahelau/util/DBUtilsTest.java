@@ -1,12 +1,8 @@
 package by.epam.learn.mudrahelau.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 
 import java.sql.Connection;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 import static org.testng.Assert.assertEquals;
 
@@ -15,17 +11,8 @@ import static org.testng.Assert.assertEquals;
  */
 public class DBUtilsTest {
 
-    private static BlockingQueue<Connection> connectionPool = new ArrayBlockingQueue<>(2);
-    private final static String URL = "jdbc:mysql://localhost:3306/providerdb?serverTimezone=Europe/Minsk&allowPublicKeyRetrieval=true&useSSL=false";
-    private final static String LOGIN = "root";
-    private final static String PASSWORD = "root";
-    private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final Logger logger = LogManager.getLogger(DBUtilsTest.class);
-
-
-
     @Test
-    public void testGetConnection() throws InterruptedException {
+    public void testGetConnection()   {
 
         Connection connectionOneRetrievedFromPool = DBUtils.getInstance().getConnection();
         Connection connectionTwoRetrievedFromPool = DBUtils.getInstance().getConnection();
@@ -39,7 +26,7 @@ public class DBUtilsTest {
     }
 
     @Test
-    public void testReleaseConnection() throws InterruptedException {
+    public void testReleaseConnection()   {
         Connection connectionOneRetrievedFromPool = DBUtils.getInstance().getConnection();
         Connection connectionTwoRetrievedFromPool = DBUtils.getInstance().getConnection();
 
