@@ -51,14 +51,14 @@
                     <form action="do" method="get">
                         <input type="hidden" name="action" value="show_edit_user_page_by_admin"/>
                         <input type="hidden" name="user_id" value="${client.id}"/>
-                        <input class="btn btn-light" type="submit" value="<fmt:message key="label.edit"/>"/>
+                        <input class="btn btn-primary" type="submit" value="<fmt:message key="label.edit"/>"/>
                     </form>
                 </td>
                 <td>
                     <form action="do" method="post">
                         <input type="hidden" name="action" value="delete_user"/>
                         <input type="hidden" name="user_id" value="${client.id}"/>
-                        <input class="btn btn-light btn" type="submit" value="<fmt:message key="label.delete"/>"/>
+                        <input class="btn btn-primary btn" type="submit" value="<fmt:message key="label.delete"/>"/>
                     </form>
                 </td>
             </tr>

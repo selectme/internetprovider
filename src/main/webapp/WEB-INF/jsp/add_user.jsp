@@ -18,7 +18,7 @@
             <div class="col-sm-10">
                 <label>
                     <input name="login" type="number" class="form-control form-control-lg" id="inputLogin"
-                           pattern="([0-9]{4})"
+                           pattern="([0-9]{4})" max="9999"
                            required/>
                 </label>
                 <small id="loginHelp" class="form-text text-muted"><fmt:message key="label.login.helper"/></small>

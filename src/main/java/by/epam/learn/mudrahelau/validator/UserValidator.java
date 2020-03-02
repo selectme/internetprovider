@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 public class UserValidator {
     private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
     private static final String EMPTY_STRING = "";
+    private static final int LOGIN_LENGTH = 4;
 
     private static final Logger logger = LogManager.getLogger(UserValidator.class);
 
@@ -69,7 +70,7 @@ public class UserValidator {
 
     private static boolean validateLogin(User user) {
         boolean result = true;
-        if (user.getLogin() != null) {
+        if ((user.getLogin() != null) && (user.getLogin().trim().length() <= LOGIN_LENGTH)) {
             Connection connection = DBUtils.getInstance().getConnection();
             try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LOGIN_SQL)) {
                 preparedStatement.setString(1, user.getLogin());
@@ -82,6 +83,8 @@ public class UserValidator {
             } finally {
                 DBUtils.getInstance().releaseConnection(connection);
             }
+        }else {
+           return false;
         }
         return result;
     }

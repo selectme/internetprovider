@@ -14,24 +14,24 @@
             <form action="do" method="get">
                 <input type="hidden" name="action" value="show_edit_client_by_client_page"/>
                 <input type="hidden" name="user_id" value="${client.id}"/>
-                <input type="submit" class="btn btn-light btn-lg text-right" value="<fmt:message key="label.edit"/>"/>
+                <input type="submit" class="btn btn-primary btn-lg text-right" value="<fmt:message key="label.edit"/>"/>
             </form>
             <br>
             <form action="do" method="get">
                 <input type="hidden" name="action" value="show_change_tariff_page"/>
                 <input type="hidden" name="user_id" value="${client.id}"/>
-                <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.change_tariff"/>"/>
+                <input type="submit" class="btn btn-primary btn-lg" value="<fmt:message key="label.change_tariff"/>"/>
             </form>
             <br>
             <form action="do" method="get">
                 <input type="hidden" name="action" value="show_payment_page"/>
                 <input type="hidden" name="user_id" value="${client.id}"/>
-                <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.make_payment"/>"/>
+                <input type="submit" class="btn btn-primary btn-lg" value="<fmt:message key="label.make_payment"/>"/>
             </form>
             <br>
             <form action="do" method="get">
                 <input type="hidden" name="action" value="show_clients_payments_page"/>
-                <input type="submit" class="btn btn-light btn-lg" value="<fmt:message key="label.payments_history"/>"/>
+                <input type="submit" class="btn btn-primary btn-lg" value="<fmt:message key="label.payments_history"/>"/>
             </form>
         </div>
     </div>

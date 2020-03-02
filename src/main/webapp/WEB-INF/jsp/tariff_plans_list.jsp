@@ -79,14 +79,14 @@
                             <form action="do" method="get">
                                 <input type="hidden" name="action" value="show_edit_tariffplan_page"/>
                                 <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                                <input class="btn btn-light btn" type="submit" value="<fmt:message key="label.edit"/>"/>
+                                <input class="btn btn-primary btn" type="submit" value="<fmt:message key="label.edit"/>"/>
                             </form>
                         </td>
                         <td>
                             <form action="do" method="post">
                                 <input type="hidden" name="action" value="delete_tariff_plan"/>
                                 <input type="hidden" name="tariff_id" value="${tariff.id}"/>
-                                <input class="btn btn-light btn" type="submit"
+                                <input class="btn btn-primary btn" type="submit"
                                        value="<fmt:message key="label.delete"/>"/>
                             </form>
                         </td>
