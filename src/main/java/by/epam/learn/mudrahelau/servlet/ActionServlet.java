@@ -12,9 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * ActionServlet interacts with clients through a request-response principle.
+ * Depending on the type of request, the method that processes the request will be determined.
+ */
 public class ActionServlet extends HttpServlet {
-
+    /**
+     * Parameter based on which it will be determined which command to execute .
+     */
     private static final String ACTION = "action";
+
+    /**
+     * {@link Logger}
+     */
     private static final Logger logger = LogManager.getLogger(ActionServlet.class);
 
     @Override

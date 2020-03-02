@@ -1,7 +1,7 @@
 package by.epam.learn.mudrahelau.constant;
 
 /**
- * @author Viktar on 24.02.2020
+ * List of redirect references which used for working with servlet.
  */
 public class RedirectConstants {
     public static final String MAIN_PAGE_REDIRECT = "/";

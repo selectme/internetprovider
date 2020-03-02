@@ -5,10 +5,14 @@ import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.UserService;
 
 /**
- * @author Viktar on 27.01.2020
+ * JDBC implementation of the {@link UserService}
+ *
+ * @see UserService
  */
 public class UserServiceDbImpl implements UserService {
-
+    /**
+     * @see UserService
+     */
     private UserDao userDao;
 
     public UserServiceDbImpl(UserDao userDao) {

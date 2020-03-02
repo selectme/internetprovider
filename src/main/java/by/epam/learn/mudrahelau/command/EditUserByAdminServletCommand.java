@@ -26,13 +26,26 @@ import java.util.List;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * EditUserByAdminServletCommand is intended to edit {@link User}.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class EditUserByAdminServletCommand implements ServletCommand {
-
-    private static final String COMMAND_NAME = "edit_user_by_admin";
-    private static final String MESSAGE = "label.edit.by.client.error";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "edit_user_by_admin";
+    /**
+     * Localized error message.
+     */
+    private static final String MESSAGE = "label.edit.by.client.error";
+
     private static final Logger logger = LogManager.getLogger(EditUserByAdminServletCommand.class);
 
     public EditUserByAdminServletCommand(AdminService adminService) {
@@ -48,8 +61,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
             if (checkUserIsAdmin(user)) {
                 long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
                 String login = request.getParameter(ParameterConstant.LOGIN);
-                String name = request.getParameter(ParameterConstant.NAME);
-                String surname = request.getParameter(ParameterConstant.SURNAME);
+                String name = request.getParameter(ParameterConstant.NAME).trim();
+                String surname = request.getParameter(ParameterConstant.SURNAME).trim();
                 int tariffPlanId;
                 try {
                     tariffPlanId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
@@ -64,6 +77,7 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                 client.setName(name);
                 client.setSurname(surname);
                 client.setStatus(status);
+                client.setTariffPlan(adminService.getTariffPlanByClientId(clientId));
                 if (UserValidator.validateEditingClient(client)) {
                     adminService.editClientByAdmin(client);
                     if (status == ClientStatus.INACTIVE) {
@@ -77,8 +91,8 @@ public class EditUserByAdminServletCommand implements ServletCommand {
                     response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {
                     request.setAttribute(ParameterConstant.CLIENT, client);
-                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, MESSAGE);
                     List<TariffPlan> tariffPlans = adminService.retrieveTariffPlans();
+                    request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, MESSAGE);
                     request.setAttribute(ParameterConstant.TARIFF_PLANS, tariffPlans);
                     request.getRequestDispatcher(PagesConstant.EDIT_BY_ADMIN_PAGE).forward(request, response);
                 }

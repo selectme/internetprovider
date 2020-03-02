@@ -17,11 +17,23 @@ import java.util.List;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowEditTariffPageServletCommand is intended for forwarding {@link User} to the page where he can
+ * edit {@link User}.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} ADMIN.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowEditUserPageServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_edit_user_page_by_admin";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_edit_user_page_by_admin";
 
     public ShowEditUserPageServletCommand(AdminService adminService) {
         this.adminService = adminService;

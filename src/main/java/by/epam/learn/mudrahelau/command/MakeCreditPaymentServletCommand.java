@@ -17,11 +17,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * MakeCreditPaymentServletCommand is intended that {@link User} can make {@link Payment} and replenish his balance.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class MakeCreditPaymentServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "make_payment";
+    /**
+     * @see ClientService
+     */
     private ClientService clientService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "make_payment";
 
     public MakeCreditPaymentServletCommand(ClientService clientService) {
         this.clientService = clientService;

@@ -15,9 +15,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * JDBC implementation of the {@link ClientService}
+ *
+ * @see ClientService
+ */
 public class ClientServiceDbImpl implements ClientService {
+
     private static final int COMPARE_TO_VALUE = 0;
     private static final Logger logger = LogManager.getLogger(ClientServiceDbImpl.class);
+    /**
+     * @see ClientDao
+     */
     private ClientDao clientDao;
 
     public ClientServiceDbImpl(ClientDao clientDao) {
@@ -49,9 +58,6 @@ public class ClientServiceDbImpl implements ClientService {
         logger.info(LoggerConstants.CLIENT_STATUS_CHANGED, clientId, status);
     }
 
-    public void removeTariffPlanFromClient(long clientId) {
-        clientDao.removeTariffPlanFromClient(clientId);
-    }
 
     public Map<Long, Integer> retrieveActiveClientsId() {
         return clientDao.retrieveActiveClientsId();

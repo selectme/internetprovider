@@ -1,7 +1,7 @@
 package by.epam.learn.mudrahelau.constant;
 
 /**
- * @author Viktar on 19.02.2020
+ * List of constants that used for working with {@link org.apache.logging.log4j.Logger}
  */
 public class LoggerConstants {
     public static final String USER_CREATED = "User{{} {}.{}} created";

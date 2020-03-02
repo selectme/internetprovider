@@ -15,11 +15,20 @@ import java.io.IOException;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * DeleteUserServletCommand is intended to delete {@link User} from a database.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class DeleteUserServletCommand implements ServletCommand {
-
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "delete_user";
 
     public DeleteUserServletCommand(AdminService adminService) {
@@ -36,10 +45,10 @@ public class DeleteUserServletCommand implements ServletCommand {
                 adminService.deleteUserById(userId);
                 response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
             } else {
-                requestDispatcher.forward(request,response);
+                requestDispatcher.forward(request, response);
             }
         } else {
-            requestDispatcher.forward(request,response);
+            requestDispatcher.forward(request, response);
         }
     }
 

@@ -5,12 +5,33 @@ import by.epam.learn.mudrahelau.role.Role;
 import java.util.Objects;
 
 
+/**
+ * Model object that represents a user of the internet-provider. The user may have the role of client or administrator.
+ */
 public class User {
+    /**
+     * A unique identificator of user.
+     */
     private Long id;
+    /**
+     * User's login is used for log in. Must be four digits.
+     */
     private String login;
+    /**
+     * User's password. There is no specific format restrictions.
+     */
     private String password;
+    /**
+     * User's name.
+     */
     private String name;
+    /**
+     * User's surname.
+     */
     private String surname;
+    /**
+     * User's {@link Role}. User must be a client or an administrator.
+     */
     private Role role;
 
     public User() {

@@ -15,11 +15,20 @@ import java.io.IOException;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * DeleteTariffPlanServletCommand is intended to delete {@link by.epam.learn.mudrahelau.model.TariffPlan} from a database.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class DeleteTariffPlanServletCommand implements ServletCommand {
-
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "delete_tariff_plan";
 
     public DeleteTariffPlanServletCommand(AdminService adminService) {

@@ -1,22 +1,34 @@
 package by.epam.learn.mudrahelau.model;
 
-import by.epam.learn.mudrahelau.role.Role;
 import by.epam.learn.mudrahelau.status.ClientStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+
 /**
- * @author Viktar on 26.12.2019
+ * Model object that represents a client of the internet-provider.
  */
 public class Client extends User {
 
+    /**
+     * Client's {@link TariffPlan}.
+     */
     private TariffPlan tariffPlan;
 
+    /**
+     * Client's list of {@link Payment}.
+     */
     private List<Payment> payments;
 
+    /**
+     * Current money balance of a client.
+     */
     private BigDecimal moneyOnAccount;
 
+    /**
+     * Current {@link ClientStatus} of a client. May be ACTIVE, INACTIVE, BLOCKED.
+     */
     private ClientStatus status;
 
     public Client(long id, String login, String password, String name, String surname, TariffPlan tariffPlan, ClientStatus status) {

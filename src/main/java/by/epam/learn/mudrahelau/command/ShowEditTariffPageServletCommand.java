@@ -15,11 +15,23 @@ import java.io.IOException;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowEditTariffPageServletCommand is intended for forwarding {@link User} to the page where he can
+ * edit {@link TariffPlan}.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} ADMIN.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowEditTariffPageServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_edit_tariffplan_page";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_edit_tariffplan_page";
 
     public ShowEditTariffPageServletCommand(AdminService adminService) {
         this.adminService = adminService;

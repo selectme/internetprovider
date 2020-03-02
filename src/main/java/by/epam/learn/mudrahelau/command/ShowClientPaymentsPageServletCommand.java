@@ -15,11 +15,23 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowClientPaymentsPageServletCommand is intended for forwarding {@link User} to the page where he can see his
+ * {@link Payment} history.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} CLIENT.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowClientPaymentsPageServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_clients_payments_page";
+    /**
+     * @see ClientService
+     */
     private ClientService clientService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_clients_payments_page";
 
     public ShowClientPaymentsPageServletCommand(ClientService clientService) {
         this.clientService = clientService;

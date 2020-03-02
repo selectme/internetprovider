@@ -15,14 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * EditClientByClientServletCommand is intended to edit {@link Client} data by {@link Client}.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class EditClientByClientServletCommand implements ServletCommand {
-
+    /**
+     * @see ClientService
+     */
     private ClientService clientService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "edit_client_by_client";
+    /**
+     * Localized error message.
+     */
     private static final String MESSAGE = "label.edit.by.client.error";
-
 
     public EditClientByClientServletCommand(ClientService clientService) {
         this.clientService = clientService;

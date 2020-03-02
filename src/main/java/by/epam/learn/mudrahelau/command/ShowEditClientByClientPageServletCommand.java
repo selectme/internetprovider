@@ -13,11 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowEditClientByClientPageServletCommand is intended for forwarding {@link User} to the page where he can
+ * change his personal data.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} CLIENT.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowEditClientByClientPageServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_edit_client_by_client_page";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_edit_client_by_client_page";
 
     public ShowEditClientByClientPageServletCommand(AdminService adminService) {
         this.adminService = adminService;
@@ -33,7 +45,8 @@ public class ShowEditClientByClientPageServletCommand implements ServletCommand 
                 Client client = adminService.getClientById(clientId);
                 request.setAttribute(ParameterConstant.CLIENT, client);
                 destinationPage = PagesConstant.EDIT_BY_CLIENT_PAGE;
-            } RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
+            }
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinationPage);
             requestDispatcher.forward(request, response);
         }
     }

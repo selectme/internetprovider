@@ -1,7 +1,7 @@
 package by.epam.learn.mudrahelau.constant;
 
 /**
- * @author Viktar on 18.02.2020
+ * List of constants that used for working with a database
  */
 public class DbConstants {
 

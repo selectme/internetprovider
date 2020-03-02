@@ -3,12 +3,24 @@ package by.epam.learn.mudrahelau.model;
 import java.math.BigDecimal;
 
 /**
- * @author Viktar on 26.12.2019
+ * Model object that represents tariff plan.
  */
 public class TariffPlan {
+    /**
+     * Unique identificator of tariff plan.
+     */
     private int id;
+    /**
+     * Tariff plan name.
+     */
     private String title;
+    /**
+     * Tariff plan speed.
+     */
     private int speed;
+    /**
+     * Tariff plan price.
+     */
     private BigDecimal price;
 
     public TariffPlan() {

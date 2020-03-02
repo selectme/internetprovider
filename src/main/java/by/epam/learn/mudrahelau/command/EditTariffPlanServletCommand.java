@@ -6,6 +6,7 @@ import by.epam.learn.mudrahelau.constant.RedirectConstants;
 import by.epam.learn.mudrahelau.model.TariffPlan;
 import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
+import by.epam.learn.mudrahelau.service.ClientService;
 import by.epam.learn.mudrahelau.validator.TariffValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -18,11 +19,24 @@ import java.math.BigDecimal;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * EditTariffPlanServletCommand is intended to edit {@link TariffPlan}.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class EditTariffPlanServletCommand implements ServletCommand {
+    /**
+     * @see ClientService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "edit_tariff_plan";
+    /**
+     * Localized error message.
+     */
     private static final String ERROR_MESSAGE = "label.incorrect.tariff.data.error";
 
     public EditTariffPlanServletCommand(AdminService adminService) {

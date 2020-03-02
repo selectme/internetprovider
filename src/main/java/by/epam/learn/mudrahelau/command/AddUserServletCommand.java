@@ -16,11 +16,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * AddUserServletCommand is intended to add {@link User} into a database.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class AddUserServletCommand implements ServletCommand {
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "add_user";
+    /**
+     * Localized error message.
+     */
     private static final String ERROR_MESSAGE = "label.incorrect.user.data.error";
 
     public AddUserServletCommand(AdminService adminService) {
@@ -44,7 +57,7 @@ public class AddUserServletCommand implements ServletCommand {
                 newUser.setSurname(surname);
                 newUser.setRole(role);
                 if (UserValidator.validateCreatingUser(newUser)) {
-                    adminService.createUser(newUser);
+                    adminService.addUser(newUser);
                     response.sendRedirect(RedirectConstants.SHOW_USERS_REDIRECT);
                 } else {
                     request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);

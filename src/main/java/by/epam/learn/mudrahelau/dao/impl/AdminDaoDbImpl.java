@@ -21,6 +21,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JDBC implementation of the {@link AdminDao}
+ *
+ * @see AdminDao
+ */
 public class AdminDaoDbImpl implements AdminDao {
 
     private static final String GET_CLIENT_BY_ID_SQL = "SELECT id, login, name, surname, status FROM user WHERE id = ?";
@@ -34,7 +39,6 @@ public class AdminDaoDbImpl implements AdminDao {
     private final static String CREATE_TARIFF_PLAN_SQL = "INSERT into tariff_plan(title, speed, price) values (?,?,?)";
     private final static String CREATE_USER_SQL = "INSERT INTO user_tariffplan(user_id, tariff_id) VALUES (LAST_INSERT_ID(), ?)";
     private final static String DELETE_USER_BY_ID_SQL = "DELETE FROM user WHERE id=?";
-    //    private final static String DELETE_TARIFF_BY_ID_SQL = "DELETE FROM tariff_plan WHERE id=?";
     private final static String DELETE_TARIFF_BY_ID_SQL = "DELETE FROM tariff_plan WHERE id=?";
     private final static String SET_FAKE_TARIFF_TO_USER_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE user_id = ?";
     private final static String SET_FAKE_TARIFF_ID_SQL = "UPDATE user_tariffplan SET tariff_id=0 WHERE tariff_id = ?";
@@ -154,7 +158,7 @@ public class AdminDaoDbImpl implements AdminDao {
         return tariffPlan;
     }
 
-    public void createUser(User user) {
+    public void addUser(User user) {
         Connection connection = DBUtils.getInstance().getConnection();
         PreparedStatement assignToTariffPlanTableStatement = null;
         try (PreparedStatement createUserStatement = connection.prepareStatement(CREATE_CLIENT_SQL)
@@ -303,7 +307,7 @@ public class AdminDaoDbImpl implements AdminDao {
     }
 
 
-    public void createTariffPlan(TariffPlan tariffPlan) {
+    public void addTariffPlan(TariffPlan tariffPlan) {
         Connection connection = DBUtils.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TARIFF_PLAN_SQL)) {
             preparedStatement.setString(1, tariffPlan.getTitle());

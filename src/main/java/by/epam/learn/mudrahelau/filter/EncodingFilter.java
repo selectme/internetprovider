@@ -7,7 +7,7 @@ import java.io.IOException;
 
 
 /**
- * @author Viktar on 30.01.2020
+ * Servlet filter which encodes the request and response in UTF-8 format.
  */
 public class EncodingFilter implements Filter {
 

@@ -13,11 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowClientAccountServletCommand is intended for forwarding {@link User} to the personal account page.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} CLIENT.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowClientAccountServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_client_account_page";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_client_account_page";
 
     public ShowClientAccountServletCommand(AdminService adminService) {
         this.adminService = adminService;

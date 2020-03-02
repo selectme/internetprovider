@@ -15,11 +15,22 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowUsersListServletCommand is intended for forwarding {@link User} to the page where he can
+ * see a list of  {@link User}.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} ADMIN.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowUsersListServletCommand implements ServletCommand {
-
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "show_users";
 
     public ShowUsersListServletCommand(AdminService adminService) {

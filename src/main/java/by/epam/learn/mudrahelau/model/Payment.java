@@ -5,15 +5,30 @@ import by.epam.learn.mudrahelau.payment.PaymentType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
 /**
- * @author Viktar on 26.12.2019
+ * Model object that represents a payment.
  */
 public class Payment {
-
+    /**
+     * Unique identificator of payment transaction.
+     */
     private int id;
+    /**
+     * {@link Client} identificator.
+     */
     private long clientId;
+    /**
+     * Amount of money
+     */
     private BigDecimal amount;
+    /**
+     * Date of operation.
+     */
     private LocalDateTime date;
+    /**
+     * {@link PaymentType} can be DEBIT or CREDIT.
+     */
     private PaymentType paymentType;
 
     public Payment() {

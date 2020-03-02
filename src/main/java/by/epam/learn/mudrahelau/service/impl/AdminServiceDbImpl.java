@@ -12,9 +12,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * JDBC implementation of the {@link AdminService}
+ *
+ * @see AdminService
+ */
 public class AdminServiceDbImpl implements AdminService {
+
     private static final Logger logger = LogManager.getLogger(AdminServiceDbImpl.class);
 
+    /**
+     * @see AdminDao
+     */
     private AdminDao adminDao;
 
     public AdminServiceDbImpl(AdminDao adminDao) {
@@ -22,8 +31,8 @@ public class AdminServiceDbImpl implements AdminService {
     }
 
     @Override
-    public void createUser(User user) {
-        adminDao.createUser(user);
+    public void addUser(User user) {
+        adminDao.addUser(user);
         logger.info(LoggerConstants.USER_CREATED, user.getName(), user.getSurname(), user.getRole());
     }
 
@@ -50,8 +59,8 @@ public class AdminServiceDbImpl implements AdminService {
         return adminDao.retrieveClients();
     }
 
-    public void createTariffPlan(TariffPlan tariffPlan) {
-        adminDao.createTariffPlan(tariffPlan);
+    public void addTariffPlan(TariffPlan tariffPlan) {
+        adminDao.addTariffPlan(tariffPlan);
         logger.info(LoggerConstants.TARIFF_CREATED, tariffPlan.getTitle(), tariffPlan.getSpeed(), tariffPlan.getPrice());
     }
 

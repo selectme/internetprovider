@@ -18,13 +18,34 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserValidator {
-    private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
-    private static final String EMPTY_STRING = "";
-    private static final int LOGIN_LENGTH = 4;
 
+/**
+ * TariffValidator is used for validating {@link User} in during creation or editing process.
+ */
+public class UserValidator {
+    /**
+     * SQL request for getting {@link User} login.
+     */
+    private static final String GET_LOGIN_SQL = "SELECT login FROM user WHERE login=?";
+    /**
+     * Empty string involved in the validation process.
+     */
+    private static final String EMPTY_STRING = "";
+    /**
+     * Login length.
+     */
+    private static final int LOGIN_LENGTH = 4;
+    /**
+     * {@link Logger}
+     */
     private static final Logger logger = LogManager.getLogger(UserValidator.class);
 
+    /**
+     * Validates {@link User}.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} in case that all validation stages are satisfactory.
+     */
     public static boolean validateCreatingUser(User user) {
         return validateLogin(user) && validatePassword(user) && validateName(user) && validateSurname(user) && validateRole(user);
     }
@@ -33,6 +54,12 @@ public class UserValidator {
         return validateName(user) && validateSurname(user);
     }
 
+    /**
+     * Checks that {@link User} name is not null or empty and fits the required parameters.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} if {@link User} name is not null or empty and satisfies the condition.
+     */
     @VisibleForTesting
     static boolean validateName(User user) {
         boolean result = false;
@@ -47,6 +74,12 @@ public class UserValidator {
         return result;
     }
 
+    /**
+     * Checks that {@link User} surname is not null or empty and fits the required parameters.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} if {@link User} surname is not null or empty and satisfies the condition.
+     */
     @VisibleForTesting
     static boolean validateSurname(User user) {
         boolean result = false;
@@ -61,6 +94,12 @@ public class UserValidator {
         return result;
     }
 
+    /**
+     * Checks that {@link User} password is not null or empty.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} if {@link User} password is not null or empty.
+     */
     @VisibleForTesting
     static boolean validatePassword(User user) {
         if (user.getPassword() != null) {
@@ -68,6 +107,12 @@ public class UserValidator {
         } else return false;
     }
 
+    /**
+     * Checks that login is not null and unique.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} if {@link User} login is not null or empty and has no duplicates.
+     */
     private static boolean validateLogin(User user) {
         boolean result = true;
         if ((user.getLogin() != null) && (user.getLogin().trim().length() <= LOGIN_LENGTH)) {
@@ -84,12 +129,18 @@ public class UserValidator {
             } finally {
                 DBUtils.getInstance().releaseConnection(connection);
             }
-        }else {
-           return false;
+        } else {
+            return false;
         }
         return result;
     }
 
+    /**
+     * Checks that {@link Role} is not null and exists.
+     *
+     * @param user {@link User} to be validated.
+     * @return {@code true} if {@link Role} not null and exists.
+     */
     @VisibleForTesting
     static boolean validateRole(User user) {
         boolean result = true;

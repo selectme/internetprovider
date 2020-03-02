@@ -13,10 +13,17 @@ import java.io.IOException;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowAdminPanelServletCommand is intended for forwarding {@link User} to the administration panel page.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} ADMIN.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowAdminPanelServletCommand implements ServletCommand {
-
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "show_administration_panel";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

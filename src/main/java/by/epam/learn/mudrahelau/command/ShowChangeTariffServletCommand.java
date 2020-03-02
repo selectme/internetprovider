@@ -15,11 +15,21 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowChangeTariffServletCommand is intended for forwarding {@link User} to the page where he can change {@link TariffPlan}.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowChangeTariffServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_change_tariff_page";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_change_tariff_page";
 
     public ShowChangeTariffServletCommand(AdminService adminService) {
         this.adminService = adminService;

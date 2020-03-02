@@ -8,9 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * NotExistsServletCommand is intended for cases when {@link by.epam.learn.mudrahelau.model.User}
+ * enters the wrong command. In this case he will be redirected to the main page.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class NotExistsServletCommand implements ServletCommand{
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "not_exists";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

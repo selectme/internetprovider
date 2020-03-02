@@ -12,11 +12,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+/**
+ * Implementation of {@link ServletCommand}.
+ * LoginServletCommand is intended that {@link User} can log in in his account.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
+ */
 public class LoginServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "do_login";
-    private static final String ERROR_MESSAGE = "label.error";
+    /**
+     * @see UserService
+     */
     private UserService userService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "do_login";
+    /**
+     * Localized error message.
+     */
+    private static final String ERROR_MESSAGE = "label.error";
 
     public LoginServletCommand(UserService userService) {
         this.userService = userService;

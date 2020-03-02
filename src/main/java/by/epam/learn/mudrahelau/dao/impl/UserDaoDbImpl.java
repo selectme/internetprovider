@@ -15,6 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * JDBC implementation of the {@link UserDao}
+ *
+ * @see UserDao
+ */
 public class UserDaoDbImpl implements UserDao {
 
     private static final String GET_USER_SQL = "SELECT * from user WHERE login = ? and password = ?";

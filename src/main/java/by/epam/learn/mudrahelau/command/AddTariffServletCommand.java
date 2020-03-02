@@ -18,12 +18,25 @@ import java.math.BigDecimal;
 
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * AddTariffServletCommand is intended to add {@link TariffPlan} into a database.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class AddTariffServletCommand implements ServletCommand {
 
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "add_tariff";
+    /**
+     * Localized error message.
+     */
     private static final String ERROR_MESSAGE = "label.incorrect.tariff.data.error";
 
 
@@ -47,7 +60,7 @@ public class AddTariffServletCommand implements ServletCommand {
                 tariffPlan.setSpeed(speed);
                 tariffPlan.setPrice(price);
                 if (TariffValidator.validateCreatingTariff(tariffPlan)) {
-                    adminService.createTariffPlan(tariffPlan);
+                    adminService.addTariffPlan(tariffPlan);
                     response.sendRedirect(RedirectConstants.SHOW_TARIFFS_REDIRECT);
                 } else {
                     request.setAttribute(ParameterConstant.ERROR_ATTRIBUTE, ERROR_MESSAGE);

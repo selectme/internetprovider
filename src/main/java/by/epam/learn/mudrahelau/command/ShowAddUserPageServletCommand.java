@@ -13,10 +13,18 @@ import java.io.IOException;
 import static by.epam.learn.mudrahelau.validator.AdminValidator.checkUserIsAdmin;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowAddUserPageServletCommand is intended for forwarding {@link User} to the page where he can add the new {@link User}
+ * into the database.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} ADMIN.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowAddUserPageServletCommand implements ServletCommand {
-
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "show_add_client_page";
 
     @Override

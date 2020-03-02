@@ -3,6 +3,7 @@ package by.epam.learn.mudrahelau.command;
 import by.epam.learn.mudrahelau.constant.PagesConstant;
 import by.epam.learn.mudrahelau.constant.ParameterConstant;
 import by.epam.learn.mudrahelau.model.TariffPlan;
+import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.service.AdminService;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +14,22 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowTariffsServletCommand is intended for forwarding {@link User} to the page where he can
+ * see list of  {@link TariffPlan}.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowTariffsServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_tariffs";
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_tariffs";
 
     public ShowTariffsServletCommand(AdminService adminService) {
         this.adminService = adminService;

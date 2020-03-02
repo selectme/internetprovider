@@ -4,7 +4,7 @@ import by.epam.learn.mudrahelau.model.User;
 import by.epam.learn.mudrahelau.role.Role;
 
 /**
- * @author Viktar on 16.02.2020
+ * AdminValidator is used for validate that {@link User} is an administrator.
  */
 public class AdminValidator {
 

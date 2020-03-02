@@ -1,4 +1,4 @@
-package by.epam.learn.mudrahelau.sheduler;
+package by.epam.learn.mudrahelau.scheduler;
 
 import by.epam.learn.mudrahelau.constant.LoggerConstants;
 import by.epam.learn.mudrahelau.dao.impl.AdminDaoDbImpl;
@@ -21,13 +21,28 @@ import java.util.TimerTask;
 
 import static by.epam.learn.mudrahelau.constant.LoggerConstants.CLIENT_DOES_NOT_HAVE_ARREARS;
 
-
+/**
+ * PaymentChecker is used for checking {@link Client} is paid the bill. Otherwise PaymentChecker will try to make
+ * {@link Payment} based on the price of {@link by.epam.learn.mudrahelau.model.TariffPlan}. In case that {@link Client}
+ * has no enough money on the balance his {@link ClientStatus} will be changed to BLOCKED until {@link Client}
+ * replenishes the balance.
+ */
 public class PaymentChecker extends TimerTask {
     private static final Logger logger = LogManager.getLogger(PaymentChecker.class);
-
+    /**
+     * {@link AdminService} {@link AdminServiceDbImpl}
+     */
     private AdminService adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
+    /**
+     * {@link ClientService} {@link ClientServiceDbImpl}
+     */
     private ClientService clientService = new ClientServiceDbImpl(new ClientDaoDbImpl());
 
+    /**
+     * Number of days after the last debit payment. Debit payment means that {@link by.epam.learn.mudrahelau.model.TariffPlan}
+     * was paid. PaymentChecker checks the last date of debit payment and in case that current date is higher than the last
+     * debit date PaymentChecker will try to make {@link Payment}.
+     */
     private static final int DAYS_AFTER_THE_LAST_DEBIT_PAYMENT = 1;
     private static final int ZERO_VALUE = 0;
 

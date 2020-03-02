@@ -9,6 +9,6 @@ public interface ServletCommand {
 
     void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 
-    // @NonNull
+
     String getName();
 }

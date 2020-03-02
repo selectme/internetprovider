@@ -15,11 +15,20 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ChangeTariffPlanServletCommand is intended to change {@link User}'s {@link by.epam.learn.mudrahelau.model.TariffPlan}
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ChangeTariffPlanServletCommand implements ServletCommand {
-
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
     private static final String COMMAND_NAME = "change_tariff_plan";
 
     public ChangeTariffPlanServletCommand(AdminService adminService) {
@@ -34,9 +43,9 @@ public class ChangeTariffPlanServletCommand implements ServletCommand {
             long clientId = Long.parseLong(request.getParameter(ParameterConstant.USER_ID));
             int tariffId = Integer.parseInt(request.getParameter(ParameterConstant.TARIFF_ID));
             BigDecimal tariffPlanPrice = adminService.getTariffPlanById(tariffId).getPrice();
-                Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
-                adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
-                response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
+            Payment payment = new Payment(clientId, tariffPlanPrice.negate(), PaymentType.DEBIT, LocalDateTime.now());
+            adminService.makePaymentAndChangeTariff(clientId, tariffId, payment);
+            response.sendRedirect(RedirectConstants.CLIENT_ACCOUNT_REDIRECT + user.getId());
         }
     }
 

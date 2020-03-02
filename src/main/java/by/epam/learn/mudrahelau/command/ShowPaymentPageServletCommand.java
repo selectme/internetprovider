@@ -13,12 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Viktar on 16.02.2020
+ * Implementation of {@link ServletCommand}.
+ * ShowPaymentPageServletCommand is intended for forwarding {@link User} to the page where he can
+ * make {@link by.epam.learn.mudrahelau.model.Payment}.
+ * {@link User} must have {@link by.epam.learn.mudrahelau.role.Role} CLIENT.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
  */
 public class ShowPaymentPageServletCommand implements ServletCommand {
-    private static final String COMMAND_NAME = "show_payment_page";
-
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * Constant name of the command.
+     */
+    private static final String COMMAND_NAME = "show_payment_page";
 
     public ShowPaymentPageServletCommand(AdminService adminService) {
         this.adminService = adminService;

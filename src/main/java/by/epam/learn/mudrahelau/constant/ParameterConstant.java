@@ -3,7 +3,7 @@ package by.epam.learn.mudrahelau.constant;
 import java.math.BigDecimal;
 
 /**
- * @author Viktar on 18.02.2020
+ * List of parameters that used for working with jsp pages and servlets.
  */
 public class ParameterConstant {
 

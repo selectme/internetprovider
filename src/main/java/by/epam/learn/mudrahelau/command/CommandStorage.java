@@ -13,14 +13,35 @@ import by.epam.learn.mudrahelau.service.impl.UserServiceDbImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * CommandStorage is intended to store {@link ServletCommand} used to execute the logic associated with receiving and sending HTTP
+ * requests and responses.
+ *
+ * @see ServletCommand
+ * @see CommandStorage
+ */
 public class CommandStorage {
-
+    /**
+     * {@link Map} that contains names(keys) of {@link ServletCommand} and instances(values) of {@link ServletCommand}.
+     */
     private Map<String, ServletCommand> commandsByNames = new HashMap<>();
-
+    /**
+     * static instance.
+     */
     private static CommandStorage commandStorage;
+    /**
+     * @see AdminService
+     */
     private AdminService adminService;
+    /**
+     * @see ClientService
+     */
     private ClientService clientService;
+    /**
+     * @see UserService
+     */
     private UserService userService;
+
 
     private CommandStorage() {
         adminService = new AdminServiceDbImpl(new AdminDaoDbImpl());
@@ -36,6 +57,12 @@ public class CommandStorage {
         return commandStorage;
     }
 
+    /**
+     * Gets {@link ServletCommand} by name.
+     *
+     * @param name name of {@link ServletCommand}.
+     * @return {@link ServletCommand} associated by name from the map.
+     */
     public ServletCommand getCommandByName(String name) {
         ServletCommand servletCommand = commandsByNames.get(name);
         if (servletCommand == null) {
@@ -44,6 +71,9 @@ public class CommandStorage {
         return servletCommand;
     }
 
+    /**
+     * Load {@link ServletCommand} in the moment of instantiation CommandStorage.
+     */
     private void loadCommands() {
         addCommandByName(new LoginServletCommand(userService));
         addCommandByName(new AddTariffServletCommand(adminService));
@@ -69,7 +99,7 @@ public class CommandStorage {
         addCommandByName(new ShowTariffsServletCommand(adminService));
         addCommandByName(new ShowUsersListServletCommand(adminService));
         addCommandByName(new ShowAddTariffPageServletCommand());
-        
+
     }
 
     private void addCommandByName(ServletCommand command) {
