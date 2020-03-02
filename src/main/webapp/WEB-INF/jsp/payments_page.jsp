@@ -20,7 +20,15 @@
         <c:forEach items="${payments}" var="payment">
             <tr>
                 <td>${payment.amount}</td>
-                <td>${payment.paymentType}</td>
+                <td><c:choose>
+                    <c:when test="${payment.paymentType=='DEBIT'}">
+                        <fmt:message key="label.debit"/>
+                    </c:when>
+                    <c:when test="${payment.paymentType=='CREDIT'}">
+                        <fmt:message key="label.credit"/>
+                    </c:when>
+                </c:choose>
+                </td>
                 <td>${payment.date}</td>
             </tr>
         </c:forEach>
