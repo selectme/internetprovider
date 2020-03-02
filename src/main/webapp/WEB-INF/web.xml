@@ -12,7 +12,7 @@
 
     <listener>
         <listener-class>
-            by.epam.learn.mudrahelau.sheduler.PaymentsScheduler
+            by.epam.learn.mudrahelau.scheduler.PaymentsSchedulerExecutor
         </listener-class>
     </listener>
 

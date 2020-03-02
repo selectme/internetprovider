@@ -7,9 +7,6 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp"/>
 
-
-
-
     <div class="row">
         <div class="col-sm-6">
             <div class="card bg-light">

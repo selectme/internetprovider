@@ -30,7 +30,7 @@
             <div class="col-sm-10">
                 <label>
                     <input type="password" name="password" class="form-control form-control-lg"
-                           id="passwordLabel"/>
+                           id="passwordLabel" required/>
                 </label>
             </div>
         </div>
@@ -49,7 +49,6 @@
             <div class="col-sm-10">
                 <label>
                     <input name="surname" class="form-control form-control-lg" pattern="^[A-Za-zА-Яа-я\s]+[\.\']?[A-Za-zА-Яа-я\s]*$" required/>
-                    <%--<input name="surname" class="form-control form-control-lg" pattern="[A-Za-zА-Яа-я]{1,32}" required/>--%>
                 </label>
             </div>
         </div>
