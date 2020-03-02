@@ -71,6 +71,7 @@ public class UserValidator {
     private static boolean validateLogin(User user) {
         boolean result = true;
         if ((user.getLogin() != null) && (user.getLogin().trim().length() <= LOGIN_LENGTH)) {
+
             Connection connection = DBUtils.getInstance().getConnection();
             try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LOGIN_SQL)) {
                 preparedStatement.setString(1, user.getLogin());
