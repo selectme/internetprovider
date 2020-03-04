@@ -27,8 +27,6 @@ import java.util.Map;
  */
 public class ClientDaoDbImpl implements ClientDao {
 
-//    private static final String UPDATE_CLIENT_DATA_SQL = "UPDATE user SET login=?, password=?, name=?, surname=? where id=?";
-//    private static final String UPDATE_CLIENT_TARIFF_PLAN_SQL = "UPDATE user_tariffplan SET tariff_id=? where user_id=?";
     private static final String UPDATE_CLIENT_SQL = "UPDATE user SET name=?, surname=? WHERE id=?";
     private static final String MAKE_PAYMENT_SQL = "INSERT into payments(client_id, amount, type, date) values (?,?,?,?)";
     private static final String GET_PAYMENTS_BY_CLIENT_ID_SQL = "SELECT * FROM payments WHERE client_id = ?";
