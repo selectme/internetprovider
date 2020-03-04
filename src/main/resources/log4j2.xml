@@ -2,7 +2,7 @@
 <Configuration status="WARN">
 
     <Properties>
-        <Property name="basePath">C:/Users/Viktar/Desktop/internetprovider</Property>
+        <Property name="basePath">F:\epam\internetprovider\</Property>
     </Properties>
 
     <Appenders>
